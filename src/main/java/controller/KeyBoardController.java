@@ -1,8 +1,8 @@
 package controller;
 
-import model.Player;
-
 import java.util.Scanner;
+
+import model.entities.Player;
 
 public class KeyboardController {
   Player player;

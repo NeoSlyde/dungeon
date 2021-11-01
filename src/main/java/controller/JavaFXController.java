@@ -2,7 +2,7 @@ package controller;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
-import model.Player;
+import model.entities.Player;
 
 public class JavaFXController {
   EventHandler<? super KeyEvent> eventHandler;

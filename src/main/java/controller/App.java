@@ -5,8 +5,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
-import model.Player;
-import view.JavaFXView;
 
 public class App extends Application {
   /**
@@ -27,12 +25,12 @@ public class App extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     Group root = new Group();
-    JavaFXView view = new JavaFXView();
+    // JavaFXView view = new JavaFXView();
     root.getChildren().add(new Canvas(400, 200));
     Scene scene = new Scene(root);
-    Player player = new Player(view);
-    JavaFXController javaFXController = new JavaFXController(player);
-    scene.setOnKeyPressed(javaFXController.eventHandler);
+    // Player player = new Player(view);
+    // JavaFXController javaFXController = new JavaFXController(player);
+    // scene.setOnKeyPressed(javaFXController.eventHandler);
     primaryStage.setScene(scene);
     primaryStage.show();
 
