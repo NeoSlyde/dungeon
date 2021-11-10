@@ -6,6 +6,6 @@ public interface Usable {
   boolean canBeUsed();
 
   default void use(LivingEntity user) {
-
+    
   }
 }

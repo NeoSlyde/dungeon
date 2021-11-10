@@ -1,5 +1,5 @@
 package model;
 
-public interface Item {
-
+public abstract class Item implements Usable{
+    
 }
