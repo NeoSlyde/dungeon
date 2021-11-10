@@ -33,6 +33,5 @@ public class App extends Application {
     // scene.setOnKeyPressed(javaFXController.eventHandler);
     primaryStage.setScene(scene);
     primaryStage.show();
-
   }
 }

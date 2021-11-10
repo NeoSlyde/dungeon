@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 import model.entities.Player;
 
-public class KeyBoardController {
+public class KeyboardController {
   Player player;
 
-  public KeyBoardController(Player player) {
+  public KeyboardController(Player player) {
     this.player = player;
   }
 
