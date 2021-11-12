@@ -4,14 +4,13 @@ import model.Inventory;
 import model.World;
 import model.misc.Position;
 import model.misc.Size;
-import view.View;
 
 public class Chest extends Entity{
 
     private Inventory inventory;
 
-    public Chest(Position position, Size size, View view) {
-        super(position, size, view);
+    public Chest(Position position, Size size) {
+        super(position, size);
     }
 
     @Override

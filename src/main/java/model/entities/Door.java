@@ -3,14 +3,13 @@ package model.entities;
 import model.World;
 import model.misc.Position;
 import model.misc.Size;
-import view.View;
 
 public class Door extends Entity{
 
     Door destination;
 
-    public Door(Position position, Size size, View view) {
-        super(position, size, view);
+    public Door(Position position, Size size) {
+        super(position, size);
     }
 
     @Override

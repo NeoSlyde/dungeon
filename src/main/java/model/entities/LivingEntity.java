@@ -5,7 +5,6 @@ import model.World;
 import model.misc.Direction;
 import model.misc.Position;
 import model.misc.Size;
-import view.View;
 
 public abstract class LivingEntity extends Entity {
   private double maxHealth;
@@ -21,8 +20,8 @@ public abstract class LivingEntity extends Entity {
 
   private Inventory inventory;
 
-  public LivingEntity(Position position, Size size, View view) {
-    super(position, size, view);
+  public LivingEntity(Position position, Size size) {
+    super(position, size);
   }
 
   @Override

@@ -3,12 +3,11 @@ package model.entities;
 import model.World;
 import model.misc.Position;
 import model.misc.Size;
-import view.View;
 
 public class Wall extends Entity{
 
-    public Wall(Position position, Size size, View view) {
-        super(position, size, view);
+    public Wall(Position position, Size size) {
+        super(position, size);
     }
 
     @Override
