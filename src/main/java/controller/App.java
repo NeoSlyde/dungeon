@@ -6,11 +6,26 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
+import model.World;
+import model.entities.Player;
+import model.misc.Position;
+import model.misc.Room;
+import model.misc.Size;
 
 public class App extends Application {
+  private World world = initWorld();
+
+  private static World initWorld() {
+    var world = new World();
+    var player = new Player(new Position(0, 0, new Room(0)));
+    world.addEntity(player);
+    return world;
+  }
+
   /**
    * The main entry point for all JavaFX applications. The start method is called
    * after the init method has returned, and after the system is ready for the
@@ -30,7 +45,9 @@ public class App extends Application {
   public void start(Stage primaryStage) throws Exception {
     Group root = new Group();
     // JavaFXView view = new JavaFXView();
-    Canvas canvas = new Canvas(960, 540);
+    int windowWidth = 960;
+    int windowHeight = 540;
+    Canvas canvas = new Canvas(windowWidth, windowHeight);
     root.getChildren().add(canvas);
     Scene scene = new Scene(root);
     // Player player = new Player(view);
@@ -38,7 +55,9 @@ public class App extends Application {
     // scene.setOnKeyPressed(javaFXController.eventHandler);
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> update(gc)));
+    Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> {
+      update(gc, new Size(windowWidth, windowHeight));
+    }));
     tl.setCycleCount(Timeline.INDEFINITE);
 
     canvas.setOnMouseClicked(e -> {
@@ -52,7 +71,12 @@ public class App extends Application {
     tl.play();
   }
 
-  private void update(GraphicsContext gc) {
+  private void update(GraphicsContext gc, Size windowSize) {
+    gc.setFill(Color.BLACK);
+    gc.fillRect(0, 0, windowSize.width, windowSize.height);
 
+    for (var entity : world.getEntities()) {
+      entity.draw(gc, windowSize);
+    }
   }
 }

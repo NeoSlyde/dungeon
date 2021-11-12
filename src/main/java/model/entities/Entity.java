@@ -1,11 +1,14 @@
 package model.entities;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import model.Usable;
 import model.World;
 import model.misc.Position;
 import model.misc.Size;
+import view.Drawable;
 
-public abstract class Entity implements Usable {
+public abstract class Entity implements Usable, Drawable {
   private Position position;
   private Size size;
 
@@ -26,5 +29,13 @@ public abstract class Entity implements Usable {
 
   public Size getSize() {
     return size;
+  }
+
+  @Override
+  public void draw(GraphicsContext gc, Size windowSize) {
+    gc.setFill(Color.WHITE);
+    gc.fillRect(getPosition().x, getPosition().y, Drawable.VIRTUAL_TO_PX * getSize().width,
+        Drawable.VIRTUAL_TO_PX * getSize().height);
+
   }
 }
