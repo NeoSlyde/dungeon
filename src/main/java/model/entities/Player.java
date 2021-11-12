@@ -11,7 +11,12 @@ public class Player extends LivingEntity {
 
   @Override
   public void update(double dt, World world) {
-    throw new AssertionError("Unimplemented");
+    if (isMoving()) {
+      final double speed = 0.166;
+      var newX = getPosition().x + getFacingDirection().unitX() * dt * speed;
+      var newY = getPosition().y + getFacingDirection().unitY() * dt * speed;
+      setPosition(new Position(newX, newY, getPosition().room));
+    }
   }
 
 }

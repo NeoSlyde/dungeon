@@ -17,13 +17,11 @@ import model.misc.Room;
 import model.misc.Size;
 
 public class App extends Application {
-  private World world = initWorld();
+  private World world = new World();
+  private Player player = new Player(new Position(0, 0, new Room(0)));
 
-  private static World initWorld() {
-    var world = new World();
-    var player = new Player(new Position(0, 0, new Room(0)));
+  private void initState() {
     world.addEntity(player);
-    return world;
   }
 
   /**
@@ -43,6 +41,8 @@ public class App extends Application {
    */
   @Override
   public void start(Stage primaryStage) throws Exception {
+    initState();
+
     Group root = new Group();
     // JavaFXView view = new JavaFXView();
     int windowWidth = 960;
@@ -50,13 +50,15 @@ public class App extends Application {
     Canvas canvas = new Canvas(windowWidth, windowHeight);
     root.getChildren().add(canvas);
     Scene scene = new Scene(root);
-    // Player player = new Player(view);
-    // JavaFXController javaFXController = new JavaFXController(player);
-    // scene.setOnKeyPressed(javaFXController.eventHandler);
+
+    JavaFXController javaFXController = new JavaFXController(player);
+    scene.setOnKeyPressed(javaFXController.onKeyPressed);
+    scene.setOnKeyReleased(javaFXController.onKeyRelease);
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> {
-      update(gc, new Size(windowWidth, windowHeight));
+    double dt = 16;
+    Timeline tl = new Timeline(new KeyFrame(Duration.millis(dt), e -> {
+      update(dt, gc, new Size(windowWidth, windowHeight));
     }));
     tl.setCycleCount(Timeline.INDEFINITE);
 
@@ -71,10 +73,13 @@ public class App extends Application {
     tl.play();
   }
 
-  private void update(GraphicsContext gc, Size windowSize) {
+  private void update(double dt, GraphicsContext gc, Size windowSize) {
     gc.setFill(Color.BLACK);
     gc.fillRect(0, 0, windowSize.width, windowSize.height);
 
+    for (var entity : world.getEntities()) {
+      entity.update(dt, world);
+    }
     for (var entity : world.getEntities()) {
       entity.draw(gc, windowSize);
     }
