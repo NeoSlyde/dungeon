@@ -5,6 +5,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.animation.Timeline;
+import javafx.animation.KeyFrame;
+import javafx.util.Duration;
 
 public class App extends Application {
   /**
@@ -33,9 +37,22 @@ public class App extends Application {
     // JavaFXController javaFXController = new JavaFXController(player);
     // scene.setOnKeyPressed(javaFXController.eventHandler);
 
-    
+    GraphicsContext gc = canvas.getGraphicsContext2D();
+    Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> update(gc)));
+    tl.setCycleCount(Timeline.INDEFINITE);
+
+    canvas.setOnMouseClicked(e -> {
+      // javaFXController.mouseClicked(e);
+    });
+
     primaryStage.setScene(scene);
     primaryStage.setResizable(false);
     primaryStage.show();
+
+    tl.play();
+  }
+
+  private void update(GraphicsContext gc) {
+
   }
 }
