@@ -18,7 +18,7 @@ import model.misc.Size;
 
 public class App extends Application {
   private World world = new World();
-  private Player player = new Player(new Position(0, 0, new Room(0)));
+  private Player player = new Player(new Position(50, 50, new Room(0)));
 
   private void initState() {
     world.addEntity(player);

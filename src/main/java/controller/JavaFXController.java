@@ -60,6 +60,9 @@ public class JavaFXController {
           pressedKeys.add(KeyCode.RIGHT);
         updatePlayerMoving();
         break;
+      case SHIFT:
+        player.setRunning();
+        break;  
       default:
         break;
       }
@@ -83,6 +86,9 @@ public class JavaFXController {
         pressedKeys.remove(KeyCode.RIGHT);
         updatePlayerMoving();
         break;
+      case SHIFT:
+        player.setWalking();
+        break;  
       default:
         break;
       }
