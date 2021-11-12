@@ -15,12 +15,15 @@ import model.entities.Player;
 import model.misc.Position;
 import model.misc.Room;
 import model.misc.Size;
+import model.misc.Direction;
 
 public class App extends Application {
   private World world = new World();
   private Player player = new Player(new Position(50, 50, new Room(0)));
 
   private void initState() {
+    player.getPlayerImage();
+    player.setFacingDirection(Direction.EAST);
     world.addEntity(player);
   }
 

@@ -33,6 +33,19 @@ public class JavaFXController {
       }
       player.setMoving(true);
     }
+    player.spriteCounter++;
+      if(player.spriteCounter > player.framelimit){
+        if(player.spriteNum == 0){
+          player.spriteNum = 1;
+        }
+        else if(player.spriteNum == 1){
+          player.spriteNum = 2;
+        }
+        else if(player.spriteNum == 2){
+          player.spriteNum = 1;
+        }
+        player.spriteCounter = 0;
+      };
   }
 
   JavaFXController(Player player) {

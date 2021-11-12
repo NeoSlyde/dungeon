@@ -38,4 +38,6 @@ public abstract class Entity implements Usable, Drawable {
         Drawable.VIRTUAL_TO_PX * getSize().height);
 
   }
+
+  
 }
