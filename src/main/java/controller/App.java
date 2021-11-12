@@ -1,12 +1,9 @@
 package controller;
 
-import java.io.File;
-
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class App extends Application {
