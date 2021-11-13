@@ -5,8 +5,8 @@ import model.misc.Position;
 import model.misc.Size;
 
 public class Wall extends Entity {
-    public Wall(Position position, Size size) {
-        super(position, size);
+    public Wall(Position position) {
+        super(position, new Size(1, 1));
     }
 
     @Override
