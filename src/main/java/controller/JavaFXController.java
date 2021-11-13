@@ -17,7 +17,6 @@ public class JavaFXController {
   private List<KeyCode> pressedKeys = new ArrayList<>();
 
   private void updatePlayerMoving() {
-
     if (pressedKeys.isEmpty()) {
       player.setMoving(false);
     } else {
@@ -33,19 +32,6 @@ public class JavaFXController {
       }
       player.setMoving(true);
     }
-    player.spriteCounter++;
-      if(player.spriteCounter > player.framelimit){
-        if(player.spriteNum == 0){
-          player.spriteNum = 1;
-        }
-        else if(player.spriteNum == 1){
-          player.spriteNum = 2;
-        }
-        else if(player.spriteNum == 2){
-          player.spriteNum = 1;
-        }
-        player.spriteCounter = 0;
-      };
   }
 
   JavaFXController(Player player) {
@@ -75,7 +61,7 @@ public class JavaFXController {
         break;
       case SHIFT:
         player.setRunning();
-        break;  
+        break;
       default:
         break;
       }
@@ -101,7 +87,7 @@ public class JavaFXController {
         break;
       case SHIFT:
         player.setWalking();
-        break;  
+        break;
       default:
         break;
       }

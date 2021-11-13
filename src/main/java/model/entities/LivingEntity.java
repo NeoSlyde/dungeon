@@ -22,11 +22,10 @@ public abstract class LivingEntity extends Entity {
 
   private Inventory inventory;
 
-  public BufferedImage up0,up1,up2,down0,down1,down2,left0,left1,left2,right0,right1,right2;
+  public BufferedImage up0, up1, up2, down0, down1, down2, left0, left1, left2, right0, right1, right2;
   public int spriteCounter = 0;
   public int spriteNum = 0;
-  public int framelimit = 2;
-
+  public int framelimit = 5;
 
   public LivingEntity(Position position, Size size) {
     super(position, size);
@@ -122,5 +121,4 @@ public abstract class LivingEntity extends Entity {
     return inventory;
   }
 
-  
 }
