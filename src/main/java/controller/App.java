@@ -32,7 +32,7 @@ public class App extends Application {
     world.addEntity(player);
     world.addEntity(skeleton);
 
-    soundManager.setFile(1);
+    soundManager.setFile(0);
     soundManager.play();
     soundManager.loop();
 

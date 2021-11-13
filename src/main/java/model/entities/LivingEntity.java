@@ -1,10 +1,14 @@
 package model.entities;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import model.Inventory;
 import model.World;
 import model.misc.Direction;
 import model.misc.Position;
 import model.misc.Size;
+import view.DirectedSprite;
 
 public abstract class LivingEntity extends Entity {
   private double maxHealth;
@@ -19,9 +23,11 @@ public abstract class LivingEntity extends Entity {
   private double speed;
 
   private Inventory inventory;
+  private DirectedSprite sprite;
 
-  public LivingEntity(Position position, Size size) {
+  public LivingEntity(Position position, Size size, DirectedSprite sprite) {
     super(position, size);
+    this.sprite = sprite;
   }
 
   @Override
@@ -31,12 +37,23 @@ public abstract class LivingEntity extends Entity {
 
   @Override
   public void update(double dt, World world) {
+    sprite.setSpeed(getSpeed() * 3);
     if (isMoving()) {
-      double dx = facingDirection.unitX() * dt;
-      double dy = facingDirection.unitY() * dt;
-
-      setPosition(new Position(getPosition().x + dx, getPosition().y + dy, getPosition().room));
+      var newX = getPosition().x + getFacingDirection().unitX() * dt * getSpeed();
+      var newY = getPosition().y + getFacingDirection().unitY() * dt * getSpeed();
+      if (newX + 32 < 960 && newY + 32 < 540 && newX > 0 && newY > 0) {
+        setPosition(new Position(newX, newY, getPosition().room));
+      }
+      sprite.update(dt);
+    } else {
+      sprite.setIdle();
     }
+  }
+
+  @Override
+  public void draw(GraphicsContext gc, Size windowSize) {
+    Image imagef = SwingFXUtils.toFXImage(sprite.getImage(getFacingDirection()), null);
+    gc.drawImage(imagef, getPosition().x, getPosition().y, 32, 32);
   }
 
   public double getMaxHealth() {
