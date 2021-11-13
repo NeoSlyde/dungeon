@@ -1,5 +1,6 @@
 package model.entities;
 
+import controller.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import model.World;
 import model.misc.Position;
@@ -9,10 +10,13 @@ import view.ResourceManager;
 
 public class Door extends Entity {
     Position destination;
+    private Sound soundEffect = new Sound();
+
 
     public Door(Position position, Position destination) {
         super(position, new Size(1,1));
         this.destination = destination;
+        soundEffect.setFile(2);
     }
 
     @Override
@@ -22,6 +26,7 @@ public class Door extends Entity {
 
     @Override
     public void use(LivingEntity entity) {
+        soundEffect.play();
         entity.setPosition(destination);
     }
 
