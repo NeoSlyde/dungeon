@@ -1,8 +1,6 @@
 package model.entities;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import model.Inventory;
 import model.World;
 import model.misc.Direction;
@@ -60,9 +58,9 @@ public abstract class LivingEntity extends Entity {
 
   @Override
   public void draw(GraphicsContext gc, Size windowSize) {
-    Image imagef = SwingFXUtils.toFXImage(sprite.getImage(getFacingDirection()), null);
-    gc.drawImage(imagef, Drawable.VIRTUAL_TO_PX * getPosition().x, Drawable.VIRTUAL_TO_PX * getPosition().y,
-        Drawable.VIRTUAL_TO_PX * getSize().width, Drawable.VIRTUAL_TO_PX * getSize().height);
+    gc.drawImage(sprite.getImage(getFacingDirection()), Drawable.VIRTUAL_TO_PX * getPosition().x,
+        Drawable.VIRTUAL_TO_PX * getPosition().y, Drawable.VIRTUAL_TO_PX * getSize().width,
+        Drawable.VIRTUAL_TO_PX * getSize().height);
   }
 
   public double getMaxHealth() {

@@ -2,7 +2,6 @@ package model.generator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import model.World;
 import model.entities.Entity;
