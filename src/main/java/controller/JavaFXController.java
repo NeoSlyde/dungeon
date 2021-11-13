@@ -62,6 +62,9 @@ public class JavaFXController {
       case SHIFT:
         player.setRunning(true);
         break;
+      case SPACE:
+          player.useFacing();
+        break;
       default:
         break;
       }

@@ -43,4 +43,5 @@ public abstract class Entity implements Usable, Drawable {
         && this.position.y < pos.y + size.height && this.position.y + this.size.height > pos.y
         && getPosition().room.equals(pos.room);
   }
+  
 }
