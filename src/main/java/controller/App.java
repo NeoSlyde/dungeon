@@ -14,14 +14,18 @@ import javafx.util.Duration;
 import model.World;
 import model.entities.Player;
 import model.entities.Skeleton;
+import model.generator.RandomWorldGenerator;
+import model.generator.WorldGenerator;
 import model.misc.Position;
 import model.misc.Room;
 import model.misc.Size;
 import model.misc.Direction;
 
 public class App extends Application {
-  private World world = new World();
-  private Player player = new Player(new Position(0, 0, new Room(0)));
+  WorldGenerator worldGenerator = new RandomWorldGenerator();
+
+  private World world = worldGenerator.generate();
+  private Player player = new Player(new Position(1, 1, new Room(0)));
   private Skeleton skeleton = new Skeleton(new Position(5, 5, new Room(0)));
 
   private Sound soundManager = new Sound();
