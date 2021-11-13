@@ -27,8 +27,8 @@ public class RandomWorldGenerator implements WorldGenerator {
     var xs = new ArrayList<Entity>();
     Random start = new Random();
     roomBorderPattern(r).forEach(xs::add);
-    pattern1(r, start.nextInt((int) r.getSize().height-2) + 2).forEach(xs::add);
-    pattern2(r, start.nextInt((int) r.getSize().height-2) + 2).forEach(xs::add);
+    subRoom1(r, start.nextInt((int) r.getSize().height-2) + 2).forEach(xs::add);
+    subRoom2(r, start.nextInt((int) r.getSize().height-2) + 2).forEach(xs::add);
     return xs;
   }
 
@@ -59,7 +59,7 @@ public class RandomWorldGenerator implements WorldGenerator {
     return xs;
   }
 
-  private List<Entity> pattern1(Room room, int startPosition) {
+  private List<Entity> subRoom1(Room room, int startPosition) {
     var xs = new ArrayList<Entity>();
     Random r = new Random();
     int entrancePos = r.nextInt(7) + 1;
@@ -77,7 +77,7 @@ public class RandomWorldGenerator implements WorldGenerator {
     return xs;
   }
 
-  private List<Entity> pattern2(Room room, int startPosition) {
+  private List<Entity> subRoom2(Room room, int startPosition) {
     var xs = new ArrayList<Entity>();
     Random r = new Random();
     int entrancePos = r.nextInt(7) + 1;
