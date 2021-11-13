@@ -34,10 +34,9 @@ public abstract class Entity implements Usable, Drawable {
   @Override
   public void draw(GraphicsContext gc, Size windowSize) {
     gc.setFill(Color.WHITE);
-    gc.fillRect(getPosition().x, getPosition().y, Drawable.VIRTUAL_TO_PX * getSize().width,
-        Drawable.VIRTUAL_TO_PX * getSize().height);
+    gc.fillRect(getPosition().x * Drawable.VIRTUAL_TO_PX, getPosition().y * Drawable.VIRTUAL_TO_PX,
+        Drawable.VIRTUAL_TO_PX * getSize().width, Drawable.VIRTUAL_TO_PX * getSize().height);
 
   }
 
-  
 }
