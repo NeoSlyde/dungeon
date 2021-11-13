@@ -63,8 +63,8 @@ public class App extends Application {
 
     Group root = new Group();
     // JavaFXView view = new JavaFXView();
-    int windowWidth = 960;
-    int windowHeight = 540;
+    int windowWidth = 1024;
+    int windowHeight = 576;
     Canvas canvas = new Canvas(windowWidth, windowHeight);
     root.getChildren().add(canvas);
     Scene scene = new Scene(root);
