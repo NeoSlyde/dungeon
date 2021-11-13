@@ -38,18 +38,9 @@ public abstract class Entity implements Usable, Drawable {
         Drawable.VIRTUAL_TO_PX * getSize().width, Drawable.VIRTUAL_TO_PX * getSize().height);
   }
 
-  public boolean contains(Position pos) {
-    return pos.x >= getPosition().x && pos.x <= getPosition().x + getSize().width && pos.y >= getPosition().y
-        && pos.y <= getPosition().y + getSize().height && pos.room.equals(getPosition().room);
-  }
-
   public boolean collidesWith(Position pos, Size size) {
-    var topLeft = pos;
-    var topRight = new Position(topLeft.x + size.width, topLeft.y, topLeft.room);
-    var bottomLeft = new Position(topLeft.x, topLeft.y + size.height, topLeft.room);
-    var bottomRight = new Position(topLeft.x + size.width, topLeft.y + size.height, topLeft.room);
-    // A square collides with another <=> one of its corners is inside the other
-    // square
-    return contains(topLeft) || contains(topRight) || contains(bottomLeft) || contains(bottomRight);
+    return this.position.x < pos.x + size.width && this.position.x + this.size.width > pos.x
+        && this.position.y < pos.y + size.height && this.position.y + this.size.height > pos.y
+        && getPosition().room.equals(pos.room);
   }
 }

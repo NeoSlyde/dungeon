@@ -38,16 +38,24 @@ public abstract class LivingEntity extends Entity {
   public void update(double dt, World world) {
     sprite.setSpeed(getSpeed() * 0.7);
     if (isMoving()) {
-      var newX = getPosition().x + getFacingDirection().unitX() * dt * getSpeed() / 200;
-      var newY = getPosition().y + getFacingDirection().unitY() * dt * getSpeed() / 200;
-      if (newX + getSize().width <= getPosition().room.getSize().width
-          && newY + getSize().height <= getPosition().room.getSize().height && newX >= 0 && newY >= 0) {
-        setPosition(new Position(newX, newY, getPosition().room));
-      }
+      setPosition(computeNextPosition(dt, world));
       sprite.update(dt);
     } else {
       sprite.setIdle();
     }
+  }
+
+  private Position computeNextPosition(double dt, World world) {
+    var newX = getPosition().x + getFacingDirection().unitX() * dt * getSpeed() / 200;
+    var newY = getPosition().y + getFacingDirection().unitY() * dt * getSpeed() / 200;
+    var newPos = new Position(newX, newY, getPosition().room);
+    for (var entity : world.getEntities()) {
+      // If the entity collides with any other, we don't move
+      // (i.e return the old position)
+      if (!entity.collidesWith(getPosition(), getSize()) && entity.collidesWith(newPos, getSize()))
+        return getPosition();
+    }
+    return newPos;
   }
 
   @Override
