@@ -6,7 +6,6 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import model.World;
-import model.misc.Direction;
 import model.misc.Position;
 import model.misc.Size;
 import view.DirectedSprite;
