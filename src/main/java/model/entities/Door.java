@@ -10,8 +10,9 @@ import view.ResourceManager;
 public class Door extends Entity {
     Position destination;
 
-    public Door(Position position) {
+    public Door(Position position, Position destination) {
         super(position, new Size(1,1));
+        this.destination = destination;
     }
 
     @Override

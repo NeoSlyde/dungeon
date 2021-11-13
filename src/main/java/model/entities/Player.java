@@ -38,23 +38,18 @@ public class Player extends LivingEntity {
 
       if (getFacingDirection() == Direction.NORTH
           && entity.collidesWith(new Position(getPosition().x, getPosition().y - 0.5, getPosition().room), getSize())) {
-        System.out.println("UP");
         canBeUsed = entity;
       } else if (getFacingDirection() == Direction.SOUTH
           && entity.collidesWith(new Position(getPosition().x, getPosition().y + 0.5, getPosition().room), getSize())) {
-        System.out.println("DOWN");
         canBeUsed = entity;
       } else if (getFacingDirection() == Direction.EAST
           && entity.collidesWith(new Position(getPosition().x + 0.5, getPosition().y, getPosition().room), getSize())) {
-        System.out.println("RIGHT");
         canBeUsed = entity;
       } else if (getFacingDirection() == Direction.WEST
           && entity.collidesWith(new Position(getPosition().x - 0.5, getPosition().y, getPosition().room), getSize())) {
-        System.out.println("LEFT");
         canBeUsed = entity;
       }
     }
-    System.out.println(canBeUsed);
   }
 
   public void useFacing() {
