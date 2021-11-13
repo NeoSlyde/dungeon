@@ -91,9 +91,6 @@ public class App extends Application {
     gc.setFill(new ImagePattern(new Image("\\dungeon\\floor\\lair_2_new.png"), 0, 0, 32, 32, false));
     gc.fillRect(0, 0, windowSize.width, windowSize.height);
 
-
-    skeleton.AI(dt, world);
-
     for (var entity : world.getEntities()) {
       entity.update(dt, world);
     }
