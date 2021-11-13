@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
@@ -33,7 +32,7 @@ public class App extends Application {
 
   private void initState() {
     player.setFacingDirection(Direction.EAST);
-    skeleton.setFacingDirection(Direction.WEST);
+    skeleton.setFacingDirection(Direction.SOUTH);
     world.addEntity(player);
     world.addEntity(skeleton);
 
@@ -100,7 +99,9 @@ public class App extends Application {
       entity.update(dt, world);
     }
     for (var entity : world.getEntities()) {
-      entity.draw(gc, windowSize);
+      if(entity.getPosition().room.equals(player.getPosition().room)) {
+        entity.draw(gc, windowSize);
+      }
     }
   }
 }

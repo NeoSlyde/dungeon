@@ -20,7 +20,7 @@ public abstract class LivingEntity extends Entity {
   private boolean moving = false;
 
   private Inventory inventory = new Inventory();
-  private DirectedSprite sprite;
+  public DirectedSprite sprite;
 
   public LivingEntity(Position position, Size size, DirectedSprite sprite) {
     super(position, size);

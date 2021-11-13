@@ -7,31 +7,25 @@ import model.misc.Size;
 import view.Drawable;
 import view.ResourceManager;
 
-public class Door extends Entity {
-    Position destination;
+public class RoomWall extends Entity {
 
-    public Door(Position position) {
-        super(position, new Size(1,1));
+    public RoomWall(Position position) {
+        super(position, new Size(1, 1));
     }
 
     @Override
     public boolean canBeUsed() {
-        return true;
-    }
-
-    @Override
-    public void use(LivingEntity entity) {
-        entity.setPosition(destination);
+        return false;
     }
 
     @Override
     public void update(double dt, World world) {
-
+        // Do nothing
     }
 
     @Override
     public void draw(GraphicsContext gc, Size windowSize) {
-        var image = ResourceManager.INSTANCE.getWritableImage("/dungeon/doors/runed_door.png");
+        var image = ResourceManager.INSTANCE.getWritableImage("/dungeon/wall/snake_9.png");
         gc.drawImage(image, getPosition().x * Drawable.VIRTUAL_TO_PX, getPosition().y * Drawable.VIRTUAL_TO_PX,
                 Drawable.VIRTUAL_TO_PX * getSize().width, Drawable.VIRTUAL_TO_PX * getSize().height);
     }
