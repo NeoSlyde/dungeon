@@ -22,7 +22,6 @@ public class App extends Application {
   private Player player = new Player(new Position(50, 50, new Room(0)));
 
   private void initState() {
-    player.getPlayerImage();
     player.setFacingDirection(Direction.EAST);
     world.addEntity(player);
   }

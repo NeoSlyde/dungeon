@@ -6,8 +6,6 @@ import model.misc.Direction;
 import model.misc.Position;
 import model.misc.Size;
 
-import java.awt.image.BufferedImage;
-
 public abstract class LivingEntity extends Entity {
   private double maxHealth;
   private double health;
@@ -21,11 +19,6 @@ public abstract class LivingEntity extends Entity {
   private double speed;
 
   private Inventory inventory;
-
-  public BufferedImage up0, up1, up2, down0, down1, down2, left0, left1, left2, right0, right1, right2;
-  public int spriteCounter = 0;
-  public int spriteNum = 0;
-  public int framelimit = 5;
 
   public LivingEntity(Position position, Size size) {
     super(position, size);

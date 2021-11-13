@@ -60,7 +60,7 @@ public class JavaFXController {
         updatePlayerMoving();
         break;
       case SHIFT:
-        player.setRunning();
+        player.setRunning(true);
         break;
       default:
         break;
@@ -86,7 +86,7 @@ public class JavaFXController {
         updatePlayerMoving();
         break;
       case SHIFT:
-        player.setWalking();
+        player.setRunning(false);
         break;
       default:
         break;
