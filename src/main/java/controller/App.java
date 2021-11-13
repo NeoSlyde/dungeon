@@ -6,7 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
@@ -76,7 +78,7 @@ public class App extends Application {
   }
 
   private void update(double dt, GraphicsContext gc, Size windowSize) {
-    gc.setFill(Color.BLACK);
+    gc.setFill(new ImagePattern(new Image("\\dungeon\\floor\\lair_2_new.png"), 0, 0, 32, 32, false));
     gc.fillRect(0, 0, windowSize.width, windowSize.height);
 
     for (var entity : world.getEntities()) {
