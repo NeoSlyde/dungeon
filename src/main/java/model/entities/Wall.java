@@ -24,7 +24,7 @@ public class Wall extends Entity {
 
     @Override
     public void draw(GraphicsContext gc, Size windowSize) {
-        var image = ResourceManager.INSTANCE.getWritableImage("/dungeon/wall/mirrored_wall_old.png");
+        var image = ResourceManager.INSTANCE.getWritableImage("/dungeon/wall/stone_gray_0.png");
         gc.drawImage(image, getPosition().x * Drawable.VIRTUAL_TO_PX, getPosition().y * Drawable.VIRTUAL_TO_PX,
                 Drawable.VIRTUAL_TO_PX * getSize().width, Drawable.VIRTUAL_TO_PX * getSize().height);
     }
