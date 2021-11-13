@@ -4,9 +4,8 @@ import model.World;
 import model.misc.Position;
 import model.misc.Size;
 
-public class Door extends Entity{
-
-    Door destination;
+public class Door extends Entity {
+    Position destination;
 
     public Door(Position position, Size size) {
         super(position, size);
@@ -19,12 +18,11 @@ public class Door extends Entity{
 
     @Override
     public void use(LivingEntity entity) {
-        entity.setPosition(destination.getPosition());
+        entity.setPosition(destination);
     }
 
     @Override
     public void update(double dt, World world) {
-        //Do nothing
+
     }
-    
 }

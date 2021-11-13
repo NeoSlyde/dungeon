@@ -20,7 +20,8 @@ public class Player extends LivingEntity {
     this.running = running;
   }
 
+  @Override
   public double getSpeed() {
-    return running ? 0.332 : 0.166;
+    return running ? 2 : 1;
   }
 }

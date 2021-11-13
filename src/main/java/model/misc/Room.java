@@ -7,6 +7,10 @@ public class Room {
     this.id = id;
   }
 
+  public Size getSize() {
+    return new Size(32, 18);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (o == null)

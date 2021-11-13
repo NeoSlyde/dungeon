@@ -21,8 +21,8 @@ import model.misc.Direction;
 
 public class App extends Application {
   private World world = new World();
-  private Player player = new Player(new Position(50, 50, new Room(0)));
-  private Skeleton skeleton = new Skeleton(new Position(500, 400, new Room(0)));
+  private Player player = new Player(new Position(0, 0, new Room(0)));
+  private Skeleton skeleton = new Skeleton(new Position(5, 5, new Room(0)));
 
   private Sound soundManager = new Sound();
 
@@ -33,8 +33,8 @@ public class App extends Application {
     world.addEntity(skeleton);
 
     soundManager.setFile(0);
-    soundManager.play();
-    soundManager.loop();
+    // soundManager.play();
+    // soundManager.loop();
 
   }
 

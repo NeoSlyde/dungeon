@@ -9,20 +9,19 @@ import model.misc.Direction;
 import model.misc.Position;
 import model.misc.Size;
 import view.DirectedSprite;
+import view.Drawable;
 
 public abstract class LivingEntity extends Entity {
-  private double maxHealth;
-  private double health;
+  private double maxHealth = 20;
+  private double health = 20;
 
-  private double maxMana;
-  private double mana;
+  private double maxMana = 20;
+  private double mana = 20;
 
   private Direction facingDirection = Direction.EAST;
   private boolean moving = false;
 
-  private double speed;
-
-  private Inventory inventory;
+  private Inventory inventory = new Inventory();
   private DirectedSprite sprite;
 
   public LivingEntity(Position position, Size size, DirectedSprite sprite) {
@@ -37,11 +36,12 @@ public abstract class LivingEntity extends Entity {
 
   @Override
   public void update(double dt, World world) {
-    sprite.setSpeed(getSpeed() * 3);
+    sprite.setSpeed(getSpeed() * 0.7);
     if (isMoving()) {
-      var newX = getPosition().x + getFacingDirection().unitX() * dt * getSpeed();
-      var newY = getPosition().y + getFacingDirection().unitY() * dt * getSpeed();
-      if (newX + 32 < 960 && newY + 32 < 540 && newX > 0 && newY > 0) {
+      var newX = getPosition().x + getFacingDirection().unitX() * dt * getSpeed() / 200;
+      var newY = getPosition().y + getFacingDirection().unitY() * dt * getSpeed() / 200;
+      if (newX + getSize().width <= getPosition().room.getSize().width
+          && newY + getSize().height <= getPosition().room.getSize().height && newX >= 0 && newY >= 0) {
         setPosition(new Position(newX, newY, getPosition().room));
       }
       sprite.update(dt);
@@ -53,7 +53,8 @@ public abstract class LivingEntity extends Entity {
   @Override
   public void draw(GraphicsContext gc, Size windowSize) {
     Image imagef = SwingFXUtils.toFXImage(sprite.getImage(getFacingDirection()), null);
-    gc.drawImage(imagef, getPosition().x, getPosition().y, 32, 32);
+    gc.drawImage(imagef, Drawable.VIRTUAL_TO_PX * getPosition().x, Drawable.VIRTUAL_TO_PX * getPosition().y,
+        Drawable.VIRTUAL_TO_PX * getSize().width, Drawable.VIRTUAL_TO_PX * getSize().height);
   }
 
   public double getMaxHealth() {
@@ -117,18 +118,10 @@ public abstract class LivingEntity extends Entity {
   }
 
   public double getSpeed() {
-    return speed;
-  }
-
-  public void setSpeed(double speed) {
-    if (speed < 0)
-      throw new IllegalArgumentException("speed must be positive");
-
-    this.speed = speed;
+    return 1;
   }
 
   public Inventory getInventory() {
     return inventory;
   }
-
 }

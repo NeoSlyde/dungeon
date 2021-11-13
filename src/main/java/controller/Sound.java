@@ -11,31 +11,30 @@ public class Sound {
     Clip clip;
     URL soundURL[] = new URL[30];
 
-    public Sound(){
+    public Sound() {
         soundURL[0] = getClass().getResource("/sounds/music.wav");
         soundURL[1] = getClass().getResource("/sounds/spin.wav");
     }
-    
-    public void setFile(int i){
-        try{
+
+    public void setFile(int i) {
+        try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
             clip.open(ais);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void play(){
+    public void play() {
         clip.start();
     }
 
-    public void stop(){
+    public void stop() {
         clip.stop();
     }
 
-    public void loop(){
+    public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 }
