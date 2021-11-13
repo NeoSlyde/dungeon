@@ -59,15 +59,11 @@ public class Player extends LivingEntity {
 
       spriteCounter++;
       if (spriteCounter > framelimit) {
-        if (spriteNum == 0) {
-          spriteNum = 1;
-        } else if (spriteNum == 1) {
-          spriteNum = 2;
-        } else if (spriteNum == 2) {
-          spriteNum = 1;
-        }
+        spriteNum = (spriteNum) % 2 + 1;
         spriteCounter = 0;
       }
+    } else {
+      spriteNum = 0;
     }
   }
 
