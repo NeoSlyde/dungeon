@@ -13,6 +13,7 @@ import javafx.animation.KeyFrame;
 import javafx.util.Duration;
 import model.World;
 import model.entities.Player;
+import model.entities.Skeleton;
 import model.misc.Position;
 import model.misc.Room;
 import model.misc.Size;
@@ -21,10 +22,20 @@ import model.misc.Direction;
 public class App extends Application {
   private World world = new World();
   private Player player = new Player(new Position(50, 50, new Room(0)));
+  private Skeleton skeleton = new Skeleton(new Position(500, 400, new Room(0)));
+
+  private Sound soundManager = new Sound();
 
   private void initState() {
     player.setFacingDirection(Direction.EAST);
+    skeleton.setFacingDirection(Direction.WEST);
     world.addEntity(player);
+    world.addEntity(skeleton);
+
+    soundManager.setFile(1);
+    soundManager.play();
+    soundManager.loop();
+
   }
 
   /**
@@ -79,6 +90,9 @@ public class App extends Application {
   private void update(double dt, GraphicsContext gc, Size windowSize) {
     gc.setFill(new ImagePattern(new Image("\\dungeon\\floor\\lair_2_new.png"), 0, 0, 32, 32, false));
     gc.fillRect(0, 0, windowSize.width, windowSize.height);
+
+
+    skeleton.AI(dt, world);
 
     for (var entity : world.getEntities()) {
       entity.update(dt, world);
