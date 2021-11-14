@@ -1,5 +1,6 @@
 package model.entities;
 
+import controller.Sound;
 import model.World;
 import model.misc.Direction;
 import model.misc.Position;
@@ -21,6 +22,9 @@ public class Skeleton extends Monster {
     world.getEntities().stream().filter(e -> e instanceof Player).forEach(e -> {
       this.setMoving(true);
       if(this.distance(e) < 1) {
+        Sound soundEffect = new Sound();
+        soundEffect.setFile(3);
+        soundEffect.play();
         this.setMoving(false);
       }
       else if (e.getPosition().y + 0.1 < this.getPosition().y) {
