@@ -37,7 +37,7 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
       for (int j = 0; j < w; j++)
         layout[i][j] = new Wall(new Position(j, i, room));
 
-    generatePathInLayout(start, end, room, 1, 3, layout);
+    generatePathInLayout(start, end, room, 4, 3, layout);
     int subRoomCount = random.nextInt(4) + 1;
     for (int i = 0; i < subRoomCount; i++)
       tryCutOutSubroom(layout, room);
@@ -102,8 +102,9 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
       for (int j = bestX; j < bestX + w; ++j)
         layout[i][j] = null;
 
+    // Cut out a path to enter the subroom
     Position entrance = null;
-    for (int radius = 1; entrance == null && radius < 10; ++radius) {
+    for (int radius = 1; entrance == null && radius < 30; ++radius) {
       for (int i = Math.max(0, bestY - radius); entrance == null
           && i < Math.min(layout.length, bestY + h + radius); ++i) {
         if (bestX - radius >= 0 && layout[i][bestX - radius] == null)
@@ -116,6 +117,7 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
       generatePathInLayout(new Position(entrance.x, bestY, room), entrance, room, 1, 0, layout);
       generatePathInLayout(new Position(bestX, bestY, room), new Position(entrance.x, bestY, room), room, 1, 0, layout);
     }
+
     // Generate a chest
     Direction chestOrientation = Direction.values()[random.nextInt(Direction.values().length)];
     int chestX = bestX + (chestOrientation == Direction.EAST ? w - 1 : chestOrientation == Direction.WEST ? 0 : w / 2);
