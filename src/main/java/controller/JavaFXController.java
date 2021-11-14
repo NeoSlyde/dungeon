@@ -18,6 +18,7 @@ public class JavaFXController {
   private List<KeyCode> pressedKeys = new ArrayList<>();
 
   private void updatePlayerMoving() {
+    if(!player.isStopped()){
     if (pressedKeys.isEmpty()) {
       player.setMoving(false);
     } else {
@@ -33,6 +34,7 @@ public class JavaFXController {
       }
       player.setMoving(true);
     }
+  }
   }
 
   JavaFXController(Player player, GraphicsContext gc) {
