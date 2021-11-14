@@ -9,6 +9,8 @@ import model.World;
 import model.entities.Chest;
 import model.entities.Door;
 import model.entities.Entity;
+import model.entities.Monster;
+import model.entities.Skeleton;
 import model.entities.Wall;
 import model.misc.Direction;
 import model.misc.Position;
@@ -80,6 +82,8 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
       layout[0][i] = new Wall(new Position(i, 0, room));
       layout[h - 1][i] = new Wall(new Position(i, h - 1, room));
     }
+
+    generateMonsters(layout, room, random.nextInt(4));
 
     return layout;
   }
@@ -156,6 +160,20 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
     layout[chestY][chestX] = new Chest(new Position(chestX, chestY, room));
   }
 
+  private void generateMonsters(Entity[][] layout, Room room, int n) {
+    for (int i = 0; i < n; ++i) {
+      for (int j = 0; j < 1000; ++j) {
+        int x = random.nextInt(layout[0].length);
+        int y = random.nextInt(layout.length);
+        if (layout[y][x] == null) {
+          Monster monster = new Skeleton(new Position(x, y, room));
+          layout[y][x] = monster;
+          break;
+        }
+      }
+    }
+  }
+
   private List<Entity> layoutToRoom(Entity[][] layout) {
     var entities = new ArrayList<Entity>();
     for (int i = 0; i < layout.length; i++)
@@ -164,4 +182,5 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
           entities.add(layout[i][j]);
     return entities;
   }
+
 }
