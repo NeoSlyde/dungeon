@@ -7,7 +7,7 @@ public class Room {
     this.id = id;
   }
 
-  public Size getSize() {
+  public static Size getSize() {
     return new Size(32, 18);
   }
 

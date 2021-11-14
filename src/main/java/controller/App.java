@@ -13,22 +13,27 @@ import javafx.animation.KeyFrame;
 import javafx.util.Duration;
 import model.World;
 import model.entities.Player;
-import model.generator.RandomWorldGenerator;
+import model.generator.RandomWorldGeneratorMk2;
 import model.generator.WorldGenerator;
+import model.misc.Direction;
 import model.misc.Size;
 import view.ResourceManager;
 
 public class App extends Application {
-  WorldGenerator worldGenerator = new RandomWorldGenerator();
+  WorldGenerator worldGenerator = new RandomWorldGeneratorMk2();
 
   private World world = worldGenerator.generate();
-  
+  private Player player = new Player(world.getSpawnPoint());
+
+  private Sound soundManager = new Sound();
 
   private void initState() {
-  
-    world.worldMusic.setFile(0);
-    world.worldMusic.setVolume(-10.f);
-    world.worldMusic.loop();
+    player.setFacingDirection(Direction.EAST);
+    world.addEntity(player);
+
+    soundManager.setFile(0);
+    // soundManager.play();
+    // soundManager.loop();
 
   }
 
@@ -60,9 +65,6 @@ public class App extends Application {
     Scene scene = new Scene(root);
     Player player = (Player) world.getEntities().stream().filter(e -> e instanceof Player).findFirst().get();
 
-    
-    
-
     GraphicsContext gc = canvas.getGraphicsContext2D();
     JavaFXController javaFXController = new JavaFXController(player, gc);
     scene.setOnKeyPressed(javaFXController.onKeyPressed);
@@ -93,18 +95,15 @@ public class App extends Application {
       entity.update(dt, world);
     }
     for (var entity : world.getEntities()) {
-      if(entity.getPosition().room.equals(
-        player.getPosition().room))
-     {
+      if (entity.getPosition().room.equals(player.getPosition().room)) {
         entity.draw(gc, windowSize);
       }
     }
     Image inventoryImage = ResourceManager.INSTANCE.getWritableImage("/gui/inventory.png");
-    if(player.isInventoryOpen()) {
+    if (player.isInventoryOpen()) {
       world.getEntities().forEach(e -> e.setStopped(true));
-      gc.drawImage(inventoryImage, windowSize.width/2-300/2,windowSize.height/2-300/2, 300,300);
-    }
-    else{
+      gc.drawImage(inventoryImage, windowSize.width / 2 - 300 / 2, windowSize.height / 2 - 300 / 2, 300, 300);
+    } else {
       world.getEntities().forEach(e -> e.setStopped(false));
     }
   }

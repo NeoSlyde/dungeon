@@ -5,12 +5,21 @@ import java.util.List;
 
 import controller.Sound;
 import model.entities.Entity;
+import model.misc.Position;
 
 public class World {
   private List<Entity> entities = new ArrayList<>();
   public Sound worldMusic = new Sound();
 
-  
+  private Position spawnPoint;
+
+  public World() {
+
+  }
+
+  public World(Position spawnPoint) {
+    this.spawnPoint = spawnPoint;
+  }
 
   public void addEntity(Entity entity) {
     entities.add(entity);
@@ -28,5 +37,9 @@ public class World {
     for (Entity entity : entities) {
       entity.update(dt, this);
     }
+  }
+
+  public Position getSpawnPoint() {
+    return spawnPoint;
   }
 }

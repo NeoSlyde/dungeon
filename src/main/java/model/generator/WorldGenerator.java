@@ -4,4 +4,5 @@ import model.World;
 
 public interface WorldGenerator {
   World generate();
+
 }
