@@ -13,26 +13,18 @@ import javafx.animation.KeyFrame;
 import javafx.util.Duration;
 import model.World;
 import model.entities.Player;
-import model.entities.Skeleton;
 import model.generator.RandomWorldGenerator;
 import model.generator.WorldGenerator;
-import model.misc.Position;
-import model.misc.Room;
 import model.misc.Size;
-import model.misc.Direction;
 
 public class App extends Application {
   WorldGenerator worldGenerator = new RandomWorldGenerator();
 
   private World world = worldGenerator.generate();
-  private Player player = new Player(new Position(1, 1, new Room(0)));
-  private Skeleton skeleton = new Skeleton(new Position(5, 5, new Room(0)));
+  
 
   private void initState() {
-    player.setFacingDirection(Direction.EAST);
-    skeleton.setFacingDirection(Direction.SOUTH);
-    world.addEntity(player);
-    world.addEntity(skeleton);
+    
 
     world.worldMusic.setFile(0);
     world.worldMusic.setVolume(-10.f);
@@ -67,7 +59,7 @@ public class App extends Application {
     root.getChildren().add(canvas);
     Scene scene = new Scene(root);
 
-    JavaFXController javaFXController = new JavaFXController(player);
+    JavaFXController javaFXController = new JavaFXController((Player) world.getEntities().stream().filter(e -> e instanceof Player).findFirst().get());
     scene.setOnKeyPressed(javaFXController.onKeyPressed);
     scene.setOnKeyReleased(javaFXController.onKeyRelease);
 
@@ -97,7 +89,9 @@ public class App extends Application {
       entity.update(dt, world);
     }
     for (var entity : world.getEntities()) {
-      if(entity.getPosition().room.equals(player.getPosition().room)) {
+      if(entity.getPosition().room.equals(
+        world.getEntities().stream().filter(e -> e instanceof Player).findFirst().get().getPosition().room))
+     {
         entity.draw(gc, windowSize);
       }
     }

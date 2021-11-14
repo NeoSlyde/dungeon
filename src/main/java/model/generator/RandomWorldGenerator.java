@@ -7,8 +7,11 @@ import java.util.Random;
 import model.World;
 import model.entities.Door;
 import model.entities.Entity;
+import model.entities.Player;
 import model.entities.RoomWall;
+import model.entities.Skeleton;
 import model.entities.Wall;
+import model.misc.Direction;
 import model.misc.Position;
 import model.misc.Room;
 
@@ -17,6 +20,15 @@ public class RandomWorldGenerator implements WorldGenerator {
   public World generate() {
     World w = new World();
     for (int i = 0; i < 16; i++) {
+      if(i == 0){
+        Room r = new Room(i);
+        Player player = new Player(new Position(1, 1, r));
+        Skeleton skeleton = new Skeleton(new Position(5, 5, r));
+        player.setFacingDirection(Direction.EAST);
+        skeleton.setFacingDirection(Direction.SOUTH);
+        w.addEntity(player);
+        w.addEntity(skeleton);
+      }
       Room r = new Room(i);
       generateRoom(w, r).forEach(w::addEntity);
     }

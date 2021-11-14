@@ -22,6 +22,7 @@ public class Skeleton extends Monster {
   @Override
   public void update(double dt, World world) {
     world.getEntities().stream().filter(e -> e instanceof Player).forEach(e -> {
+      if(e.getPosition().room.id == getPosition().room.id){
       this.setMoving(true);
       if(this.distance(e) < 1 && isMoving()) {
         world.worldMusic.stop();
@@ -53,7 +54,8 @@ public class Skeleton extends Monster {
         world.worldMusic.play();
         soundEffect.replay();
       }
-    });
+    }
+  });
 
     super.update(dt, world);
   }
