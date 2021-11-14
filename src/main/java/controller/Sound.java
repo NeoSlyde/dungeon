@@ -5,6 +5,7 @@ import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 public class Sound {
 
@@ -39,5 +40,15 @@ public class Sound {
 
     public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    public void replay(){
+        clip.setFramePosition(0);
+    }
+
+    public void setVolume(float level) {
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(level);
+        clip.start();
     }
 }

@@ -28,17 +28,15 @@ public class App extends Application {
   private Player player = new Player(new Position(1, 1, new Room(0)));
   private Skeleton skeleton = new Skeleton(new Position(5, 5, new Room(0)));
 
-  private Sound soundManager = new Sound();
-
   private void initState() {
     player.setFacingDirection(Direction.EAST);
     skeleton.setFacingDirection(Direction.SOUTH);
     world.addEntity(player);
     world.addEntity(skeleton);
 
-    soundManager.setFile(0);
-    // soundManager.play();
-    // soundManager.loop();
+    world.worldMusic.setFile(0);
+    world.worldMusic.setVolume(-10.f);
+    world.worldMusic.loop();
 
   }
 

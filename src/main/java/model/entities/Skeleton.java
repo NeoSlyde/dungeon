@@ -16,32 +16,42 @@ public class Skeleton extends Monster {
         new String[] { "/monster/skeleton/down0.png", "/monster/skeleton/down1.png", "/monster/skeleton/down2.png" },
         new String[] { "/monster/skeleton/right0.png", "/monster/skeleton/right1.png", "/monster/skeleton/right2.png" },
         new String[] { "/monster/skeleton/left0.png", "/monster/skeleton/left1.png", "/monster/skeleton/left2.png" }));
+    soundEffect.setFile(4);
   }
 
   @Override
   public void update(double dt, World world) {
     world.getEntities().stream().filter(e -> e instanceof Player).forEach(e -> {
+      this.setMoving(true);
       if(this.distance(e) < 1 && isMoving()) {
-        soundEffect.setFile(4);
-        soundEffect.play();
+        world.worldMusic.stop();
+        soundEffect.setVolume(-10.f);
         soundEffect.loop();
         this.setMoving(false);
       }
       else if (e.getPosition().y + 0.1 < this.getPosition().y) {
         this.setFacingDirection(Direction.NORTH);
-        this.setMoving(true);
+        soundEffect.stop();
+        world.worldMusic.play();
+        soundEffect.replay();
       }
       else if (e.getPosition().y - 0.1 > this.getPosition().y) {
         this.setFacingDirection(Direction.SOUTH);
-        this.setMoving(true);
+        soundEffect.stop();
+        world.worldMusic.play();
+        soundEffect.replay();
       }
       else if (e.getPosition().x + 0.1 < this.getPosition().x) {
         this.setFacingDirection(Direction.WEST);
-        this.setMoving(true);
+        soundEffect.stop();
+        world.worldMusic.play();
+        soundEffect.replay();
       }
       else if (e.getPosition().x - 0.1 > this.getPosition().x) {
         this.setFacingDirection(Direction.EAST);
-        this.setMoving(true);
+        soundEffect.stop();
+        world.worldMusic.play();
+        soundEffect.replay();
       }
     });
 

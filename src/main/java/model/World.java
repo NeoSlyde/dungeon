@@ -3,10 +3,14 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.Sound;
 import model.entities.Entity;
 
 public class World {
   private List<Entity> entities = new ArrayList<>();
+  public Sound worldMusic = new Sound();
+
+  
 
   public void addEntity(Entity entity) {
     entities.add(entity);
