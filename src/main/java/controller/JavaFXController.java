@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.event.EventHandler;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import model.entities.Player;
 import model.misc.Direction;
 
@@ -34,7 +36,7 @@ public class JavaFXController {
     }
   }
 
-  JavaFXController(Player player) {
+  JavaFXController(Player player, GraphicsContext gc) {
     this.player = player;
 
     onKeyPressed = (event) -> {
@@ -65,6 +67,9 @@ public class JavaFXController {
       case SPACE:
           player.useFacing();
         break;
+        case TAB:
+          gc.setFill(Color.BLACK);
+        break;  
       default:
         break;
       }

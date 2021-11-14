@@ -24,8 +24,7 @@ public class App extends Application {
   
 
   private void initState() {
-    
-
+  
     world.worldMusic.setFile(0);
     world.worldMusic.setVolume(-10.f);
     world.worldMusic.loop();
@@ -59,11 +58,13 @@ public class App extends Application {
     root.getChildren().add(canvas);
     Scene scene = new Scene(root);
 
-    JavaFXController javaFXController = new JavaFXController((Player) world.getEntities().stream().filter(e -> e instanceof Player).findFirst().get());
-    scene.setOnKeyPressed(javaFXController.onKeyPressed);
-    scene.setOnKeyReleased(javaFXController.onKeyRelease);
+    
+    
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
+    JavaFXController javaFXController = new JavaFXController((Player) world.getEntities().stream().filter(e -> e instanceof Player).findFirst().get(), gc);
+    scene.setOnKeyPressed(javaFXController.onKeyPressed);
+    scene.setOnKeyReleased(javaFXController.onKeyRelease);
     double dt = 16;
     Timeline tl = new Timeline(new KeyFrame(Duration.millis(dt), e -> {
       update(dt, gc, new Size(windowWidth, windowHeight));
