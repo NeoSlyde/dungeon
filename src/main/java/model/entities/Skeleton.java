@@ -8,6 +8,7 @@ import model.misc.Size;
 import view.DirectedSprite;
 
 public class Skeleton extends Monster {
+  Sound soundEffect = new Sound();
 
   public Skeleton(Position position) {
     super(position, new Size(0.5, 0.5), DirectedSprite.fromImagePaths(
@@ -20,24 +21,27 @@ public class Skeleton extends Monster {
   @Override
   public void update(double dt, World world) {
     world.getEntities().stream().filter(e -> e instanceof Player).forEach(e -> {
-      this.setMoving(true);
-      if(this.distance(e) < 1) {
-        Sound soundEffect = new Sound();
-        soundEffect.setFile(3);
+      if(this.distance(e) < 1 && isMoving()) {
+        soundEffect.setFile(4);
         soundEffect.play();
+        soundEffect.loop();
         this.setMoving(false);
       }
       else if (e.getPosition().y + 0.1 < this.getPosition().y) {
         this.setFacingDirection(Direction.NORTH);
+        this.setMoving(true);
       }
       else if (e.getPosition().y - 0.1 > this.getPosition().y) {
         this.setFacingDirection(Direction.SOUTH);
+        this.setMoving(true);
       }
       else if (e.getPosition().x + 0.1 < this.getPosition().x) {
         this.setFacingDirection(Direction.WEST);
+        this.setMoving(true);
       }
       else if (e.getPosition().x - 0.1 > this.getPosition().x) {
         this.setFacingDirection(Direction.EAST);
+        this.setMoving(true);
       }
     });
 

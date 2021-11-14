@@ -10,13 +10,10 @@ import view.ResourceManager;
 
 public class Door extends Entity {
     Position destination;
-    private Sound soundEffect = new Sound();
-
 
     public Door(Position position, Position destination) {
         super(position, new Size(1,1));
         this.destination = destination;
-        soundEffect.setFile(2);
     }
 
     @Override
@@ -26,6 +23,8 @@ public class Door extends Entity {
 
     @Override
     public void use(LivingEntity entity) {
+        Sound soundEffect = new Sound();
+        soundEffect.setFile(2);
         soundEffect.play();
         entity.setPosition(destination);
     }
