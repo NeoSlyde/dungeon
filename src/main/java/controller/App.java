@@ -16,6 +16,7 @@ import model.entities.Player;
 import model.generator.RandomWorldGenerator;
 import model.generator.WorldGenerator;
 import model.misc.Size;
+import view.ResourceManager;
 
 public class App extends Application {
   WorldGenerator worldGenerator = new RandomWorldGenerator();
@@ -57,12 +58,13 @@ public class App extends Application {
     Canvas canvas = new Canvas(windowWidth, windowHeight);
     root.getChildren().add(canvas);
     Scene scene = new Scene(root);
+    Player player = (Player) world.getEntities().stream().filter(e -> e instanceof Player).findFirst().get();
 
     
     
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    JavaFXController javaFXController = new JavaFXController((Player) world.getEntities().stream().filter(e -> e instanceof Player).findFirst().get(), gc);
+    JavaFXController javaFXController = new JavaFXController(player, gc);
     scene.setOnKeyPressed(javaFXController.onKeyPressed);
     scene.setOnKeyReleased(javaFXController.onKeyRelease);
     double dt = 16;
@@ -75,6 +77,7 @@ public class App extends Application {
       // javaFXController.mouseClicked(e);
     });
 
+    primaryStage.setTitle("Eidoslyde's Dungeon");
     primaryStage.setScene(scene);
     primaryStage.setResizable(false);
     primaryStage.show();
@@ -85,16 +88,24 @@ public class App extends Application {
   private void update(double dt, GraphicsContext gc, Size windowSize) {
     gc.setFill(new ImagePattern(new Image("\\dungeon\\floor\\grey_dirt_0_old.png"), 0, 0, 32, 32, false));
     gc.fillRect(0, 0, windowSize.width, windowSize.height);
-
+    Player player = (Player) world.getEntities().stream().filter(e -> e instanceof Player).findFirst().get();
     for (var entity : world.getEntities()) {
       entity.update(dt, world);
     }
     for (var entity : world.getEntities()) {
       if(entity.getPosition().room.equals(
-        world.getEntities().stream().filter(e -> e instanceof Player).findFirst().get().getPosition().room))
+        player.getPosition().room))
      {
         entity.draw(gc, windowSize);
       }
+    }
+    Image inventoryImage = ResourceManager.INSTANCE.getWritableImage("/gui/inventory.png");
+    if(player.isInventoryOpen()) {
+      world.getEntities().forEach(e -> e.setStopped(true));
+      gc.drawImage(inventoryImage, windowSize.width/2-300/2,windowSize.height/2-300/2, 300,300);
+    }
+    else{
+      world.getEntities().forEach(e -> e.setStopped(false));
     }
   }
 }
