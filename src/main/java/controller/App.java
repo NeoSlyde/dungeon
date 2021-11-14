@@ -25,15 +25,13 @@ public class App extends Application {
   private World world = worldGenerator.generate();
   private Player player = new Player(world.getSpawnPoint());
 
-  private Sound soundManager = new Sound();
-
   private void initState() {
     player.setFacingDirection(Direction.EAST);
     world.addEntity(player);
 
-    soundManager.setFile(0);
-    // soundManager.play();
-    // soundManager.loop();
+    world.worldMusic.setFile(0);
+    world.worldMusic.setVolume(-1000.f);
+    world.worldMusic.loop();
 
   }
 
