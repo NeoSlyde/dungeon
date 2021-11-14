@@ -9,7 +9,7 @@ import view.Drawable;
 import view.ResourceManager;
 
 public class Door extends Entity {
-    Position destination;
+    public final Position destination;
     private Sound soundEffect = new Sound();
 
     public Door(Position position, Position destination) {

@@ -5,6 +5,7 @@ import model.Inventory;
 import model.World;
 import model.misc.Direction;
 import model.misc.Position;
+import model.misc.Room;
 import model.misc.Size;
 import view.DirectedSprite;
 import view.Drawable;
@@ -47,6 +48,9 @@ public abstract class LivingEntity extends Entity {
     var newX = getPosition().x + getFacingDirection().unitX() * dt * getSpeed() / 200;
     var newY = getPosition().y + getFacingDirection().unitY() * dt * getSpeed() / 200;
     var newPos = new Position(newX, newY, getPosition().room);
+    if (newX < 0 || newY < 0 || newX >= Room.getSize().width || newY >= Room.getSize().height) {
+      return getPosition();
+    }
     for (var entity : world.getEntities()) {
       // If the entity collides with any other, we don't move
       // (i.e return the old position)

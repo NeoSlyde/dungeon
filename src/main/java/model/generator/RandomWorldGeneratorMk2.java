@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 
 import model.World;
 import model.entities.Chest;
+import model.entities.Door;
 import model.entities.Entity;
 import model.entities.Wall;
 import model.misc.Direction;
@@ -19,13 +20,42 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
   @Override
   public World generate() {
     Room[] rooms = IntStream.range(0, random.nextInt(6) + 10).mapToObj(Room::new).toArray(Room[]::new);
-    Position spawnPoint = new Position(random.nextInt((int) Room.getSize().width / 2),
-        random.nextInt((int) Room.getSize().height / 2), rooms[0]);
+    Position spawnPoint = new Position(1 + random.nextInt((int) Room.getSize().width / 2),
+        1 + random.nextInt((int) Room.getSize().height / 2), rooms[0]);
 
     World w = new World(spawnPoint);
 
-    var layout = generateRoomLayout(spawnPoint, new Position(0, 16, null), new Room(0));
-    layoutToRoom(layout).forEach(w::addEntity);
+    Door prevDoor = null;
+    for (int i = 0; i < rooms.length - 1; ++i) {
+      Direction dir = Direction.values()[random.nextInt(Direction.values().length)];
+      Door nextDoor = null;
+      if (dir == Direction.NORTH) {
+        int offset = random.nextInt((int) Room.getSize().width - 2) + 1;
+        nextDoor = new Door(new Position(offset, 0, rooms[i]),
+            new Position(offset, (int) Room.getSize().height - 1, rooms[i + 1]));
+      } else if (dir == Direction.SOUTH) {
+        int offset = random.nextInt((int) Room.getSize().width - 2) + 1;
+        nextDoor = new Door(new Position(offset, (int) Room.getSize().height - 1, rooms[i]),
+            new Position(offset, 0, rooms[i + 1]));
+      } else if (dir == Direction.EAST) {
+        int offset = random.nextInt((int) Room.getSize().height - 2) + 1;
+        nextDoor = new Door(new Position((int) Room.getSize().width - 1, offset, rooms[i]),
+            new Position(0, offset, rooms[i + 1]));
+      } else if (dir == Direction.WEST) {
+        int offset = random.nextInt((int) Room.getSize().height - 2) + 1;
+        nextDoor = new Door(new Position(0, offset, rooms[i]),
+            new Position((int) Room.getSize().width - 1, offset, rooms[i + 1]));
+      }
+
+      var layout = generateRoomLayout(prevDoor == null ? spawnPoint : prevDoor.destination, nextDoor.getPosition(),
+          rooms[i]);
+      if (prevDoor != null)
+        layout[(int) prevDoor.destination.y][(int) prevDoor.destination.x] = prevDoor.inverse();
+      layout[(int) nextDoor.getPosition().y][(int) nextDoor.getPosition().x] = nextDoor;
+      layoutToRoom(layout).forEach(w::addEntity);
+
+      prevDoor = nextDoor;
+    }
 
     return w;
   }
@@ -40,7 +70,7 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
     generatePathInLayout(start, end, room, 4, 3, layout);
     int subRoomCount = random.nextInt(4) + 1;
     for (int i = 0; i < subRoomCount; i++)
-      tryCutOutSubroom(layout, room);
+      cutOutSubroom(layout, room);
 
     for (int i = 0; i < h; i++) {
       layout[i][0] = new Wall(new Position(0, i, room));
@@ -77,7 +107,7 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
     }
   }
 
-  private void tryCutOutSubroom(Entity[][] layout, Room room) {
+  private void cutOutSubroom(Entity[][] layout, Room room) {
     // Find the best place to remove walls
     int w = random.nextInt(6) + 2;
     int h = random.nextInt(6) + 2;
