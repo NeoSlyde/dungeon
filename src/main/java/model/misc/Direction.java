@@ -16,4 +16,8 @@ public enum Direction {
   public double unitY() {
     return this == NORTH ? -1 : this == SOUTH ? 1 : 0;
   }
+
+  public Direction inverse() {
+    return this == NORTH ? SOUTH : this == SOUTH ? NORTH : this == EAST ? WEST : EAST;
+  }
 }

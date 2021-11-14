@@ -28,8 +28,12 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
     World w = new World(spawnPoint);
 
     Door prevDoor = null;
+    Direction prevDoorDirection = null;
     for (int i = 0; i < rooms.length - 1; ++i) {
-      Direction dir = Direction.values()[random.nextInt(Direction.values().length)];
+      Direction dir = null;
+      while (dir == null || (prevDoorDirection != null && dir == prevDoorDirection.inverse())) {
+        dir = Direction.values()[random.nextInt(Direction.values().length)];
+      }
       Door nextDoor = null;
       if (dir == Direction.NORTH) {
         int offset = random.nextInt((int) Room.getSize().width - 2) + 1;
@@ -57,6 +61,7 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
       layoutToRoom(layout).forEach(w::addEntity);
 
       prevDoor = nextDoor;
+      prevDoorDirection = dir;
     }
 
     return w;
@@ -86,7 +91,7 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
     int h = (int) Room.getSize().height, w = (int) Room.getSize().width;
 
     Position last = start;
-    while (last.distance(end) > pathStep) {
+    do {
       double distX = end.x - last.x;
       double distY = end.y - last.y;
       double dist = Math.sqrt(distX * distX + distY * distY);
@@ -101,7 +106,7 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
       for (int i = Math.max(0, (int) last.y - stepH); i < Math.min(h, (int) last.y + stepH); ++i)
         for (int j = Math.max(0, (int) last.x - stepW); j < Math.min(w, (int) last.x + stepW); ++j)
           layout[i][j] = null;
-    }
+    } while (last.distance(end) > pathStep);
   }
 
   private void cutOutSubroom(Entity[][] layout, Room room) {
