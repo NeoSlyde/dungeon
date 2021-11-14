@@ -34,12 +34,14 @@ public abstract class LivingEntity extends Entity {
 
   @Override
   public void update(double dt, World world) {
+    if(!isStopped()){
     sprite.setSpeed(getSpeed() * 0.7);
     if (isMoving()) {
       setPosition(computeNextPosition(dt, world));
       sprite.update(dt);
     } else {
       sprite.setIdle();
+    }
     }
   }
 

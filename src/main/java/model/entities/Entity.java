@@ -11,6 +11,7 @@ import view.Drawable;
 public abstract class Entity implements Usable, Drawable {
   private Position position;
   private Size size;
+  public boolean isStopped;
 
   public Entity(Position position, Size size) {
     this.position = position;
@@ -46,6 +47,14 @@ public abstract class Entity implements Usable, Drawable {
 
   public double distance(Entity other) {
       return Math.sqrt(Math.pow(this.position.x - other.position.x, 2) + Math.pow(this.position.y - other.position.y, 2));
+  }
+
+  public boolean isStopped() {
+    return isStopped;
+  }
+
+  public void setStopped(boolean b) {
+    this.isStopped = b;
   }
   
 }

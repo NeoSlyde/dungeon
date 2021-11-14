@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import model.entities.Player;
 import model.misc.Direction;
 
@@ -68,7 +67,7 @@ public class JavaFXController {
           player.useFacing();
         break;
         case TAB:
-          gc.setFill(Color.BLACK);
+          player.openInventory();
         break;  
       default:
         break;
@@ -96,6 +95,9 @@ public class JavaFXController {
       case SHIFT:
         player.setRunning(false);
         break;
+        case TAB:
+          player.closeInventory();
+        break; 
       default:
         break;
       }
