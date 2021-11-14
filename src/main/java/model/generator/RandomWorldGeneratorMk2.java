@@ -74,14 +74,7 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
     for (int i = 0; i < subRoomCount; i++)
       cutOutSubroom(layout, room);
 
-    for (int i = 0; i < h; i++) {
-      layout[i][0] = new Wall(new Position(0, i, room));
-      layout[i][w - 1] = new Wall(new Position(w - 1, i, room));
-    }
-    for (int i = 0; i < w; i++) {
-      layout[0][i] = new Wall(new Position(i, 0, room));
-      layout[h - 1][i] = new Wall(new Position(i, h - 1, room));
-    }
+    generateRoomBorders(layout, room);
 
     generateMonsters(layout, room, random.nextInt(4));
 
@@ -171,6 +164,18 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
           break;
         }
       }
+    }
+  }
+
+  private void generateRoomBorders(Entity[][] layout, Room room) {
+    int h = (int) Room.getSize().height, w = (int) Room.getSize().width;
+    for (int i = 0; i < h; i++) {
+      layout[i][0] = new Wall(new Position(0, i, room));
+      layout[i][w - 1] = new Wall(new Position(w - 1, i, room));
+    }
+    for (int i = 0; i < w; i++) {
+      layout[0][i] = new Wall(new Position(i, 0, room));
+      layout[h - 1][i] = new Wall(new Position(i, h - 1, room));
     }
   }
 
