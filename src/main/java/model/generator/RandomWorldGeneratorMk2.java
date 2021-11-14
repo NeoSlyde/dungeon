@@ -3,6 +3,7 @@ package model.generator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
 import model.World;
@@ -91,6 +92,14 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
     int h = (int) Room.getSize().height, w = (int) Room.getSize().width;
 
     Position last = start;
+    Consumer<Position> clearPath = (l) -> {
+      int stepH = pathStep + (rand > 0 ? random.nextInt(rand) : 0);
+      int stepW = pathStep + (rand > 0 ? random.nextInt(rand) : 0);
+      for (int i = Math.max(0, (int) l.y - stepH); i < Math.min(h, (int) l.y + stepH); ++i)
+        for (int j = Math.max(0, (int) l.x - stepW); j < Math.min(w, (int) l.x + stepW); ++j)
+          layout[i][j] = null;
+    };
+    clearPath.accept(last);
     do {
       double distX = end.x - last.x;
       double distY = end.y - last.y;
@@ -100,12 +109,7 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
       double dy = pathStep * distY / dist;
 
       last = new Position(last.x + dx, last.y + dy, null);
-
-      int stepH = pathStep + (rand > 0 ? random.nextInt(rand) : 0);
-      int stepW = pathStep + (rand > 0 ? random.nextInt(rand) : 0);
-      for (int i = Math.max(0, (int) last.y - stepH); i < Math.min(h, (int) last.y + stepH); ++i)
-        for (int j = Math.max(0, (int) last.x - stepW); j < Math.min(w, (int) last.x + stepW); ++j)
-          layout[i][j] = null;
+      clearPath.accept(last);
     } while (last.distance(end) > pathStep);
   }
 
