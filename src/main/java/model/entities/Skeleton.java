@@ -22,40 +22,38 @@ public class Skeleton extends Monster {
   @Override
   public void update(double dt, World world) {
     world.getEntities().stream().filter(e -> e instanceof Player).forEach(e -> {
-      if(e.getPosition().room.id == getPosition().room.id){
-      this.setMoving(true);
-      if(this.distance(e) < 1 && isMoving()) {
-        world.worldMusic.stop();
-        soundEffect.setVolume(-10.f);
-        soundEffect.loop();
-        this.setMoving(false);
+      if (e.getPosition().room.id == getPosition().room.id) {
+        this.setMoving(true);
+        if (e.distance(this) > 5) {
+          this.setMoving(false);
+        } else if (this.distance(e) < 1 && isMoving()) {
+          world.worldMusic.stop();
+          soundEffect.setVolume(-10.f);
+          soundEffect.loop();
+          this.setMoving(false);
+        } else if (e.getPosition().y + 0.1 < this.getPosition().y) {
+          this.setFacingDirection(Direction.NORTH);
+          soundEffect.stop();
+          world.worldMusic.play();
+          soundEffect.replay();
+        } else if (e.getPosition().y - 0.1 > this.getPosition().y) {
+          this.setFacingDirection(Direction.SOUTH);
+          soundEffect.stop();
+          world.worldMusic.play();
+          soundEffect.replay();
+        } else if (e.getPosition().x + 0.1 < this.getPosition().x) {
+          this.setFacingDirection(Direction.WEST);
+          soundEffect.stop();
+          world.worldMusic.play();
+          soundEffect.replay();
+        } else if (e.getPosition().x - 0.1 > this.getPosition().x) {
+          this.setFacingDirection(Direction.EAST);
+          soundEffect.stop();
+          world.worldMusic.play();
+          soundEffect.replay();
+        }
       }
-      else if (e.getPosition().y + 0.1 < this.getPosition().y) {
-        this.setFacingDirection(Direction.NORTH);
-        soundEffect.stop();
-        world.worldMusic.play();
-        soundEffect.replay();
-      }
-      else if (e.getPosition().y - 0.1 > this.getPosition().y) {
-        this.setFacingDirection(Direction.SOUTH);
-        soundEffect.stop();
-        world.worldMusic.play();
-        soundEffect.replay();
-      }
-      else if (e.getPosition().x + 0.1 < this.getPosition().x) {
-        this.setFacingDirection(Direction.WEST);
-        soundEffect.stop();
-        world.worldMusic.play();
-        soundEffect.replay();
-      }
-      else if (e.getPosition().x - 0.1 > this.getPosition().x) {
-        this.setFacingDirection(Direction.EAST);
-        soundEffect.stop();
-        world.worldMusic.play();
-        soundEffect.replay();
-      }
-    }
-  });
+    });
 
     super.update(dt, world);
   }
@@ -65,5 +63,4 @@ public class Skeleton extends Monster {
     return 0.5;
   }
 
-  
 }
