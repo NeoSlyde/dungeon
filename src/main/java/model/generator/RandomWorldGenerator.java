@@ -43,12 +43,12 @@ public class RandomWorldGenerator implements WorldGenerator {
     }
     for (int i = 1; i < room.getSize().height - 1; i++) {
       if (i == door1) {
-        xs.add(new Door(new Position(0, i, room), new Position(1,1, new Room(room.id-1))));
+        xs.add(new Door(new Position(0, i, room), new Position(1, 1, new Room(room.id - 1))));
       } else {
         xs.add(new Wall(new Position(0, i, room)));
       }
       if (i == door2) {
-        xs.add(new Door(new Position(room.getSize().width - 1, i, room), new Position(1,1, new Room(room.id+1))));
+        xs.add(new Door(new Position(room.getSize().width - 1, i, room), new Position(1, 1, new Room(room.id + 1))));
       } else {
         xs.add(new Wall(new Position(room.getSize().width - 1, i, room)));
       }

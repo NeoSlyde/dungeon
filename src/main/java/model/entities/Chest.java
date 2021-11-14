@@ -5,12 +5,12 @@ import model.World;
 import model.misc.Position;
 import model.misc.Size;
 
-public class Chest extends Entity{
+public class Chest extends Entity {
 
     private Inventory inventory;
 
-    public Chest(Position position, Size size) {
-        super(position, size);
+    public Chest(Position position) {
+        super(position, new Size(1, 1));
     }
 
     @Override
@@ -25,11 +25,11 @@ public class Chest extends Entity{
 
     @Override
     public void update(double dt, World world) {
-        //Do nothing
+        // Do nothing
     }
 
     public Inventory getInventory() {
         return inventory;
     }
-    
+
 }
