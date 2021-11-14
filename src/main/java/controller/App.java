@@ -14,7 +14,7 @@ import javafx.util.Duration;
 import model.World;
 import model.entities.Player;
 import model.entities.Skeleton;
-import model.generator.RandomWorldGenerator;
+import model.generator.RandomWorldGeneratorMk2;
 import model.generator.WorldGenerator;
 import model.misc.Position;
 import model.misc.Room;
@@ -22,7 +22,7 @@ import model.misc.Size;
 import model.misc.Direction;
 
 public class App extends Application {
-  WorldGenerator worldGenerator = new RandomWorldGenerator();
+  WorldGenerator worldGenerator = new RandomWorldGeneratorMk2();
 
   private World world = worldGenerator.generate();
   private Player player = new Player(new Position(1, 1, new Room(0)));
@@ -99,7 +99,7 @@ public class App extends Application {
       entity.update(dt, world);
     }
     for (var entity : world.getEntities()) {
-      if(entity.getPosition().room.equals(player.getPosition().room)) {
+      if (entity.getPosition().room.equals(player.getPosition().room)) {
         entity.draw(gc, windowSize);
       }
     }

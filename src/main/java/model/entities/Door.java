@@ -12,9 +12,8 @@ public class Door extends Entity {
     Position destination;
     private Sound soundEffect = new Sound();
 
-
     public Door(Position position, Position destination) {
-        super(position, new Size(1,1));
+        super(position, new Size(1, 1));
         this.destination = destination;
         soundEffect.setFile(2);
     }
@@ -40,5 +39,9 @@ public class Door extends Entity {
         var image = ResourceManager.INSTANCE.getWritableImage("/dungeon/doors/runed_door.png");
         gc.drawImage(image, getPosition().x * Drawable.VIRTUAL_TO_PX, getPosition().y * Drawable.VIRTUAL_TO_PX,
                 Drawable.VIRTUAL_TO_PX * getSize().width, Drawable.VIRTUAL_TO_PX * getSize().height);
+    }
+
+    public Door inverse() {
+        return new Door(destination, getPosition());
     }
 }
