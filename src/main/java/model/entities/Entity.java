@@ -43,5 +43,9 @@ public abstract class Entity implements Usable, Drawable {
         && this.position.y < pos.y + size.height && this.position.y + this.size.height > pos.y
         && getPosition().room.equals(pos.room);
   }
+
+  public double distance(Entity other) {
+      return Math.sqrt(Math.pow(this.position.x - other.position.x, 2) + Math.pow(this.position.y - other.position.y, 2));
+  }
   
 }
