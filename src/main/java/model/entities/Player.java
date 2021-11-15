@@ -1,5 +1,6 @@
 package model.entities;
 
+import controller.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import model.World;
@@ -17,7 +18,9 @@ public class Player extends LivingEntity {
 
   private boolean isInventoryOpen = false;
 
-  private boolean isInCombat = false;
+  private Sound battleMusic = new Sound();
+
+  
 
   public Player(Position position) {
     super(position, new Size(0.5, 0.5),
@@ -25,6 +28,8 @@ public class Player extends LivingEntity {
             new String[] { "/player/down0.png", "/player/down1.png", "/player/down2.png" },
             new String[] { "/player/right0.png", "/player/right1.png", "/player/right2.png" },
             new String[] { "/player/left0.png", "/player/left1.png", "/player/left2.png" })); 
+
+            battleMusic.setFile(4);
   }
 
   public void setRunning(boolean running) {
@@ -55,6 +60,15 @@ public class Player extends LivingEntity {
         canBeUsed = entity;
       }
     }
+    if(isInCombat()){
+      battleMusic.play();
+      world.worldMusic.stop();
+    }
+    if(!isInCombat()){
+      battleMusic.stop();
+      world.worldMusic.play();
+      battleMusic.replay();
+    }
   }
 
   public void useFacing() {
@@ -80,13 +94,7 @@ public class Player extends LivingEntity {
     return isInventoryOpen;
   }
 
-  public void setInCombat(boolean isInCombat) {
-    this.isInCombat = isInCombat;
-  }
-
-  public boolean isInCombat() {
-    return isInCombat;
-  }
+  
 
   @Override
   public void draw(GraphicsContext gc, Size windowSize) {

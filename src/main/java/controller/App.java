@@ -24,13 +24,16 @@ public class App extends Application {
 
   private World world = worldGenerator.generate();
   private Player player = new Player(world.getSpawnPoint());
+  Sound death = new Sound();
+  
 
   private void initState() {
     player.setFacingDirection(Direction.EAST);
     world.addEntity(player);
+    death.setFile(6);
 
     world.worldMusic.setFile(0);
-    world.worldMusic.setVolume(-1000.f);
+    world.worldMusic.setVolume(-10.f);
     world.worldMusic.loop();
 
   }
@@ -61,7 +64,7 @@ public class App extends Application {
     Canvas canvas = new Canvas(windowWidth, windowHeight);
     root.getChildren().add(canvas);
     Scene scene = new Scene(root);
-    Player player = (Player) world.getEntities().stream().filter(e -> e instanceof Player).findFirst().get();
+    Player player = world.getPlayer();
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
     JavaFXController javaFXController = new JavaFXController(player, gc);
@@ -85,10 +88,12 @@ public class App extends Application {
     tl.play();
   }
 
+  
+
   private void update(double dt, GraphicsContext gc, Size windowSize) {
     gc.setFill(new ImagePattern(new Image("\\dungeon\\floor\\grey_dirt_0_old.png"), 0, 0, 32, 32, false));
     gc.fillRect(0, 0, windowSize.width, windowSize.height);
-    Player player = (Player) world.getEntities().stream().filter(e -> e instanceof Player).findFirst().get();
+    Player player = world.getPlayer();
     for (var entity : world.getEntities()) {
       entity.update(dt, world);
     }
@@ -103,6 +108,27 @@ public class App extends Application {
       gc.drawImage(inventoryImage, windowSize.width / 2 - 300 / 2, windowSize.height / 2 - 300 / 2, 300, 300);
     } else {
       world.getEntities().forEach(e -> e.setStopped(false));
+    }
+
+    if(player.isInCombat()){
+      world.getEntities().forEach(e -> e.setStopped(true));
+    }
+
+    Image gameOver = ResourceManager.INSTANCE.getWritableImage("/gui/gameover.jpg");
+    if(player.getHealth() == 0){
+      world.worldMusic.stop();
+      death.play();
+      gc.drawImage(gameOver, 0, 0, windowSize.width, windowSize.height);
+      new java.util.Timer().schedule( 
+        new java.util.TimerTask() {
+            @Override
+            public void run() {
+              System.exit(420);
+            }
+        }, 
+        2500 
+    );
+      
     }
   }
 }

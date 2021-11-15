@@ -27,8 +27,6 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
         1 + random.nextInt((int) Room.getSize().height / 2), rooms[0]);
 
     World w = new World(spawnPoint);
-    w.worldMusic.setFile(0);
-    w.worldMusic.setVolume(-20.0f);
 
     Door prevDoor = null;
     Direction prevDoorDirection = null;

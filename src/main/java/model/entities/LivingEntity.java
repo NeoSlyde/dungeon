@@ -23,6 +23,8 @@ public abstract class LivingEntity extends Entity {
   private Inventory inventory = new Inventory();
   public DirectedSprite sprite;
 
+  private boolean isInCombat = false;
+
   public LivingEntity(Position position, Size size, DirectedSprite sprite) {
     super(position, size);
     this.sprite = sprite;
@@ -86,7 +88,7 @@ public abstract class LivingEntity extends Entity {
 
   public void setHealth(double health) {
     if (health < 0 || health > maxHealth)
-      throw new IllegalArgumentException("Invalid health value");
+      health = 0;
 
     this.health = health;
   }
@@ -135,5 +137,13 @@ public abstract class LivingEntity extends Entity {
 
   public Inventory getInventory() {
     return inventory;
+  }
+
+  public void setInCombat(boolean isInCombat) {
+    this.isInCombat = isInCombat;
+  }
+
+  public boolean isInCombat() {
+    return isInCombat;
   }
 }
