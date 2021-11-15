@@ -19,10 +19,13 @@ public abstract class Monster extends LivingEntity {
   @Override
   public void use(LivingEntity entity) {
     Sound soundEffect = new Sound();
-    soundEffect.setFile(3);
-    soundEffect.play();
     System.out.println("Implement Fighting Scene pls hee hee");
-    this.setPosition(new Position(0,0,new Room(1000)));
+    this.setHealth(this.getHealth() - 20);
+    if(this.getHealth() <= 0) {
+      soundEffect.setFile(3);
+      soundEffect.play();
+      this.setPosition(new Position(0,0,new Room(1000)));
+    }
   }
 
   @Override
