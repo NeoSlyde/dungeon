@@ -16,6 +16,8 @@ public class Player extends LivingEntity {
 
   private boolean isInventoryOpen = false;
 
+  private boolean isInCombat = false;
+
   public Player(Position position) {
     super(position, new Size(0.5, 0.5),
         DirectedSprite.fromImagePaths(new String[] { "/player/up0.png", "/player/up1.png", "/player/up2.png" },
@@ -75,6 +77,14 @@ public class Player extends LivingEntity {
 
   public boolean isInventoryOpen() {
     return isInventoryOpen;
+  }
+
+  public void setInCombat(boolean isInCombat) {
+    this.isInCombat = isInCombat;
+  }
+
+  public boolean isInCombat() {
+    return isInCombat;
   }
 
   @Override

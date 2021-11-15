@@ -74,7 +74,7 @@ public class App extends Application {
     tl.setCycleCount(Timeline.INDEFINITE);
 
     canvas.setOnMouseClicked(e -> {
-      // javaFXController.mouseClicked(e);
+      javaFXController.mouseClicked(e);
     });
 
     primaryStage.setTitle("Eidoslyde's Dungeon");

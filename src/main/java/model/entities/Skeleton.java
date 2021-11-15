@@ -1,6 +1,4 @@
 package model.entities;
-
-import controller.Sound;
 import model.World;
 import model.misc.Direction;
 import model.misc.Position;
@@ -8,7 +6,6 @@ import model.misc.Size;
 import view.DirectedSprite;
 
 public class Skeleton extends Monster {
-  Sound soundEffect = new Sound();
 
   public Skeleton(Position position) {
     super(position, new Size(0.5, 0.5), DirectedSprite.fromImagePaths(
@@ -16,7 +13,6 @@ public class Skeleton extends Monster {
         new String[] { "/monster/skeleton/down0.png", "/monster/skeleton/down1.png", "/monster/skeleton/down2.png" },
         new String[] { "/monster/skeleton/right0.png", "/monster/skeleton/right1.png", "/monster/skeleton/right2.png" },
         new String[] { "/monster/skeleton/left0.png", "/monster/skeleton/left1.png", "/monster/skeleton/left2.png" }));
-    soundEffect.setFile(4);
   }
 
   @Override
@@ -27,30 +23,15 @@ public class Skeleton extends Monster {
         if (e.distance(this) > 5) {
           this.setMoving(false);
         } else if (this.distance(e) < 1 && isMoving()) {
-          world.worldMusic.stop();
-          soundEffect.setVolume(-10.f);
-          soundEffect.loop();
           this.setMoving(false);
         } else if (e.getPosition().y + 0.1 < this.getPosition().y) {
           this.setFacingDirection(Direction.NORTH);
-          soundEffect.stop();
-          world.worldMusic.play();
-          soundEffect.replay();
         } else if (e.getPosition().y - 0.1 > this.getPosition().y) {
           this.setFacingDirection(Direction.SOUTH);
-          soundEffect.stop();
-          world.worldMusic.play();
-          soundEffect.replay();
         } else if (e.getPosition().x + 0.1 < this.getPosition().x) {
           this.setFacingDirection(Direction.WEST);
-          soundEffect.stop();
-          world.worldMusic.play();
-          soundEffect.replay();
         } else if (e.getPosition().x - 0.1 > this.getPosition().x) {
           this.setFacingDirection(Direction.EAST);
-          soundEffect.stop();
-          world.worldMusic.play();
-          soundEffect.replay();
         }
       }
     });

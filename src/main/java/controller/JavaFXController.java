@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import model.entities.Player;
 import model.misc.Direction;
 
@@ -104,5 +105,38 @@ public class JavaFXController {
         break;
       }
     };
+  }
+
+  public void mouseClicked(MouseEvent e) {
+    if(e.getSceneX() < 469 && e.getSceneX() > 416 && e.getSceneY() < 262 && e.getSceneY() > 208){
+      System.out.println("inventory slot 1");
+    }
+    if(e.getSceneX() < 540 && e.getSceneX() > 484 && e.getSceneY() < 262 && e.getSceneY() > 208){
+      System.out.println("inventory slot 2");
+    }
+    if(e.getSceneX() < 611 && e.getSceneX() > 555 && e.getSceneY() < 262 && e.getSceneY() > 208){
+      System.out.println("inventory slot 3");
+    }
+    if(e.getSceneX() < 469 && e.getSceneX() > 416 && e.getSceneY() < 332 && e.getSceneY() > 277){
+      System.out.println("inventory slot 4");
+    }
+    if(e.getSceneX() < 540 && e.getSceneX() > 484 && e.getSceneY() < 332 && e.getSceneY() > 277){
+      System.out.println("inventory slot 5");
+    }
+    if(e.getSceneX() < 611 && e.getSceneX() > 555 && e.getSceneY() < 332 && e.getSceneY() > 277){
+      System.out.println("inventory slot 6");
+    }
+    if(e.getSceneX() < 469 && e.getSceneX() > 416 && e.getSceneY() < 402 && e.getSceneY() > 347){
+      System.out.println("inventory slot 7");
+    }
+    if(e.getSceneX() < 540 && e.getSceneX() > 484 && e.getSceneY() < 402 && e.getSceneY() > 347){
+      System.out.println("inventory slot 8");
+    }
+    if(e.getSceneX() < 611 && e.getSceneX() > 555 && e.getSceneY() < 402 && e.getSceneY() > 347){
+      System.out.println("inventory slot 9");
+    }
+
+
+
   }
 }
