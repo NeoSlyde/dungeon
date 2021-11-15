@@ -3,7 +3,6 @@ package model.entities;
 import controller.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import model.Usable;
 import model.World;
 import model.misc.Position;
 import model.misc.Room;
@@ -22,7 +21,7 @@ public abstract class Monster extends LivingEntity {
     Sound soundEffect = new Sound();
     soundEffect.setFile(3);
     soundEffect.play();
-    System.out.println("Implement Fighting Scene pls");
+    System.out.println("Implement Fighting Scene pls hee hee");
     this.setPosition(new Position(0,0,new Room(1000)));
   }
 
