@@ -1,9 +1,12 @@
 package model.entities;
 
+import javafx.scene.canvas.GraphicsContext;
 import model.Inventory;
 import model.World;
 import model.misc.Position;
 import model.misc.Size;
+import view.Drawable;
+import view.ResourceManager;
 
 public class Chest extends Entity {
 
@@ -30,6 +33,13 @@ public class Chest extends Entity {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    @Override
+    public void draw(GraphicsContext gc, Size windowSize) {
+        var image = ResourceManager.INSTANCE.getWritableImage("/dungeon/chest.png");
+        gc.drawImage(image, getPosition().x * Drawable.VIRTUAL_TO_PX, getPosition().y * Drawable.VIRTUAL_TO_PX,
+                Drawable.VIRTUAL_TO_PX * getSize().width, Drawable.VIRTUAL_TO_PX * getSize().height);
     }
 
 }
