@@ -11,11 +11,11 @@ import view.DirectedSprite;
 import view.Drawable;
 
 public abstract class LivingEntity extends Entity {
-  private double maxHealth = 20;
-  private double health = 20;
+  private double maxHealth = 100;
+  private double health = 100;
 
-  private double maxMana = 20;
-  private double mana = 20;
+  private double maxMana = 150;
+  private double mana = 150;
 
   private Direction facingDirection = Direction.EAST;
   private boolean moving = false;
@@ -35,14 +35,14 @@ public abstract class LivingEntity extends Entity {
 
   @Override
   public void update(double dt, World world) {
-    if(!isStopped()){
-    sprite.setSpeed(getSpeed() * 0.7);
-    if (isMoving()) {
-      setPosition(computeNextPosition(dt, world));
-      sprite.update(dt);
-    } else {
-      sprite.setIdle();
-    }
+    if (!isStopped()) {
+      sprite.setSpeed(getSpeed() * 0.7);
+      if (isMoving()) {
+        setPosition(computeNextPosition(dt, world));
+        sprite.update(dt);
+      } else {
+        sprite.setIdle();
+      }
     }
   }
 

@@ -1,6 +1,7 @@
 package model.entities;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import model.World;
 import model.misc.Direction;
 import model.misc.Position;
@@ -23,7 +24,7 @@ public class Player extends LivingEntity {
         DirectedSprite.fromImagePaths(new String[] { "/player/up0.png", "/player/up1.png", "/player/up2.png" },
             new String[] { "/player/down0.png", "/player/down1.png", "/player/down2.png" },
             new String[] { "/player/right0.png", "/player/right1.png", "/player/right2.png" },
-            new String[] { "/player/left0.png", "/player/left1.png", "/player/left2.png" }));
+            new String[] { "/player/left0.png", "/player/left1.png", "/player/left2.png" })); 
   }
 
   public void setRunning(boolean running) {
@@ -92,5 +93,9 @@ public class Player extends LivingEntity {
     gc.drawImage(sprite.getImage(getFacingDirection()), Drawable.VIRTUAL_TO_PX * (getPosition().x - 0.25),
         Drawable.VIRTUAL_TO_PX * (getPosition().y - 0.25), Drawable.VIRTUAL_TO_PX * (getSize().width + 0.5),
         Drawable.VIRTUAL_TO_PX * (getSize().height + 0.5));
+    gc.setStroke(Color.GREEN);
+    gc.strokeText(Double.toString(this.getHealth()) + " HP", Drawable.VIRTUAL_TO_PX * (getPosition().x) -15, Drawable.VIRTUAL_TO_PX * (getPosition().y) - 25);
+    gc.setStroke(Color.BLUE);
+    gc.strokeText(Double.toString(this.getMana()) + " MP", Drawable.VIRTUAL_TO_PX * (getPosition().x) -16, Drawable.VIRTUAL_TO_PX * (getPosition().y) - 10);
   }
 }
