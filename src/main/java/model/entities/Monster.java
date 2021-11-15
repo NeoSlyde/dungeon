@@ -50,6 +50,12 @@ public abstract class Monster extends LivingEntity {
         }, 
         300
     );
+
+    if(this.getHealth() <= 0) {
+      defeated.play();
+      this.setPosition(new Position(0,0,new Room(1000)));
+      entity.setInCombat(false);
+    }
     
   }
 
@@ -61,11 +67,6 @@ public abstract class Monster extends LivingEntity {
   @Override
   public void update(double dt, World world) {
     super.update(dt, world);
-    if(this.getHealth() <= 0) {
-      defeated.play();
-      this.setPosition(new Position(0,0,new Room(1000)));
-      world.getPlayer().setInCombat(false);
-    }
   }
 
   @Override

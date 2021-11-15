@@ -33,7 +33,7 @@ public class App extends Application {
     death.setFile(6);
 
     world.worldMusic.setFile(0);
-    world.worldMusic.setVolume(-10.f);
+    world.worldMusic.setVolume(-20.0f);
     world.worldMusic.loop();
 
   }
@@ -112,6 +112,8 @@ public class App extends Application {
 
     if(player.isInCombat()){
       world.getEntities().forEach(e -> e.setStopped(true));
+    } else {
+      world.getEntities().forEach(e -> e.setStopped(false));
     }
 
     Image gameOver = ResourceManager.INSTANCE.getWritableImage("/gui/gameover.jpg");

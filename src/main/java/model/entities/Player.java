@@ -61,13 +61,16 @@ public class Player extends LivingEntity {
       }
     }
     if(isInCombat()){
-      battleMusic.play();
+      battleMusic.setVolume(-20.0f);
       world.worldMusic.stop();
     }
     if(!isInCombat()){
       battleMusic.stop();
       world.worldMusic.play();
       battleMusic.replay();
+    }
+    if(getHealth() <= 0.0){
+      battleMusic.stop();
     }
   }
 
