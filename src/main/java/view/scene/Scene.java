@@ -8,4 +8,6 @@ public interface Scene extends Drawable {
   void exit();
 
   void update(double dt);
+
+  void onUseInput();
 }

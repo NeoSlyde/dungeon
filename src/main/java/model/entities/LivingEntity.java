@@ -1,6 +1,9 @@
 package model.entities;
 
+import java.util.Optional;
+
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import model.Inventory;
 import model.World;
 import model.misc.Direction;
@@ -14,16 +17,15 @@ public abstract class LivingEntity extends Entity {
   private double maxHealth = 100;
   private double health = 100;
 
-  private double maxMana = 150;
-  private double mana = 150;
+  protected double strength = 8;
 
   private Direction facingDirection = Direction.EAST;
   private boolean moving = false;
 
   private Inventory inventory = new Inventory();
-  public DirectedSprite sprite;
+  protected DirectedSprite sprite;
 
-  private boolean isInCombat = false;
+  private Optional<LivingEntity> combatting = Optional.empty();
 
   public LivingEntity(Position position, Size size, DirectedSprite sprite) {
     super(position, size);
@@ -32,7 +34,19 @@ public abstract class LivingEntity extends Entity {
 
   @Override
   public boolean canBeUsed() {
-    return false;
+    return true;
+  }
+
+  @Override
+  public void use(LivingEntity entity) {
+    setInCombat(Optional.of(entity));
+  }
+
+  public void attack() {
+    getCombatting().ifPresent(entity -> entity.setHealth(Math.max(0, entity.getHealth() - strength)));
+  }
+
+  public void scheduleAttackBack() {
   }
 
   @Override
@@ -64,9 +78,15 @@ public abstract class LivingEntity extends Entity {
 
   @Override
   public void draw(GraphicsContext gc, Size windowSize) {
-    gc.drawImage(sprite.getImage(getFacingDirection()), Drawable.VIRTUAL_TO_PX * getPosition().x,
-        Drawable.VIRTUAL_TO_PX * getPosition().y, Drawable.VIRTUAL_TO_PX * getSize().width,
-        Drawable.VIRTUAL_TO_PX * getSize().height);
+    gc.drawImage(sprite.getImage(getFacingDirection()), Drawable.VIRTUAL_TO_PX * (getPosition().x - 0.25),
+        Drawable.VIRTUAL_TO_PX * (getPosition().y - 0.25), Drawable.VIRTUAL_TO_PX * (getSize().width + 0.5),
+        Drawable.VIRTUAL_TO_PX * (getSize().height + 0.5));
+    gc.setStroke(Color.GREEN);
+    gc.strokeText(this.getHealth() + " HP", Drawable.VIRTUAL_TO_PX * getPosition().x - 15,
+        Drawable.VIRTUAL_TO_PX * getPosition().y - 25);
+    gc.setStroke(Color.BLUE);
+    gc.strokeText(this.strength + " STR", Drawable.VIRTUAL_TO_PX * getPosition().x - 16,
+        Drawable.VIRTUAL_TO_PX * getPosition().y - 10);
   }
 
   public double getMaxHealth() {
@@ -86,31 +106,9 @@ public abstract class LivingEntity extends Entity {
 
   public void setHealth(double health) {
     if (health < 0 || health > maxHealth)
-      health = 0;
+      throw new IllegalArgumentException("invalid health value");
 
     this.health = health;
-  }
-
-  public double getMaxMana() {
-    return maxMana;
-  }
-
-  public void setMaxMana(double maxMana) {
-    if (maxMana < 0)
-      throw new IllegalArgumentException("maxMana must be positive");
-
-    this.maxMana = maxMana;
-  }
-
-  public double getMana() {
-    return mana;
-  }
-
-  public void setMana(double mana) {
-    if (mana < 0 || mana > maxMana)
-      throw new IllegalArgumentException("Invalid mana value");
-
-    this.mana = mana;
   }
 
   public Direction getFacingDirection() {
@@ -122,7 +120,7 @@ public abstract class LivingEntity extends Entity {
   }
 
   public boolean isMoving() {
-    return moving;
+    return moving && getCombatting().isEmpty();
   }
 
   public void setMoving(boolean moving) {
@@ -137,11 +135,12 @@ public abstract class LivingEntity extends Entity {
     return inventory;
   }
 
-  public void setInCombat(boolean isInCombat) {
-    this.isInCombat = isInCombat;
+  public void setInCombat(Optional<LivingEntity> adversary) {
+    this.combatting = adversary;
+    adversary.ifPresent(a -> a.combatting = Optional.of(this));
   }
 
-  public boolean isInCombat() {
-    return isInCombat;
+  public Optional<LivingEntity> getCombatting() {
+    return combatting;
   }
 }

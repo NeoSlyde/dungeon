@@ -9,14 +9,16 @@ import model.misc.Size;
 import view.sound.Sound;
 
 public class GameScene implements Scene {
-  private Sound bgMusic = new Sound("/sounds/music.wav", -20.0f);
+  protected Sound bgMusic = new Sound("/sounds/music.wav", -20.0f);
 
   private World world;
   private Player player;
+  private SceneState state;
 
   public GameScene(SceneState state, World world, Player player) {
     this.world = world;
     this.player = player;
+    this.state = state;
   }
 
   @Override
@@ -34,12 +36,13 @@ public class GameScene implements Scene {
     for (var entity : world.getEntities()) {
       entity.update(dt, world);
     }
-
+    if (player.getCombatting().isPresent()) {
+      state.setScene(new CombatScene(state, world, player, player));
+    }
   }
 
   @Override
   public void draw(GraphicsContext gc, Size windowSize) {
-
     gc.setFill(new ImagePattern(new Image("\\dungeon\\floor\\grey_dirt_0_old.png"), 0, 0, 32, 32, false));
     gc.fillRect(0, 0, windowSize.width, windowSize.height);
     for (var entity : world.getEntities()) {
@@ -49,4 +52,8 @@ public class GameScene implements Scene {
     }
   }
 
+  @Override
+  public void onUseInput() {
+    player.useFacing();
+  }
 }

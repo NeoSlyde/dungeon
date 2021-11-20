@@ -59,7 +59,7 @@ public class App extends Application {
     Scene scene = new Scene(root);
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    JavaFXController javaFXController = new JavaFXController(player, gc);
+    JavaFXController javaFXController = new JavaFXController(player, gc, sceneState);
     scene.setOnKeyPressed(javaFXController.onKeyPressed);
     scene.setOnKeyReleased(javaFXController.onKeyRelease);
     double dt = 16;

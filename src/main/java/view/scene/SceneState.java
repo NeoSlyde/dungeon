@@ -7,6 +7,10 @@ import view.Drawable;
 public class SceneState implements Drawable {
   private Scene current = null;
 
+  public Scene getScene() {
+    return current;
+  }
+
   public void setScene(Scene scene) {
     if (current != null)
       current.exit();

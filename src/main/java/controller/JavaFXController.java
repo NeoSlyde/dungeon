@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import model.entities.Player;
 import model.misc.Direction;
+import view.scene.SceneState;
 
 public class JavaFXController {
   EventHandler<? super KeyEvent> onKeyPressed;
@@ -35,7 +36,7 @@ public class JavaFXController {
     }
   }
 
-  JavaFXController(Player player, GraphicsContext gc) {
+  JavaFXController(Player player, GraphicsContext gc, SceneState sceneState) {
     this.player = player;
 
     onKeyPressed = (event) -> {
@@ -47,7 +48,7 @@ public class JavaFXController {
       } else if (keyCode == KeyCode.SHIFT) {
         player.setRunning(true);
       } else if (keyCode == KeyCode.SPACE) {
-        player.useFacing();
+        sceneState.getScene().onUseInput();
       } else if (keyCode == KeyCode.TAB) {
         player.setInventoryOpen(true);
       }
