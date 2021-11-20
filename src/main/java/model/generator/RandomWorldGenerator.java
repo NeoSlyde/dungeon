@@ -20,7 +20,7 @@ public class RandomWorldGenerator implements WorldGenerator {
   public World generate() {
     World w = new World();
     for (int i = 0; i < 16; i++) {
-      if(i == 0){
+      if (i == 0) {
         Room r = new Room(i);
         Player player = new Player(new Position(1, 1, r));
         Skeleton skeleton = new Skeleton(new Position(5, 5, r));
@@ -39,30 +39,30 @@ public class RandomWorldGenerator implements WorldGenerator {
     var xs = new ArrayList<Entity>();
     Random start = new Random();
     roomBorderPattern(r).forEach(xs::add);
-    subRoom1(r, start.nextInt((int) r.getSize().height - 2) + 2).forEach(xs::add);
-    subRoom2(r, start.nextInt((int) r.getSize().height - 2) + 2).forEach(xs::add);
+    subRoom1(r, start.nextInt((int) Room.getSize().height - 2) + 2).forEach(xs::add);
+    subRoom2(r, start.nextInt((int) Room.getSize().height - 2) + 2).forEach(xs::add);
     return xs;
   }
 
   private List<Entity> roomBorderPattern(Room room) {
     var xs = new ArrayList<Entity>();
     Random r = new Random();
-    int door1 = r.nextInt((int) room.getSize().height - 2) + 1;
-    int door2 = r.nextInt((int) room.getSize().height - 2) + 1;
-    for (int i = 0; i < room.getSize().width; i++) {
+    int door1 = r.nextInt((int) Room.getSize().height - 2) + 1;
+    int door2 = r.nextInt((int) Room.getSize().height - 2) + 1;
+    for (int i = 0; i < Room.getSize().width; i++) {
       xs.add(new Wall(new Position(i, 0, room)));
-      xs.add(new Wall(new Position(i, room.getSize().height - 1, room)));
+      xs.add(new Wall(new Position(i, Room.getSize().height - 1, room)));
     }
-    for (int i = 1; i < room.getSize().height - 1; i++) {
+    for (int i = 1; i < Room.getSize().height - 1; i++) {
       if (i == door1) {
         xs.add(new Door(new Position(0, i, room), new Position(1, 1, new Room(room.id - 1))));
       } else {
         xs.add(new Wall(new Position(0, i, room)));
       }
       if (i == door2) {
-        xs.add(new Door(new Position(room.getSize().width - 1, i, room), new Position(1, 1, new Room(room.id + 1))));
+        xs.add(new Door(new Position(Room.getSize().width - 1, i, room), new Position(1, 1, new Room(room.id + 1))));
       } else {
-        xs.add(new Wall(new Position(room.getSize().width - 1, i, room)));
+        xs.add(new Wall(new Position(Room.getSize().width - 1, i, room)));
       }
     }
     return xs;
