@@ -1,5 +1,7 @@
 package view.scene;
 
+import javafx.scene.canvas.GraphicsContext;
+import model.misc.Size;
 import view.sound.Sound;
 
 public class DeathScene implements Scene {
@@ -16,5 +18,16 @@ public class DeathScene implements Scene {
   @Override
   public void exit() {
     bgMusic.stop();
+  }
+
+  @Override
+  public void update(double dt) {
+
+  }
+
+  @Override
+  public void draw(GraphicsContext gc, Size windowSize) {
+    // TODO Auto-generated method stub
+
   }
 }

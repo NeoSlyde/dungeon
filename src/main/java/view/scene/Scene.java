@@ -1,7 +1,11 @@
 package view.scene;
 
-public interface Scene {
+import view.Drawable;
+
+public interface Scene extends Drawable {
   void enter();
 
   void exit();
+
+  void update(double dt);
 }

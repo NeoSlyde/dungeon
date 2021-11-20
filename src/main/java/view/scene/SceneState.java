@@ -1,6 +1,10 @@
 package view.scene;
 
-public class SceneState {
+import javafx.scene.canvas.GraphicsContext;
+import model.misc.Size;
+import view.Drawable;
+
+public class SceneState implements Drawable {
   private Scene current = null;
 
   public void setScene(Scene scene) {
@@ -8,5 +12,16 @@ public class SceneState {
       current.exit();
     current = scene;
     current.enter();
+  }
+
+  public void update(double dt) {
+    if (current != null)
+      current.update(dt);
+  }
+
+  @Override
+  public void draw(GraphicsContext gc, Size windowSize) {
+    if (current != null)
+      current.draw(gc, windowSize);
   }
 }
