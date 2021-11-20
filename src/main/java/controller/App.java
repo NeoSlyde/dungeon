@@ -17,23 +17,20 @@ import model.generator.RandomWorldGeneratorMk2;
 import model.generator.WorldGenerator;
 import model.misc.Direction;
 import model.misc.Size;
+import view.scene.GameScene;
+import view.scene.SceneState;
 
 public class App extends Application {
   WorldGenerator worldGenerator = new RandomWorldGeneratorMk2();
 
   private World world = worldGenerator.generate();
   private Player player = new Player(world.getSpawnPoint());
-  Sound death = new Sound();
+  private SceneState sceneState = new SceneState();
 
   private void initState() {
+    sceneState.setScene(new GameScene(sceneState));
     player.setFacingDirection(Direction.EAST);
     world.addEntity(player);
-    death.setFile(6);
-
-    world.worldMusic.setFile(0);
-    world.worldMusic.setVolume(-20.0f);
-    world.worldMusic.loop();
-
   }
 
   /**
@@ -62,7 +59,6 @@ public class App extends Application {
     Canvas canvas = new Canvas(windowWidth, windowHeight);
     root.getChildren().add(canvas);
     Scene scene = new Scene(root);
-    Player player = world.getPlayer();
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
     JavaFXController javaFXController = new JavaFXController(player, gc);
@@ -85,7 +81,6 @@ public class App extends Application {
   private void update(double dt, GraphicsContext gc, Size windowSize) {
     gc.setFill(new ImagePattern(new Image("\\dungeon\\floor\\grey_dirt_0_old.png"), 0, 0, 32, 32, false));
     gc.fillRect(0, 0, windowSize.width, windowSize.height);
-    Player player = world.getPlayer();
     for (var entity : world.getEntities()) {
       entity.update(dt, world);
     }

@@ -1,6 +1,5 @@
 package model.entities;
 
-import controller.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import model.World;
@@ -11,25 +10,16 @@ import view.DirectedSprite;
 import view.Drawable;
 
 public class Player extends LivingEntity {
-
   private boolean running = false;
 
   private Entity canBeUsed = null;
-
-  private boolean isInventoryOpen = false;
-
-  private Sound battleMusic = new Sound();
-
-  
 
   public Player(Position position) {
     super(position, new Size(0.5, 0.5),
         DirectedSprite.fromImagePaths(new String[] { "/player/up0.png", "/player/up1.png", "/player/up2.png" },
             new String[] { "/player/down0.png", "/player/down1.png", "/player/down2.png" },
             new String[] { "/player/right0.png", "/player/right1.png", "/player/right2.png" },
-            new String[] { "/player/left0.png", "/player/left1.png", "/player/left2.png" })); 
-
-            battleMusic.setFile(4);
+            new String[] { "/player/left0.png", "/player/left1.png", "/player/left2.png" }));
   }
 
   public void setRunning(boolean running) {
@@ -41,10 +31,8 @@ public class Player extends LivingEntity {
     super.update(dt, world);
     canBeUsed = null;
     for (var entity : world.getEntities()) {
-
-      if (!entity.canBeUsed()) {
+      if (!entity.canBeUsed())
         continue;
-      }
 
       if (getFacingDirection() == Direction.NORTH
           && entity.collidesWith(new Position(getPosition().x, getPosition().y - 0.5, getPosition().room), getSize())) {
@@ -60,18 +48,6 @@ public class Player extends LivingEntity {
         canBeUsed = entity;
       }
     }
-    if(isInCombat()){
-      battleMusic.setVolume(-20.0f);
-      world.worldMusic.stop();
-    }
-    if(!isInCombat()){
-      battleMusic.stop();
-      world.worldMusic.play();
-      battleMusic.replay();
-    }
-    if(getHealth() <= 0.0){
-      battleMusic.stop();
-    }
   }
 
   public void useFacing() {
@@ -85,28 +61,16 @@ public class Player extends LivingEntity {
     return running ? 2 : 1;
   }
 
-  public void openInventory() { 
-    isInventoryOpen = true;
-  }
-
-  public void closeInventory() { 
-    isInventoryOpen = false;
-  }
-
-  public boolean isInventoryOpen() {
-    return isInventoryOpen;
-  }
-
-  
-
   @Override
   public void draw(GraphicsContext gc, Size windowSize) {
     gc.drawImage(sprite.getImage(getFacingDirection()), Drawable.VIRTUAL_TO_PX * (getPosition().x - 0.25),
         Drawable.VIRTUAL_TO_PX * (getPosition().y - 0.25), Drawable.VIRTUAL_TO_PX * (getSize().width + 0.5),
         Drawable.VIRTUAL_TO_PX * (getSize().height + 0.5));
     gc.setStroke(Color.GREEN);
-    gc.strokeText(Double.toString(this.getHealth()) + " HP", Drawable.VIRTUAL_TO_PX * (getPosition().x) -15, Drawable.VIRTUAL_TO_PX * (getPosition().y) - 25);
+    gc.strokeText(Double.toString(this.getHealth()) + " HP", Drawable.VIRTUAL_TO_PX * (getPosition().x) - 15,
+        Drawable.VIRTUAL_TO_PX * (getPosition().y) - 25);
     gc.setStroke(Color.BLUE);
-    gc.strokeText(Double.toString(this.getMana()) + " MP", Drawable.VIRTUAL_TO_PX * (getPosition().x) -16, Drawable.VIRTUAL_TO_PX * (getPosition().y) - 10);
+    gc.strokeText(Double.toString(this.getMana()) + " MP", Drawable.VIRTUAL_TO_PX * (getPosition().x) - 16,
+        Drawable.VIRTUAL_TO_PX * (getPosition().y) - 10);
   }
 }

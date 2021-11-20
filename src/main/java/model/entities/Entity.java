@@ -45,6 +45,6 @@ public abstract class Entity implements Usable, Drawable {
   }
 
   public double distance(Entity other) {
-    return Math.sqrt(Math.pow(this.position.x - other.position.x, 2) + Math.pow(this.position.y - other.position.y, 2));
+    return position.distance(other.getPosition());
   }
 }

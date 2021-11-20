@@ -18,7 +18,7 @@ import model.misc.Room;
 public class RandomWorldGenerator implements WorldGenerator {
   @Override
   public World generate() {
-    World w = new World();
+    World w = new World(new Position(1, 1, new Room(0)));
     for (int i = 0; i < 16; i++) {
       if (i == 0) {
         Room r = new Room(i);

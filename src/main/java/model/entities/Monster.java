@@ -1,55 +1,20 @@
 package model.entities;
 
-import java.util.Random;
-
-import controller.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import model.World;
 import model.misc.Position;
-import model.misc.Room;
 import model.misc.Size;
 import view.DirectedSprite;
 import view.Drawable;
 
 public abstract class Monster extends LivingEntity {
-
-  Sound defeated = new Sound();
-
   public Monster(Position position, Size size, DirectedSprite sprite) {
     super(position, size, sprite);
-    defeated.setFile(3);
   }
 
   @Override
   public void use(LivingEntity entity) {
-    Sound hit = new Sound();
-    Random damage = new Random();
-    entity.setInCombat(true);
-
-    new java.util.Timer().schedule(new java.util.TimerTask() {
-      @Override
-      public void run() {
-        hit.setFile(5);
-        hit.play();
-        setHealth(getHealth() - damage.nextInt(30));
-
-        if (getHealth() <= 0) {
-          defeated.play();
-          setPosition(new Position(0, 0, new Room(1000)));
-          entity.setInCombat(false);
-        }
-      }
-    }, 100);
-
-    new java.util.Timer().schedule(new java.util.TimerTask() {
-      @Override
-      public void run() {
-        hit.setFile(5);
-        hit.play();
-        entity.setHealth(entity.getHealth() - damage.nextInt(10));
-      }
-    }, 300);
 
   }
 
@@ -72,5 +37,4 @@ public abstract class Monster extends LivingEntity {
     gc.strokeText(Double.toString(this.getHealth()) + " HP", Drawable.VIRTUAL_TO_PX * (getPosition().x) - 15,
         Drawable.VIRTUAL_TO_PX * (getPosition().y) - 10);
   }
-
 }
