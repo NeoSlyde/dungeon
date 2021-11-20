@@ -14,6 +14,8 @@ public class Player extends LivingEntity {
 
   private Entity canBeUsed = null;
 
+  private boolean isInventoryOpen = false;
+
   public Player(Position position) {
     super(position, new Size(0.5, 0.5),
         DirectedSprite.fromImagePaths(new String[] { "/player/up0.png", "/player/up1.png", "/player/up2.png" },
@@ -59,6 +61,14 @@ public class Player extends LivingEntity {
   @Override
   public double getSpeed() {
     return running ? 2 : 1;
+  }
+
+  public void setInventoryOpen(boolean b) {
+    isInventoryOpen = b;
+  }
+
+  public boolean isInventoryOpen() {
+    return isInventoryOpen;
   }
 
   @Override

@@ -49,7 +49,7 @@ public class JavaFXController {
       } else if (keyCode == KeyCode.SPACE) {
         player.useFacing();
       } else if (keyCode == KeyCode.TAB) {
-        player.openInventory();
+        player.setInventoryOpen(true);
       }
     };
 
@@ -61,7 +61,7 @@ public class JavaFXController {
       } else if (keyCode == KeyCode.SHIFT) {
         player.setRunning(false);
       } else if (keyCode == KeyCode.TAB) {
-        player.closeInventory();
+        player.setInventoryOpen(false);
       }
     };
   }
