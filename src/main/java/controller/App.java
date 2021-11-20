@@ -17,7 +17,6 @@ import model.generator.RandomWorldGeneratorMk2;
 import model.generator.WorldGenerator;
 import model.misc.Direction;
 import model.misc.Size;
-import view.ResourceManager;
 
 public class App extends Application {
   WorldGenerator worldGenerator = new RandomWorldGeneratorMk2();
@@ -25,7 +24,6 @@ public class App extends Application {
   private World world = worldGenerator.generate();
   private Player player = new Player(world.getSpawnPoint());
   Sound death = new Sound();
-  
 
   private void initState() {
     player.setFacingDirection(Direction.EAST);
@@ -76,10 +74,6 @@ public class App extends Application {
     }));
     tl.setCycleCount(Timeline.INDEFINITE);
 
-    canvas.setOnMouseClicked(e -> {
-      javaFXController.mouseClicked(e);
-    });
-
     primaryStage.setTitle("Eidoslyde's Dungeon");
     primaryStage.setScene(scene);
     primaryStage.setResizable(false);
@@ -87,8 +81,6 @@ public class App extends Application {
 
     tl.play();
   }
-
-  
 
   private void update(double dt, GraphicsContext gc, Size windowSize) {
     gc.setFill(new ImagePattern(new Image("\\dungeon\\floor\\grey_dirt_0_old.png"), 0, 0, 32, 32, false));
@@ -101,36 +93,6 @@ public class App extends Application {
       if (entity.getPosition().room.equals(player.getPosition().room)) {
         entity.draw(gc, windowSize);
       }
-    }
-    Image inventoryImage = ResourceManager.INSTANCE.getWritableImage("/gui/inventory.png");
-    if (player.isInventoryOpen()) {
-      world.getEntities().forEach(e -> e.setStopped(true));
-      gc.drawImage(inventoryImage, windowSize.width / 2 - 300 / 2, windowSize.height / 2 - 300 / 2, 300, 300);
-    } else {
-      world.getEntities().forEach(e -> e.setStopped(false));
-    }
-
-    if(player.isInCombat()){
-      world.getEntities().forEach(e -> e.setStopped(true));
-    } else {
-      world.getEntities().forEach(e -> e.setStopped(false));
-    }
-
-    Image gameOver = ResourceManager.INSTANCE.getWritableImage("/gui/gameover.jpg");
-    if(player.getHealth() == 0){
-      world.worldMusic.stop();
-      death.play();
-      gc.drawImage(gameOver, 0, 0, windowSize.width, windowSize.height);
-      new java.util.Timer().schedule( 
-        new java.util.TimerTask() {
-            @Override
-            public void run() {
-              System.exit(420);
-            }
-        }, 
-        2500 
-    );
-      
     }
   }
 }
