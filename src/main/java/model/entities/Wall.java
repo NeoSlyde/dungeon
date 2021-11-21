@@ -8,8 +8,8 @@ import view.Drawable;
 import view.ResourceManager;
 
 public class Wall extends Entity {
-    public Wall(Position position) {
-        super(position, new Size(1, 1));
+    public Wall(Position position, World world) {
+        super(position, new Size(1, 1), world);
     }
 
     @Override

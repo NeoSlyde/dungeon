@@ -1,12 +1,13 @@
 package model.entities;
 
+import model.World;
 import model.misc.Position;
 import model.misc.Size;
 import view.DirectedSprite;
 
 public abstract class Monster extends LivingEntity {
-  public Monster(Position position, Size size, DirectedSprite sprite) {
-    super(position, size, sprite);
+  public Monster(Position position, Size size, DirectedSprite sprite, World world) {
+    super(position, size, sprite, world);
   }
 
   @Override

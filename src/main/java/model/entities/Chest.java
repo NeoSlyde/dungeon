@@ -7,13 +7,15 @@ import model.misc.Position;
 import model.misc.Size;
 import view.Drawable;
 import view.ResourceManager;
+import view.sound.Sound;
 
 public class Chest extends Entity {
 
     private Inventory inventory;
 
-    public Chest(Position position) {
-        super(position, new Size(1, 1));
+    public Chest(Position position, Inventory inventory, World world) {
+        super(position, new Size(1, 1), world);
+        this.inventory = inventory;
     }
 
     @Override
@@ -23,7 +25,10 @@ public class Chest extends Entity {
 
     @Override
     public void use(LivingEntity entity) {
-        // TODO: Open chest in UI
+        entity.getInventory().addAll(this.inventory);
+        new Sound("/sounds/open.wav", 0f).play();
+        this.setPosition(new Position(1000, 1000, this.getPosition().room));
+        System.out.println("You got: " + inventory.getItems().toString());
     }
 
     @Override

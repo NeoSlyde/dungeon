@@ -11,8 +11,8 @@ import view.ResourceManager;
 public class Door extends Entity {
     public final Position destination;
 
-    public Door(Position position, Position destination) {
-        super(position, new Size(1, 1));
+    public Door(Position position, Position destination, World world) {
+        super(position, new Size(1, 1), world);
         this.destination = destination;
     }
 
@@ -40,6 +40,6 @@ public class Door extends Entity {
     }
 
     public Door inverse() {
-        return new Door(destination, getPosition());
+        return new Door(destination, getPosition(), getWorld());
     }
 }

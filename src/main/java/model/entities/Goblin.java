@@ -5,14 +5,14 @@ import model.misc.Position;
 import model.misc.Size;
 import view.DirectedSprite;
 
-public class Skeleton extends Monster {
+public class Goblin extends Monster {
 
-  public Skeleton(Position position, World world) {
+  public Goblin(Position position, World world) {
     super(position, new Size(0.5, 0.5), DirectedSprite.fromImagePaths(
-        new String[] { "/monster/skeleton/up0.png", "/monster/skeleton/up1.png", "/monster/skeleton/up2.png" },
-        new String[] { "/monster/skeleton/down0.png", "/monster/skeleton/down1.png", "/monster/skeleton/down2.png" },
-        new String[] { "/monster/skeleton/right0.png", "/monster/skeleton/right1.png", "/monster/skeleton/right2.png" },
-        new String[] { "/monster/skeleton/left0.png", "/monster/skeleton/left1.png", "/monster/skeleton/left2.png" }), world);
+        new String[] { "/monster/goblin/up0.png", "/monster/goblin/up1.png", "/monster/goblin/up2.png" },
+        new String[] { "/monster/goblin/down0.png", "/monster/goblin/down1.png", "/monster/goblin/down2.png" },
+        new String[] { "/monster/goblin/right0.png", "/monster/goblin/right1.png", "/monster/goblin/right2.png" },
+        new String[] { "/monster/goblin/left0.png", "/monster/goblin/left1.png", "/monster/goblin/left2.png" }), world);
   }
 
   @Override
@@ -20,7 +20,7 @@ public class Skeleton extends Monster {
     world.getEntities().stream().filter(e -> e instanceof Player).forEach(e -> {
       if (e.getPosition().room.id == getPosition().room.id) {
         this.setMoving(true);
-        if (e.distance(this) > 5) {
+        if (e.distance(this) > 10) {
           this.setMoving(false);
         } else if (this.distance(e) < 1 && isMoving()) {
           this.setMoving(false);
@@ -41,7 +41,7 @@ public class Skeleton extends Monster {
 
   @Override
   public double getSpeed() {
-    return 0.5;
+    return 1;
   }
 
 }

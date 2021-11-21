@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import model.entities.Player;
+import model.items.Pickaxe;
 import model.misc.Direction;
 import view.scene.SceneState;
 
@@ -51,6 +52,13 @@ public class JavaFXController {
         sceneState.getScene().onUseInput();
       } else if (keyCode == KeyCode.TAB) {
         player.setInventoryOpen(true);
+      }
+      else if (keyCode == KeyCode.X) {
+        //get pickaxe in player inventory
+        Pickaxe pickaxe = player.getInventory().getPickaxe();
+        if (pickaxe != null) {
+          pickaxe.use(player);
+        }
       }
     };
 

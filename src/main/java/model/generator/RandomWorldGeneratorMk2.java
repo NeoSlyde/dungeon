@@ -10,6 +10,8 @@ import model.World;
 import model.entities.Chest;
 import model.entities.Door;
 import model.entities.Entity;
+import model.entities.Ghost;
+import model.entities.Goblin;
 import model.entities.Monster;
 import model.entities.Skeleton;
 import model.entities.Wall;
@@ -39,23 +41,23 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
       if (dir == Direction.NORTH) {
         int offset = random.nextInt((int) Room.getSize().width - 2) + 1;
         nextDoor = new Door(new Position(offset, 0, rooms[i]),
-            new Position(offset, (int) Room.getSize().height - 1, rooms[i + 1]));
+            new Position(offset, (int) Room.getSize().height - 1, rooms[i + 1]), w);
       } else if (dir == Direction.SOUTH) {
         int offset = random.nextInt((int) Room.getSize().width - 2) + 1;
         nextDoor = new Door(new Position(offset, (int) Room.getSize().height - 1, rooms[i]),
-            new Position(offset, 0, rooms[i + 1]));
+            new Position(offset, 0, rooms[i + 1]), w);
       } else if (dir == Direction.EAST) {
         int offset = random.nextInt((int) Room.getSize().height - 2) + 1;
         nextDoor = new Door(new Position((int) Room.getSize().width - 1, offset, rooms[i]),
-            new Position(0, offset, rooms[i + 1]));
+            new Position(0, offset, rooms[i + 1]), w);
       } else if (dir == Direction.WEST) {
         int offset = random.nextInt((int) Room.getSize().height - 2) + 1;
         nextDoor = new Door(new Position(0, offset, rooms[i]),
-            new Position((int) Room.getSize().width - 1, offset, rooms[i + 1]));
+            new Position((int) Room.getSize().width - 1, offset, rooms[i + 1]), w);
       }
 
       var layout = generateRoomLayout(prevDoor == null ? spawnPoint : prevDoor.destination, nextDoor.getPosition(),
-          rooms[i]);
+          rooms[i], w);
       if (prevDoor != null)
         layout[(int) prevDoor.destination.y][(int) prevDoor.destination.x] = prevDoor.inverse();
       layout[(int) nextDoor.getPosition().y][(int) nextDoor.getPosition().x] = nextDoor;
@@ -68,21 +70,23 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
     return w;
   }
 
-  private Entity[][] generateRoomLayout(Position start, Position end, Room room) {
+  private Entity[][] generateRoomLayout(Position start, Position end, Room room, World world) {
     int h = (int) Room.getSize().height, w = (int) Room.getSize().width;
     var layout = new Entity[h][w];
     for (int i = 0; i < h; i++)
       for (int j = 0; j < w; j++)
-        layout[i][j] = new Wall(new Position(j, i, room));
+        layout[i][j] = new Wall(new Position(j, i, room), world);
 
     generatePathInLayout(start, end, room, 4, 3, layout);
     int subRoomCount = random.nextInt(4) + 1;
     for (int i = 0; i < subRoomCount; i++)
-      cutOutSubroom(layout, room);
+      cutOutSubroom(layout, room, world);
 
-    generateRoomBorders(layout, room);
+    generateRoomBorders(layout, room, world);
 
-    generateMonsters(layout, room, random.nextInt(4));
+    generateSkeletons(layout, room, random.nextInt(4), world);
+    generateGoblins(layout, room, random.nextInt(2), world);
+    generateGhosts(layout, room, random.nextInt(2), world);
 
     return layout;
   }
@@ -113,7 +117,7 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
     } while (last.distance(end) > pathStep);
   }
 
-  private void cutOutSubroom(Entity[][] layout, Room room) {
+  private void cutOutSubroom(Entity[][] layout, Room room, World world) {
     // Find the best place to remove walls
     int w = random.nextInt(6) + 2;
     int h = random.nextInt(6) + 2;
@@ -155,20 +159,21 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
     }
 
     // Generate a chest
+    RandomInventoryGenerator inventoryGen = new RandomInventoryGenerator();
     Direction chestOrientation = Direction.values()[random.nextInt(Direction.values().length)];
     int chestX = bestX + (chestOrientation == Direction.EAST ? w - 1 : chestOrientation == Direction.WEST ? 0 : w / 2);
     int chestY = bestY
         + (chestOrientation == Direction.SOUTH ? h - 1 : chestOrientation == Direction.NORTH ? 0 : h / 2);
-    layout[chestY][chestX] = new Chest(new Position(chestX, chestY, room));
+    layout[chestY][chestX] = new Chest(new Position(chestX, chestY, room), inventoryGen.generate(), world);
   }
 
-  private void generateMonsters(Entity[][] layout, Room room, int n) {
+  private void generateSkeletons(Entity[][] layout, Room room, int n, World world) {
     for (int i = 0; i < n; ++i) {
       for (int j = 0; j < 1000; ++j) {
         int x = random.nextInt(layout[0].length);
         int y = random.nextInt(layout.length);
         if (layout[y][x] == null) {
-          Monster monster = new Skeleton(new Position(x, y, room));
+          Monster monster = new Skeleton(new Position(x, y, room), world);
           layout[y][x] = monster;
           break;
         }
@@ -176,15 +181,43 @@ public class RandomWorldGeneratorMk2 implements WorldGenerator {
     }
   }
 
-  private void generateRoomBorders(Entity[][] layout, Room room) {
+  private void generateGoblins(Entity[][] layout, Room room, int n, World world) {
+    for (int i = 0; i < n; ++i) {
+      for (int j = 0; j < 1000; ++j) {
+        int x = random.nextInt(layout[0].length);
+        int y = random.nextInt(layout.length);
+        if (layout[y][x] == null) {
+          Monster monster = new Goblin(new Position(x, y, room), world);
+          layout[y][x] = monster;
+          break;
+        }
+      }
+    }
+  }
+
+  private void generateGhosts(Entity[][] layout, Room room, int n, World world) {
+    for (int i = 0; i < n; ++i) {
+      for (int j = 0; j < 1000; ++j) {
+        int x = random.nextInt(layout[0].length);
+        int y = random.nextInt(layout.length);
+        if (layout[y][x] == null) {
+          Monster monster = new Ghost(new Position(x, y, room), world);
+          layout[y][x] = monster;
+          break;
+        }
+      }
+    }
+  }
+
+  private void generateRoomBorders(Entity[][] layout, Room room, World world) {
     int h = (int) Room.getSize().height, w = (int) Room.getSize().width;
     for (int i = 0; i < h; i++) {
-      layout[i][0] = new Wall(new Position(0, i, room));
-      layout[i][w - 1] = new Wall(new Position(w - 1, i, room));
+      layout[i][0] = new Wall(new Position(0, i, room), world);
+      layout[i][w - 1] = new Wall(new Position(w - 1, i, room), world);
     }
     for (int i = 0; i < w; i++) {
-      layout[0][i] = new Wall(new Position(i, 0, room));
-      layout[h - 1][i] = new Wall(new Position(i, h - 1, room));
+      layout[0][i] = new Wall(new Position(i, 0, room), world);
+      layout[h - 1][i] = new Wall(new Position(i, h - 1, room), world);
     }
   }
 

@@ -13,12 +13,12 @@ public class Player extends LivingEntity {
 
   private boolean isInventoryOpen = false;
 
-  public Player(Position position) {
+  public Player(Position position, World world) {
     super(position, new Size(0.5, 0.5),
         DirectedSprite.fromImagePaths(new String[] { "/player/up0.png", "/player/up1.png", "/player/up2.png" },
             new String[] { "/player/down0.png", "/player/down1.png", "/player/down2.png" },
             new String[] { "/player/right0.png", "/player/right1.png", "/player/right2.png" },
-            new String[] { "/player/left0.png", "/player/left1.png", "/player/left2.png" }));
+            new String[] { "/player/left0.png", "/player/left1.png", "/player/left2.png" }), world);
     this.strength = 30;
   }
 

@@ -27,8 +27,8 @@ public abstract class LivingEntity extends Entity {
 
   private Optional<LivingEntity> combatting = Optional.empty();
 
-  public LivingEntity(Position position, Size size, DirectedSprite sprite) {
-    super(position, size);
+  public LivingEntity(Position position, Size size, DirectedSprite sprite, World world) {
+    super(position, size, world);
     this.sprite = sprite;
   }
 
@@ -104,11 +104,22 @@ public abstract class LivingEntity extends Entity {
     return health;
   }
 
+  public double getStrength() {
+    return strength;
+  }
+
   public void setHealth(double health) {
     if (health < 0 || health > maxHealth)
       throw new IllegalArgumentException("invalid health value");
 
     this.health = health;
+  }
+
+  public void setStrength(double strength) {
+    if (strength < 0)
+      throw new IllegalArgumentException("invalid strength value");
+
+    this.strength = strength;
   }
 
   public Direction getFacingDirection() {

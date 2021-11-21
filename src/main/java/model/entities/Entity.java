@@ -11,10 +11,12 @@ import view.Drawable;
 public abstract class Entity implements Usable, Drawable {
   private Position position;
   private Size size;
+  private World world;
 
-  public Entity(Position position, Size size) {
+  public Entity(Position position, Size size, World world) {
     this.position = position;
     this.size = size;
+    this.world = world;
   }
 
   public abstract void update(double dt, World world);
@@ -46,5 +48,9 @@ public abstract class Entity implements Usable, Drawable {
 
   public double distance(Entity other) {
     return position.distance(other.getPosition());
+  }
+
+  public World getWorld(){
+    return world;
   }
 }

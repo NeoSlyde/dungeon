@@ -22,7 +22,7 @@ public class App extends Application {
   WorldGenerator worldGenerator = new RandomWorldGeneratorMk2();
 
   private World world = worldGenerator.generate();
-  private Player player = new Player(world.getSpawnPoint());
+  private Player player = new Player(world.getSpawnPoint(), world);
   private SceneState sceneState = new SceneState();
 
   private void initState() {

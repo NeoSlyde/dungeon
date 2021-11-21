@@ -9,8 +9,8 @@ import view.ResourceManager;
 
 public class RoomWall extends Entity {
 
-    public RoomWall(Position position) {
-        super(position, new Size(1, 1));
+    public RoomWall(Position position, World world) {
+        super(position, new Size(1, 1), world);
     }
 
     @Override
