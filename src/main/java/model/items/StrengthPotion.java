@@ -6,6 +6,11 @@ import model.entities.LivingEntity;
 public class StrengthPotion extends Item{
 
     private int strengthValue = 20;
+    private static String name = "Strength Potion";
+
+    public StrengthPotion() {
+        super(name);
+    }
 
     @Override
     public boolean canBeUsed() {

@@ -11,6 +11,11 @@ import view.sound.Sound;
 public class Pickaxe extends Item{
 
     private int uses = 10;
+    private static String name = "Pickaxe";
+
+    public Pickaxe() {
+        super(name);
+    }
 
     @Override
     public boolean canBeUsed() {

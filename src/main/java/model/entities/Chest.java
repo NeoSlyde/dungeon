@@ -28,7 +28,12 @@ public class Chest extends Entity {
         entity.getInventory().addAll(this.inventory);
         new Sound("/sounds/open.wav", 0f).play();
         this.setPosition(new Position(1000, 1000, this.getPosition().room));
-        System.out.println("You got: " + inventory.getItems().toString());
+
+        inventory.getItems().keySet().forEach(item -> {
+            System.out.println("You got: " + item.getName());
+        });
+
+        
     }
 
     @Override

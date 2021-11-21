@@ -7,6 +7,10 @@ public class HealingPotion extends Item{
 
     private int healingValue = 30;
 
+    public HealingPotion() {
+        super("Healing Potion");
+    }
+
     @Override
     public boolean canBeUsed() {
         return true;
