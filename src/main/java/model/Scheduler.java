@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.misc.Updatable;
+
 // A scheduler that can be updated.
 // This prevents asynchronous events from happening between updates
 public class Scheduler implements Updatable {
