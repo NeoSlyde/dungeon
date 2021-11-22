@@ -7,23 +7,22 @@ import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 
 public class App extends Application {
-  private void initState() {
+    private void initState() {
 
-  }
+    }
 
-  @Override
-  public void start(Stage primaryStage) throws Exception {
-    initState();
-    Group root = new Group();
-    int windowWidth = 0;
-    int windowHeight = 0;
-    Canvas canvas = new Canvas(windowWidth, windowHeight);
-    root.getChildren().add(canvas);
-    Scene scene = new Scene(root);
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        initState();
+        Group root = new Group();
+        int windowWidth = 512;
+        int windowHeight = 512;
+        root.getChildren().add(new Canvas(windowWidth, windowHeight));
+        Scene scene = new Scene(root);
 
-    primaryStage.setTitle("Eidoslyde's Dungeon");
-    primaryStage.setScene(scene);
-    primaryStage.setResizable(false);
-    primaryStage.show();
-  }
+        primaryStage.setTitle("Eidoslyde's Dungeon");
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
 }
