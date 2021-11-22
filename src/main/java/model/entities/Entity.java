@@ -1,6 +1,7 @@
 package model.entities;
 
 import model.Room;
+import model.misc.Updatable;
 import model.misc.Vec2;
 
 // An entity in the World.
@@ -9,7 +10,11 @@ import model.misc.Vec2;
 // (Think of it as a minecraft block: it's 1x1x1, not 32x32x32 or whatever)
 //
 // An entity can be bounded to a room or not.
-public abstract class Entity {
+//
+// Note: I went with canBeUpdated(), canBeUsed()... methods. I tried a component 
+// approach, but then it either led to downcasting or a single Entity class 
+// for everything (a.k.a an ECS, but it breaks OCP)
+public abstract class Entity implements Updatable {
     private Room room;
     private Vec2 position, size;
 

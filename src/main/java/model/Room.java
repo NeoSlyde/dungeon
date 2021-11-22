@@ -7,7 +7,7 @@ import model.entities.Entity;
 
 public class Room {
     public final World world;
-    public List<Entity> entities = new ArrayList<>();
+    private List<Entity> entities = new ArrayList<>();
 
     public Room(World world) {
         this.world = world;
