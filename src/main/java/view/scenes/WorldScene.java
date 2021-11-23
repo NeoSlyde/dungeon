@@ -1,5 +1,7 @@
 package view.scenes;
 
+import eventhandlers.EventHandler;
+import eventhandlers.WorldSceneEventHandler;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
@@ -7,8 +9,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.util.Duration;
 import model.World;
 import model.misc.Vec2;
-import view.scenes.eventhandlers.EventHandler;
-import view.scenes.eventhandlers.WorldSceneEventHandler;
 
 public class WorldScene implements Scene {
     private static final double dt = 0.016;

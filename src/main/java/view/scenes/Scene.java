@@ -1,7 +1,7 @@
 package view.scenes;
 
+import eventhandlers.EventHandler;
 import javafx.scene.Node;
-import view.scenes.eventhandlers.EventHandler;
 
 public interface Scene {
     void onEnter();

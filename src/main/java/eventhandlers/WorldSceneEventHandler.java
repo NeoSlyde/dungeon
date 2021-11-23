@@ -1,4 +1,4 @@
-package view.scenes.eventhandlers;
+package eventhandlers;
 
 import model.World;
 import model.misc.Direction;
