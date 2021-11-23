@@ -14,9 +14,9 @@ public class AudioData {
     }
 
     public static class Builder {
-        private String path;
-        private double volume;
-        private boolean loop;
+        private String path = null;
+        private double volume = 0f;
+        private boolean loop = false;
 
         public Builder withPath(String path) {
             this.path = path;
