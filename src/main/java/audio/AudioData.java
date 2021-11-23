@@ -4,7 +4,7 @@ package audio;
 // It does not deal with playing it
 public class AudioData {
     String path;
-    double volume;
+    float volume;
     boolean loop;
 
     public AudioData(Builder builder) {
@@ -15,7 +15,7 @@ public class AudioData {
 
     public static class Builder {
         private String path = null;
-        private double volume = 0f;
+        private float volume = 0f;
         private boolean loop = false;
 
         public Builder withPath(String path) {
@@ -23,7 +23,7 @@ public class AudioData {
             return this;
         }
 
-        public Builder withVolume(double volume) {
+        public Builder withVolume(float volume) {
             this.volume = volume;
             return this;
         }
