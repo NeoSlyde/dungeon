@@ -1,6 +1,8 @@
 package model.misc;
 
 public class Vec2 {
+    public static final Vec2 ZERO = new Vec2(0, 0);
+
     public final double x, y;
 
     public Vec2(double x, double y) {
@@ -19,6 +21,21 @@ public class Vec2 {
 
     public Vec2 subtract(Vec2 p) {
         return new Vec2(x - p.x, y - p.y);
+    }
+
+    public Vec2 multiply(double s) {
+        return new Vec2(x * s, y * s);
+    }
+
+    // Returns the same vector with the given magnitude.
+    // If the vector has length 0, returns the same vector.
+    public Vec2 withMagnitude(double magnitude) {
+        double len = length();
+        return len == 0 ? this : multiply(magnitude / len);
+    }
+
+    public double length() {
+        return Math.sqrt(x * x + y * y);
     }
 
     @Override
