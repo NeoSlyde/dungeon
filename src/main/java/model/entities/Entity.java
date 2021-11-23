@@ -1,5 +1,7 @@
 package model.entities;
 
+import java.util.Optional;
+
 import model.Room;
 import model.misc.Updatable;
 import model.misc.Vec2;
@@ -57,5 +59,9 @@ public abstract class Entity implements Updatable {
 
     @Override
     public void update(double dt) {
+    }
+
+    public Optional<Entity> getFacingEntity() {
+        return null; // TODO (Use Room::getCloseEntities)
     }
 }

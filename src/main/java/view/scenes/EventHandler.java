@@ -1,17 +1,17 @@
 package view.scenes;
 
-import model.misc.Vec2;
+import model.misc.Direction;
 
 public interface EventHandler {
-    void onMenu();
+    void onMenu(KeyEventType keyEventType);
 
-    void onSpacebar();
+    void onSpacebar(KeyEventType keyEventType);
 
-    void onLeftShift();
+    void onLeftShift(KeyEventType keyEventType);
 
-    /**
-     * @param direction A unit vector indicating the direction of the movement, or
-     *                  (0, 0) if not moving.
-     */
-    void onChangeDirection(Vec2 direction);
+    void onDirection(KeyEventType keyEventType, Direction direction);
+
+    public static enum KeyEventType {
+        PRESSED, RELEASED
+    }
 }
