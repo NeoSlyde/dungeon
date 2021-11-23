@@ -2,7 +2,9 @@ package model;
 
 import java.util.List;
 
-public class World {
+import model.misc.Updatable;
+
+public class World implements Updatable {
     private List<Room> rooms;
 
     public World(List<Room> rooms) {
@@ -11,5 +13,10 @@ public class World {
 
     public List<Room> getRooms() {
         return rooms;
+    }
+
+    @Override
+    public void update(double dt) {
+        rooms.forEach(r -> r.update(dt));
     }
 }

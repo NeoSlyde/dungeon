@@ -1,4 +1,4 @@
-package view.scenes;
+package view.scenes.eventhandlers;
 
 import model.misc.Direction;
 

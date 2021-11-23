@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import model.entities.Entity;
+import model.misc.Updatable;
 
-public class Room {
+public class Room implements Updatable {
     public final World world;
     private List<Entity> entities = new ArrayList<>();
 
@@ -31,5 +32,10 @@ public class Room {
     @Override
     public boolean equals(Object obj) {
         return this == obj;
+    }
+
+    @Override
+    public void update(double dt) {
+        entities.forEach(e -> e.update(dt));
     }
 }
