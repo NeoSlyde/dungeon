@@ -10,10 +10,6 @@ import model.misc.Vec2;
 // (Think of it as a minecraft block: it's 1x1x1, not 32x32x32 or whatever)
 //
 // An entity can be bounded to a room or not.
-//
-// Note: I went with canBeUpdated(), canBeUsed()... methods. I tried a component 
-// approach, but then it either led to downcasting or a single Entity class 
-// for everything (a.k.a an ECS, but it breaks OCP)
 public abstract class Entity implements Updatable {
     private Room room;
     private Vec2 position, size;
@@ -23,6 +19,10 @@ public abstract class Entity implements Updatable {
         this.position = position;
         this.size = size;
     }
+
+    public abstract boolean isUsable();
+
+    public abstract void use(LivingEntity user);
 
     public Room getRoom() {
         return room;
@@ -53,5 +53,9 @@ public abstract class Entity implements Updatable {
     public boolean collidesWith(Vec2 position, Vec2 size) {
         return this.position.x < position.x + size.x && this.position.x + this.size.x > position.x
                 && this.position.y < position.y + size.y && this.position.y + this.size.y > position.y;
+    }
+
+    @Override
+    public void update(double dt) {
     }
 }
