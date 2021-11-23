@@ -4,6 +4,8 @@ import model.World;
 import model.misc.Direction;
 
 public class WorldSceneEventHandler implements EventHandler {
+    private MovementInputConverter movementInputConverter = new MovementInputConverter();
+
     public WorldSceneEventHandler(World world) {
 
     }
@@ -25,6 +27,7 @@ public class WorldSceneEventHandler implements EventHandler {
 
     @Override
     public void onDirection(KeyEventType keyEventType, Direction direction) {
+        movementInputConverter.keyEvent(direction, keyEventType);
         // TODO Auto-generated method stub
     }
 
