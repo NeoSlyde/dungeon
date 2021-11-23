@@ -19,7 +19,7 @@ public class WorldScene implements Scene {
 
     private Timeline tl;
 
-    public WorldScene(World world) {
+    public WorldScene(SceneContext ctx, World world) {
         this.world = world;
 
         final Vec2 windowSize = new Vec2(800, 600);
