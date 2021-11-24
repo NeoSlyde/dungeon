@@ -1,25 +1,31 @@
 package view.scenes;
 
 import eventhandlers.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Node;
 
 public class SceneContext {
-    // RAII note: we can't pass it in the constructor because of cyclic dependency
-    private Scene current = null;
+    private Scene current = new DummyScene();
+    public final Group root;
 
-    public void switchScene(Scene scene) {
-        if (current != null)
-            current.onLeave();
-        current = scene;
-        current.onEnter();
+    public SceneContext(Group root) {
+        this.root = root;
     }
 
-    // Scene must have been set to call this method
+    public void switchScene(Scene scene) {
+        root.getChildren().remove(current.getUI());
+        current.onLeave();
+
+        current = scene;
+
+        current.onEnter();
+        root.getChildren().add(current.getUI());
+    }
+
     public Node getUI() {
         return current.getUI();
     }
 
-    // Scene must have been set to call this method
     public EventHandler getEventHandler() {
         return current.getEventHandler();
     }

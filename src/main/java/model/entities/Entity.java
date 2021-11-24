@@ -5,6 +5,8 @@ import java.util.Optional;
 import model.Room;
 import model.misc.Updatable;
 import model.misc.Vec2;
+import view.Drawable;
+import view.DrawableVisitor;
 
 // An entity in the World.
 //
@@ -12,7 +14,7 @@ import model.misc.Vec2;
 // (Think of it as a minecraft block: it's 1x1x1, not 32x32x32 or whatever)
 //
 // An entity can be bounded to a room or not.
-public abstract class Entity implements Updatable {
+public abstract class Entity implements Updatable, Drawable {
     private Room room;
     private Vec2 position, size;
 
@@ -59,6 +61,11 @@ public abstract class Entity implements Updatable {
 
     @Override
     public void update(double dt) {
+    }
+
+    @Override
+    public void draw(DrawableVisitor d) {
+        d.draw(this);
     }
 
     public Optional<Entity> getFacingEntity() {

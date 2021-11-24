@@ -17,11 +17,18 @@ public abstract class LivingEntity extends Entity {
         super(room, position, size);
     }
 
+    @Override
+    public boolean isUsable() {
+        return false;
+    }
+
+    @Override
+    public void use(LivingEntity user) {
+    }
+
     public abstract double getMaxHealth();
 
     public abstract double getHealth();
-
-    public abstract double getMaxStrength();
 
     public abstract double getStrength();
 

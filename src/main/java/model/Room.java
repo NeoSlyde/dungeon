@@ -6,13 +6,15 @@ import java.util.stream.Stream;
 
 import model.entities.Entity;
 import model.misc.Updatable;
+import view.Drawable;
+import view.DrawableVisitor;
 
-public class Room implements Updatable {
-    public final World world;
+public class Room implements Updatable, Drawable {
+    public World world = null;
     private List<Entity> entities = new ArrayList<>();
 
-    public Room(World world) {
-        this.world = world;
+    public Room() {
+
     }
 
     // ! Can only be called by Entity's constructor!
@@ -23,6 +25,11 @@ public class Room implements Updatable {
     // ! Can only be called by Entity's constructor!
     public void removeEntity(Entity entity) {
         entities.remove(entity);
+    }
+
+    // ! Can only be called by World constructor!
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     public Stream<Entity> getCloseEntities(Entity entity) {
@@ -37,5 +44,10 @@ public class Room implements Updatable {
     @Override
     public void update(double dt) {
         entities.forEach(e -> e.update(dt));
+    }
+
+    @Override
+    public void draw(DrawableVisitor d) {
+        d.draw(this);
     }
 }
