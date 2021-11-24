@@ -30,8 +30,6 @@ public class DrawableVisitor {
     }
 
     public void draw(Entity e) {
-        System.out.println(e);
-
         ctx.setFill(new Color(1, 1, 1, 1));
         ctx.fillRect(posPx.x, posPx.y, sizePx.x, sizePx.y);
     }

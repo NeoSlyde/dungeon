@@ -16,12 +16,15 @@ public class WorldScene implements Scene {
 
     private World world;
 
+    private EventHandler evtHandler;
+
     private Canvas canvas;
 
     private Timeline tl;
 
     public WorldScene(SceneContext ctx, World world) {
         this.world = world;
+        this.evtHandler = new WorldSceneEventHandler(world);
 
         final Vec2 windowSize = new Vec2(16 * 70, 9 * 70);
         canvas = new Canvas(windowSize.x, windowSize.y);
@@ -50,6 +53,10 @@ public class WorldScene implements Scene {
 
     @Override
     public EventHandler getEventHandler() {
-        return new WorldSceneEventHandler(world);
+        return evtHandler;
+    }
+
+    public World getWorld() {
+        return world;
     }
 }

@@ -5,9 +5,10 @@ import model.misc.Direction;
 
 public class WorldSceneEventHandler implements EventHandler {
     private MovementInputConverter movementInputConverter = new MovementInputConverter();
+    private World world;
 
     public WorldSceneEventHandler(World world) {
-
+        this.world = world;
     }
 
     @Override
@@ -22,13 +23,14 @@ public class WorldSceneEventHandler implements EventHandler {
 
     @Override
     public void onLeftShift(KeyEventType keyEventType) {
-        // TODO Auto-generated method stub
+        world.getPlayer().setRunning(keyEventType.equals(KeyEventType.PRESSED));
     }
 
     @Override
     public void onDirection(KeyEventType keyEventType, Direction direction) {
         movementInputConverter.keyEvent(direction, keyEventType);
-        // TODO Auto-generated method stub
+        world.getPlayer().setFacingDirection(movementInputConverter.getDirection());
+        world.getPlayer().setMoving(movementInputConverter.isMoving());
     }
 
 }

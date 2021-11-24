@@ -50,6 +50,22 @@ public abstract class LivingEntity extends Entity {
         inCombatWith = Optional.empty();
     }
 
+    public void setMoving(boolean m) {
+        this.moving = m;
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setFacingDirection(Direction d) {
+        this.facingDirection = d;
+    }
+
+    public Direction getFacingDirection() {
+        return facingDirection;
+    }
+
     @Override
     public void update(double dt) {
         setPosition(computeNextPos(dt));
