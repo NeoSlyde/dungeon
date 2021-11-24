@@ -76,6 +76,9 @@ public abstract class LivingEntity extends Entity {
     }
 
     private Vec2 computeNextPos(double dt) {
-        return new Vec2(getPosition()).add(getVelocity().multiply(dt));
+        var next = new Vec2(getPosition()).add(getVelocity().multiply(dt));
+        next = next.withX(Math.max(0, Math.min(getRoom().size.x - getSize().x, next.x)));
+        next = next.withY(Math.max(0, Math.min(getRoom().size.y - getSize().y, next.y)));
+        return next;
     }
 }
