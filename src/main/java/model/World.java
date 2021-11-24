@@ -13,7 +13,7 @@ public class World implements Updatable, Drawable {
 
     public World(List<Room> rooms, Player player) {
         for (var room : rooms)
-            room.world = this;
+            room.setWorld(this);
         this.rooms = rooms;
         this.player = player;
     }

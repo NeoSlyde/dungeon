@@ -25,7 +25,9 @@ public class App extends Application {
 
         var sceneCtx = new SceneContext(root);
         var room = new Room();
-        sceneCtx.switchScene(new WorldScene(sceneCtx, new World(List.of(room), new Player(room, new Vec2(1, 1)))));
+        var player = new Player(room, new Vec2(1, 1));
+        room.addEntity(player);
+        sceneCtx.switchScene(new WorldScene(sceneCtx, new World(List.of(room), player)));
         var controller = new JavaFXController(sceneCtx);
 
         scene.setOnKeyPressed(controller::handleKeyPressed);

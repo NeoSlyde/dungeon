@@ -6,12 +6,14 @@ import java.util.stream.Stream;
 
 import model.entities.Entity;
 import model.misc.Updatable;
+import model.misc.Vec2;
 import view.Drawable;
 import view.DrawableVisitor;
 
 public class Room implements Updatable, Drawable {
-    public World world = null;
-    private List<Entity> entities = new ArrayList<>();
+    private final List<Entity> entities = new ArrayList<>();
+    private World world = null;
+    public final Vec2 size = new Vec2(32, 18);
 
     public Room() {
 
@@ -32,8 +34,16 @@ public class Room implements Updatable, Drawable {
         this.world = world;
     }
 
+    public World getWorld() {
+        return world;
+    }
+
     public Stream<Entity> getCloseEntities(Entity entity) {
         return entities.stream().filter(e -> e != entity);
+    }
+
+    public List<Entity> getEntities() {
+        return entities;
     }
 
     @Override

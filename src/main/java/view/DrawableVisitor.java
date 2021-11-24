@@ -20,9 +20,18 @@ public class DrawableVisitor {
         ctx.setFill(new Color(0, 0, 0, 1));
         ctx.fillRect(posPx.x, posPx.y, sizePx.x, sizePx.y);
 
+        var gameSizeFactor = sizePx.divide(room.size);
+
+        for (var e : room.getEntities()) {
+            var d = new DrawableVisitor(posPx.add(e.getPosition().multiply(gameSizeFactor)),
+                    e.getSize().multiply(gameSizeFactor), ctx);
+            e.draw(d);
+        }
     }
 
     public void draw(Entity e) {
+        System.out.println(e);
+
         ctx.setFill(new Color(1, 1, 1, 1));
         ctx.fillRect(posPx.x, posPx.y, sizePx.x, sizePx.y);
     }

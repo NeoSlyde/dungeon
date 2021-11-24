@@ -23,7 +23,7 @@ public class WorldScene implements Scene {
     public WorldScene(SceneContext ctx, World world) {
         this.world = world;
 
-        final Vec2 windowSize = new Vec2(800, 600);
+        final Vec2 windowSize = new Vec2(16 * 70, 9 * 70);
         canvas = new Canvas(windowSize.x, windowSize.y);
         tl = new Timeline(new KeyFrame(Duration.seconds(dt), e -> {
             world.update(dt);

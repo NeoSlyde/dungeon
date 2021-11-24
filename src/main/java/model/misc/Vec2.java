@@ -27,6 +27,14 @@ public class Vec2 {
         return new Vec2(x * s, y * s);
     }
 
+    public Vec2 multiply(Vec2 p) {
+        return new Vec2(x * p.x, y * p.y);
+    }
+
+    public Vec2 divide(Vec2 p) {
+        return new Vec2(x / p.x, y / p.y);
+    }
+
     // Returns the same vector with the given magnitude.
     // If the vector has length 0, returns the same vector.
     public Vec2 withMagnitude(double magnitude) {
