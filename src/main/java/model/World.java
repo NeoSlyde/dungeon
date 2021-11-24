@@ -10,6 +10,7 @@ import view.DrawableVisitor;
 public class World implements Updatable, Drawable {
     private final List<Room> rooms;
     private final Player player;
+    private double t = 0;
 
     public World(List<Room> rooms, Player player) {
         for (var room : rooms)
@@ -28,7 +29,12 @@ public class World implements Updatable, Drawable {
 
     @Override
     public void update(double dt) {
+        t += dt;
         rooms.forEach(r -> r.update(dt));
+    }
+
+    public double getT() {
+        return t;
     }
 
     @Override
