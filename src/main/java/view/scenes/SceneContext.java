@@ -20,6 +20,7 @@ public class SceneContext {
 
         current.onEnter();
         root.getChildren().add(current.getUI());
+        current.getUI().requestFocus();
     }
 
     public Node getUI() {
