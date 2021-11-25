@@ -12,6 +12,7 @@ public class JavaFXController {
     }
 
     public void handleKeyPressed(KeyEvent keyEvent) {
+        System.out.print(keyEvent.getCode());
         handleKey(KeyEventType.PRESSED, keyEvent);
     }
 
