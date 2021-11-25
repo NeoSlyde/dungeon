@@ -29,12 +29,13 @@ public class MainMenuScene implements Scene {
 
     private SceneContext ctx;
     Clip menuTheme;
+    AudioPlayer audioPlayer;
 
     public MainMenuScene(SceneContext ctx) {
         this.evtHandler = new MainMenuSceneEventHandler();
         this.ctx = ctx;
 
-        AudioPlayer audioPlayer = new AudioPlayer();
+        audioPlayer = new AudioPlayer();
 
         menuTheme = audioPlayer.play(new StandardAudioDataFactory().MainMenuTheme());
     }
@@ -79,6 +80,7 @@ public class MainMenuScene implements Scene {
         Button play = new Button("START A NEW GAME");
         menu.getChildren().add(play);
         play.setOnAction(e -> {
+            audioPlayer.play(new StandardAudioDataFactory().SelectSoundEffect());
             ctx.switchScene(new WorldScene(ctx, new World(List.of(room), player)));
             menuTheme.stop();
         });
@@ -95,6 +97,7 @@ public class MainMenuScene implements Scene {
         menu.getChildren().add(option);
 
         option.setOnAction(e -> {
+            audioPlayer.play(new StandardAudioDataFactory().SelectSoundEffect());
             menu.getChildren().remove(option);
             menu.getChildren().remove(play);
             menu.getChildren().remove(quit);
@@ -105,6 +108,7 @@ public class MainMenuScene implements Scene {
         });
 
         goBack.setOnAction(e -> {
+            audioPlayer.play(new StandardAudioDataFactory().CloseSoundEffect());
             menu.getChildren().add(play);
             menu.getChildren().add(option);
             menu.getChildren().add(quit);
@@ -115,6 +119,7 @@ public class MainMenuScene implements Scene {
         });
 
         musicOnOff.setOnAction(e -> {
+            audioPlayer.play(new StandardAudioDataFactory().SelectSoundEffect());
             if (musicOnOff.getText().equals("MUSIC: ON")) {
                 musicOnOff.setText("MUSIC: OFF");
                 menuTheme.stop();
@@ -126,7 +131,10 @@ public class MainMenuScene implements Scene {
 
         menu.getChildren().add(quit);
 
-        quit.setOnAction(e -> System.exit(0));
+        quit.setOnAction(e -> {
+            audioPlayer.play(new StandardAudioDataFactory().CloseSoundEffect());
+            System.exit(0);
+        });
 
         return menu;
     }
