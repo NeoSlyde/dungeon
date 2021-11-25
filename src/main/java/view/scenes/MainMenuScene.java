@@ -88,6 +88,8 @@ public class MainMenuScene implements Scene {
         Button goBack = new Button("GO BACK");
 
         Button musicOnOff = new Button("MUSIC: ON");
+        Button invisible = new Button("HAHA YOU CAN'T SEE ME");
+        invisible.setVisible(false);
 
         Button option = new Button("OPTIONS");
         menu.getChildren().add(option);
@@ -98,6 +100,7 @@ public class MainMenuScene implements Scene {
             menu.getChildren().remove(quit);
 
             menu.getChildren().add(musicOnOff);
+            menu.getChildren().add(invisible);
             menu.getChildren().add(goBack);
         });
 
@@ -107,6 +110,7 @@ public class MainMenuScene implements Scene {
             menu.getChildren().add(quit);
 
             menu.getChildren().remove(musicOnOff);
+            menu.getChildren().remove(invisible);
             menu.getChildren().remove(goBack);
         });
 
