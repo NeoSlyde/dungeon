@@ -83,11 +83,45 @@ public class MainMenuScene implements Scene {
             menuTheme.stop();
         });
 
+        Button quit = new Button("LEAVE THE GAME");
+
+        Button goBack = new Button("GO BACK");
+
+        Button musicOnOff = new Button("MUSIC: ON");
+
         Button option = new Button("OPTIONS");
         menu.getChildren().add(option);
 
-        Button quit = new Button("LEAVE THE GAME");
+        option.setOnAction(e -> {
+            menu.getChildren().remove(option);
+            menu.getChildren().remove(play);
+            menu.getChildren().remove(quit);
+
+            menu.getChildren().add(musicOnOff);
+            menu.getChildren().add(goBack);
+        });
+
+        goBack.setOnAction(e -> {
+            menu.getChildren().add(play);
+            menu.getChildren().add(option);
+            menu.getChildren().add(quit);
+
+            menu.getChildren().remove(musicOnOff);
+            menu.getChildren().remove(goBack);
+        });
+
+        musicOnOff.setOnAction(e -> {
+            if (musicOnOff.getText().equals("MUSIC: ON")) {
+                musicOnOff.setText("MUSIC: OFF");
+                menuTheme.stop();
+            } else {
+                musicOnOff.setText("MUSIC: ON");
+                menuTheme.start();
+            }
+        });
+
         menu.getChildren().add(quit);
+
         quit.setOnAction(e -> System.exit(0));
 
         return menu;

@@ -29,7 +29,7 @@ public class App extends Application {
 
         scene.setOnKeyPressed(controller::handleKeyPressed);
         scene.setOnKeyReleased(controller::handleKeyReleased);
-        primaryStage.setTitle("Eidoslyde's Dungeon");
+        primaryStage.setTitle("EidoSlyde Dungeon");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
