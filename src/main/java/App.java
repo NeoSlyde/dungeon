@@ -1,17 +1,13 @@
 
-import java.util.List;
-
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Room;
-import model.World;
 import model.entities.Player;
 import model.misc.Vec2;
 import view.scenes.MainMenuScene;
 import view.scenes.SceneContext;
-import view.scenes.WorldScene;
 
 public class App extends Application {
     private void initState() {
@@ -29,8 +25,6 @@ public class App extends Application {
         var player = new Player(room, new Vec2(1, 1));
         room.addEntity(player);
         sceneCtx.switchScene(new MainMenuScene(sceneCtx));
-        // sceneCtx.switchScene(new WorldScene(sceneCtx, new World(List.of(room),
-        // player)));
         var controller = new JavaFXController(sceneCtx);
 
         scene.setOnKeyPressed(controller::handleKeyPressed);
