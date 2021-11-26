@@ -5,12 +5,14 @@ import audio.AudioPlayer;
 import eventhandlers.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import model.misc.Vec2;
 
 public class SceneContext {
     private Scene current = new DummyScene();
     private AudioDataFactory audioDataFactory;
     private AudioPlayer audioPlayer = new AudioPlayer();
     private final Group root;
+    public final Vec2 windowSize = new Vec2(16 * 70, 9 * 70);
 
     public SceneContext(Group root, AudioDataFactory audioDataFactory) {
         this.root = root;

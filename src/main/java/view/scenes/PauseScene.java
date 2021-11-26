@@ -18,7 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.World;
-import model.misc.Vec2;
 
 public class PauseScene implements Scene {
 
@@ -50,25 +49,24 @@ public class PauseScene implements Scene {
 
     @Override
     public Node getUI() {
-        final Vec2 windowSize = new Vec2(16 * 70, 9 * 70);
         VBox pauseMenu = new VBox();
-        pauseMenu.setPrefSize(windowSize.x, windowSize.y);
+        pauseMenu.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
         pauseMenu.setAlignment(Pos.CENTER);
         pauseMenu.setSpacing(10);
 
         VBox inventoryComponent = new VBox();
-        inventoryComponent.setPrefSize(windowSize.x, windowSize.y);
+        inventoryComponent.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
         inventoryComponent.setAlignment(Pos.CENTER);
         inventoryComponent.setSpacing(-80);
 
         TilePane inventory1 = new TilePane();
-        inventory1.setPrefSize(windowSize.x, windowSize.y);
+        inventory1.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
         inventory1.setAlignment(Pos.CENTER);
         inventory1.setHgap(10);
         inventory1.setVgap(10);
 
         TilePane inventory2 = new TilePane();
-        inventory2.setPrefSize(windowSize.x, windowSize.y);
+        inventory2.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
         inventory2.setAlignment(Pos.CENTER);
         inventory2.setHgap(10);
         inventory2.setVgap(10);

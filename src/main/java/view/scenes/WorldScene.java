@@ -26,11 +26,10 @@ public class WorldScene implements Scene {
         this.world = world;
         this.evtHandler = new WorldSceneEventHandler(world);
 
-        final Vec2 windowSize = new Vec2(16 * 70, 9 * 70);
-        canvas = new Canvas(windowSize.x, windowSize.y);
+        canvas = new Canvas(ctx.windowSize.x, ctx.windowSize.y);
         tl = new Timeline(new KeyFrame(Duration.seconds(dt), e -> {
             world.update(dt);
-            world.draw(new DrawableVisitor(Vec2.ZERO, windowSize, canvas.getGraphicsContext2D()));
+            world.draw(new DrawableVisitor(Vec2.ZERO, ctx.windowSize, canvas.getGraphicsContext2D()));
         }));
         tl.setCycleCount(Timeline.INDEFINITE);
 

@@ -37,9 +37,8 @@ public class MainMenuScene implements Scene {
 
     @Override
     public Node getUI() {
-        final Vec2 windowSize = new Vec2(16 * 70, 9 * 70);
         VBox menu = new VBox();
-        menu.setPrefSize(windowSize.x, windowSize.y);
+        menu.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
         menu.setAlignment(Pos.CENTER);
         menu.setSpacing(10);
 
