@@ -28,13 +28,11 @@ public class PauseScene implements Scene {
 
     private World world;
 
-    private SceneContext ctx;
     Clip pauseTheme;
     AudioPlayer audioPlayer;
 
     public PauseScene(SceneContext ctx, World world) {
         this.evtHandler = new PauseSceneEventHandler(world);
-        this.ctx = ctx;
 
         this.world = world;
 
@@ -139,9 +137,13 @@ public class PauseScene implements Scene {
         rectangle.setStrokeWidth(5);
         rectangle.setFill(Color.GREY);
 
-        rectangle.setOnMouseClicked(e -> audioPlayer.play(new StandardAudioDataFactory().BruhSoundEffect()));
+        rectangle.setOnMouseClicked(e -> audioPlayer.play(new StandardAudioDataFactory().SelectSoundEffect()));
 
         return rectangle;
+    }
+
+    public World getWorld() {
+        return world;
     }
 
 }
