@@ -1,7 +1,5 @@
 package eventhandlers;
 
-import audio.AudioPlayer;
-import audio.StandardAudioDataFactory;
 import model.World;
 import model.misc.Direction;
 import view.scenes.SceneContext;
@@ -9,11 +7,9 @@ import view.scenes.WorldScene;
 
 public class PauseSceneEventHandler implements EventHandler {
     private World world;
-    AudioPlayer audioPlayer;
 
     public PauseSceneEventHandler(World world) {
         this.world = world;
-        audioPlayer = new AudioPlayer();
     }
 
     @Override
@@ -37,7 +33,7 @@ public class PauseSceneEventHandler implements EventHandler {
     @Override
     public void onEscape(KeyEventType type, SceneContext sceneContext) {
         if (type == KeyEventType.PRESSED) {
-            audioPlayer.play(new StandardAudioDataFactory().PauseCloseSoundEffect());
+            sceneContext.getAudioPlayer().play(sceneContext.getAudioDataFactory().pauseCloseSoundEffect());
             sceneContext.switchScene(new WorldScene(sceneContext, world));
         }
     }

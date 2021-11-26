@@ -15,5 +15,5 @@ public interface AudioDataFactory {
 
     AudioData pauseOpenSoundEffect();
 
-    AudioData PauseCloseSoundEffect();
+    AudioData pauseCloseSoundEffect();
 }

@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 
 import javax.sound.sampled.Clip;
 
-import audio.AudioPlayer;
-import audio.StandardAudioDataFactory;
 import eventhandlers.EventHandler;
 import eventhandlers.PauseSceneEventHandler;
 import javafx.geometry.Pos;
@@ -28,17 +26,16 @@ public class PauseScene implements Scene {
 
     private World world;
 
-    Clip pauseTheme;
-    AudioPlayer audioPlayer;
+    private SceneContext ctx;
+
+    private Clip pauseTheme;
 
     public PauseScene(SceneContext ctx, World world) {
+        this.ctx = ctx;
         this.evtHandler = new PauseSceneEventHandler(world);
 
         this.world = world;
-
-        audioPlayer = new AudioPlayer();
-
-        pauseTheme = audioPlayer.play(new StandardAudioDataFactory().pauseMenuTheme());
+        pauseTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().pauseMenuTheme());
     }
 
     @Override
@@ -137,7 +134,7 @@ public class PauseScene implements Scene {
         rectangle.setStrokeWidth(5);
         rectangle.setFill(Color.GREY);
 
-        rectangle.setOnMouseClicked(e -> audioPlayer.play(new StandardAudioDataFactory().selectSoundEffect()));
+        rectangle.setOnMouseClicked(e -> ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect()));
 
         return rectangle;
     }

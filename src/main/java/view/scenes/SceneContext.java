@@ -1,14 +1,18 @@
 package view.scenes;
 
+import audio.AudioDataFactory;
+import audio.AudioPlayer;
 import eventhandlers.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 
 public class SceneContext {
     private Scene current = new DummyScene();
-    public final Group root;
+    private AudioDataFactory audioDataFactory;
+    private AudioPlayer audioPlayer = new AudioPlayer();
+    private final Group root;
 
-    public SceneContext(Group root) {
+    public SceneContext(Group root, AudioDataFactory audioDataFactory) {
         this.root = root;
     }
 
@@ -29,5 +33,13 @@ public class SceneContext {
 
     public EventHandler getEventHandler() {
         return current.getEventHandler();
+    }
+
+    public AudioDataFactory getAudioDataFactory() {
+        return audioDataFactory;
+    }
+
+    public AudioPlayer getAudioPlayer() {
+        return audioPlayer;
     }
 }

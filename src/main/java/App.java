@@ -1,4 +1,5 @@
 
+import audio.StandardAudioDataFactory;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -20,7 +21,9 @@ public class App extends Application {
         Group root = new Group();
         Scene scene = new Scene(root);
 
-        var sceneCtx = new SceneContext(root);
+        var audioDataFactory = new StandardAudioDataFactory();
+
+        var sceneCtx = new SceneContext(root, audioDataFactory);
         var room = new Room();
         var player = new Player(room, new Vec2(1, 1));
         room.addEntity(player);

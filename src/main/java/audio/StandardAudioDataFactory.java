@@ -36,7 +36,7 @@ public class StandardAudioDataFactory implements AudioDataFactory {
     }
 
     @Override
-    public AudioData PauseCloseSoundEffect() {
+    public AudioData pauseCloseSoundEffect() {
         return new AudioData.Builder().withPath("/sounds/pauseclose.wav").withVolume(-10.0f).build();
     }
 
