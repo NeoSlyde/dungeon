@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import model.entities.Entity;
 import model.misc.Updatable;
@@ -35,10 +34,6 @@ public class Room implements Updatable {
 
     public World getWorld() {
         return world;
-    }
-
-    public Stream<Entity> getCloseEntities(Entity entity) {
-        return entities.stream().filter(e -> e != entity);
     }
 
     public List<Entity> getEntities() {

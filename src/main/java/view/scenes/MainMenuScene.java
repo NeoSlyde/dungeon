@@ -59,7 +59,6 @@ public class MainMenuScene implements Scene {
             menu.setBackground(new Background(background));
 
         } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
 
