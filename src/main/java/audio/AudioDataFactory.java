@@ -3,17 +3,17 @@ package audio;
 public interface AudioDataFactory {
     AudioData gameplayPeacefulMusic();
 
-    AudioData MainMenuTheme();
+    AudioData mainMenuTheme();
 
-    AudioData PauseMenuTheme();
+    AudioData pauseMenuTheme();
 
-    AudioData SelectSoundEffect();
+    AudioData selectSoundEffect();
 
-    AudioData CloseSoundEffect();
+    AudioData closeSoundEffect();
 
-    AudioData BruhSoundEffect();
+    AudioData bruhSoundEffect();
 
-    AudioData PauseOpenSoundEffect();
+    AudioData pauseOpenSoundEffect();
 
     AudioData PauseCloseSoundEffect();
 }

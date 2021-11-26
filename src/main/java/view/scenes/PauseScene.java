@@ -38,7 +38,7 @@ public class PauseScene implements Scene {
 
         audioPlayer = new AudioPlayer();
 
-        pauseTheme = audioPlayer.play(new StandardAudioDataFactory().PauseMenuTheme());
+        pauseTheme = audioPlayer.play(new StandardAudioDataFactory().pauseMenuTheme());
     }
 
     @Override
@@ -137,7 +137,7 @@ public class PauseScene implements Scene {
         rectangle.setStrokeWidth(5);
         rectangle.setFill(Color.GREY);
 
-        rectangle.setOnMouseClicked(e -> audioPlayer.play(new StandardAudioDataFactory().SelectSoundEffect()));
+        rectangle.setOnMouseClicked(e -> audioPlayer.play(new StandardAudioDataFactory().selectSoundEffect()));
 
         return rectangle;
     }

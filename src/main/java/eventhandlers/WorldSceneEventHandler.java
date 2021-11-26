@@ -42,7 +42,7 @@ public class WorldSceneEventHandler implements EventHandler {
     @Override
     public void onEscape(KeyEventType type, SceneContext sceneContext) {
         if (type == KeyEventType.PRESSED) {
-            audioPlayer.play(new StandardAudioDataFactory().PauseOpenSoundEffect());
+            audioPlayer.play(new StandardAudioDataFactory().pauseOpenSoundEffect());
             sceneContext.switchScene(new PauseScene(sceneContext, world));
         }
     }
