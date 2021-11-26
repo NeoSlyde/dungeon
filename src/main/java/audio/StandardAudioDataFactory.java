@@ -17,27 +17,27 @@ public class StandardAudioDataFactory implements AudioDataFactory {
 
     @Override
     public AudioData selectSoundEffect() {
-        return new AudioData.Builder().withPath("/sounds/select.wav").withVolume(-10.0f).withLoop(false).build();
+        return new AudioData.Builder().withPath("/sounds/select.wav").withVolume(-10.0f).build();
     }
 
     @Override
     public AudioData closeSoundEffect() {
-        return new AudioData.Builder().withPath("/sounds/close.wav").withVolume(-10.0f).withLoop(false).build();
+        return new AudioData.Builder().withPath("/sounds/close.wav").withVolume(-10.0f).build();
     }
 
     @Override
     public AudioData bruhSoundEffect() {
-        return new AudioData.Builder().withPath("/sounds/bruh.wav").withVolume(0).withLoop(false).build();
+        return new AudioData.Builder().withPath("/sounds/bruh.wav").build();
     }
 
     @Override
     public AudioData pauseOpenSoundEffect() {
-        return new AudioData.Builder().withPath("/sounds/pauseopen.wav").withVolume(-10.0f).withLoop(false).build();
+        return new AudioData.Builder().withPath("/sounds/pauseopen.wav").withVolume(-10.0f).build();
     }
 
     @Override
     public AudioData PauseCloseSoundEffect() {
-        return new AudioData.Builder().withPath("/sounds/pauseclose.wav").withVolume(-10.0f).withLoop(false).build();
+        return new AudioData.Builder().withPath("/sounds/pauseclose.wav").withVolume(-10.0f).build();
     }
 
 }
