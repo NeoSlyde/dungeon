@@ -104,7 +104,6 @@ public class PauseScene implements Scene {
             inventoryComponent.getChildren().add(inventoryImage);
 
         } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
 

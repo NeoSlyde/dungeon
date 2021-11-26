@@ -14,11 +14,6 @@ public class WorldSceneEventHandler implements EventHandler {
     }
 
     @Override
-    public void onSpacebar(KeyEventType keyEventType) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public void onLeftShift(KeyEventType keyEventType) {
         world.getPlayer().setRunning(keyEventType.equals(KeyEventType.PRESSED));
     }

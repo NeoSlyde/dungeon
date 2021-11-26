@@ -7,7 +7,6 @@ import java.util.List;
 import javax.sound.sampled.Clip;
 
 import eventhandlers.EventHandler;
-import eventhandlers.MainMenuSceneEventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -29,18 +28,11 @@ public class MainMenuScene implements Scene {
     private Clip menuTheme;
 
     public MainMenuScene(SceneContext ctx) {
-        this.evtHandler = new MainMenuSceneEventHandler();
+        this.evtHandler = new EventHandler() {
+        };
         this.ctx = ctx;
 
         menuTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().mainMenuTheme());
-    }
-
-    @Override
-    public void onEnter() {
-    }
-
-    @Override
-    public void onLeave() {
     }
 
     @Override

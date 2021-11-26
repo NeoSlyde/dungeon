@@ -4,9 +4,11 @@ import eventhandlers.EventHandler;
 import javafx.scene.Node;
 
 public interface Scene {
-    void onEnter();
+    default void onEnter() {
+    }
 
-    void onLeave();
+    default void onLeave() {
+    }
 
     Node getUI();
 

@@ -14,6 +14,7 @@ public class SceneContext {
 
     public SceneContext(Group root, AudioDataFactory audioDataFactory) {
         this.root = root;
+        this.audioDataFactory = audioDataFactory;
     }
 
     public void switchScene(Scene scene) {
