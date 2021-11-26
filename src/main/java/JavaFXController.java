@@ -31,7 +31,7 @@ public class JavaFXController {
         else if (keyEvent.getCode() == KeyCode.SPACE)
             sceneContext.getEventHandler().onSpacebar(type);
         else if (keyEvent.getCode() == KeyCode.ESCAPE)
-            sceneContext.getEventHandler().onMenu(type);
+            sceneContext.getEventHandler().onEscape(type, sceneContext);
         else if (keyEvent.getCode() == KeyCode.SHIFT)
             sceneContext.getEventHandler().onLeftShift(type);
     }

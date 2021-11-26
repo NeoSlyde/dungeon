@@ -1,6 +1,7 @@
 package eventhandlers;
 
 import model.misc.Direction;
+import view.scenes.SceneContext;
 
 public class MainMenuSceneEventHandler implements EventHandler {
 
@@ -26,6 +27,9 @@ public class MainMenuSceneEventHandler implements EventHandler {
     public void onDirection(KeyEventType keyEventType, Direction direction) {
         // TODO Auto-generated method stub
 
+    }
+
+    public void onEscape(KeyEventType keyEventType, SceneContext sceneContext) {
     }
 
 }

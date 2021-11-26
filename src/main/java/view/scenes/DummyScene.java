@@ -43,6 +43,12 @@ public class DummyScene implements Scene {
 
             }
 
+            @Override
+            public void onEscape(KeyEventType type, SceneContext sceneContext) {
+                // TODO Auto-generated method stub
+
+            }
+
         };
     }
 

@@ -5,7 +5,15 @@ public interface AudioDataFactory {
 
     AudioData MainMenuTheme();
 
+    AudioData PauseMenuTheme();
+
     AudioData SelectSoundEffect();
 
     AudioData CloseSoundEffect();
+
+    AudioData BruhSoundEffect();
+
+    AudioData PauseOpenSoundEffect();
+
+    AudioData PauseCloseSoundEffect();
 }
