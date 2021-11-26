@@ -24,11 +24,6 @@ public class DummyScene implements Scene {
     public EventHandler getEventHandler() {
         return new EventHandler() {
             @Override
-            public void onMenu(KeyEventType keyEventType) {
-
-            }
-
-            @Override
             public void onSpacebar(KeyEventType keyEventType) {
 
             }

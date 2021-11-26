@@ -17,12 +17,6 @@ public class PauseSceneEventHandler implements EventHandler {
     }
 
     @Override
-    public void onMenu(KeyEventType keyEventType) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public void onSpacebar(KeyEventType keyEventType) {
         // TODO Auto-generated method stub
 
