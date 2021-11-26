@@ -7,10 +7,9 @@ import java.util.stream.Stream;
 import model.entities.Entity;
 import model.misc.Updatable;
 import model.misc.Vec2;
-import view.Drawable;
 import view.DrawableVisitor;
 
-public class Room implements Updatable, Drawable {
+public class Room implements Updatable {
     private final List<Entity> entities = new ArrayList<>();
     private World world = null;
     public final Vec2 size = new Vec2(32, 18);
@@ -56,7 +55,6 @@ public class Room implements Updatable, Drawable {
         entities.forEach(e -> e.update(dt));
     }
 
-    @Override
     public void draw(DrawableVisitor d) {
         d.draw(this);
     }

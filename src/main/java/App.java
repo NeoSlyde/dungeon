@@ -11,13 +11,8 @@ import view.scenes.MainMenuScene;
 import view.scenes.SceneContext;
 
 public class App extends Application {
-    private void initState() {
-
-    }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        initState();
         Group root = new Group();
         Scene scene = new Scene(root);
 

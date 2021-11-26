@@ -4,10 +4,9 @@ import java.util.List;
 
 import model.entities.Player;
 import model.misc.Updatable;
-import view.Drawable;
 import view.DrawableVisitor;
 
-public class World implements Updatable, Drawable {
+public class World implements Updatable {
     private final List<Room> rooms;
     private final Player player;
     private double t = 0;
@@ -37,7 +36,6 @@ public class World implements Updatable, Drawable {
         return t;
     }
 
-    @Override
     public void draw(DrawableVisitor d) {
         player.getRoom().draw(d);
     }
