@@ -16,4 +16,6 @@ public interface AudioDataFactory {
     AudioData pauseOpenSoundEffect();
 
     AudioData pauseCloseSoundEffect();
+
+    AudioData battleMenuTheme();
 }

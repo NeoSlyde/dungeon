@@ -40,4 +40,9 @@ public class StandardAudioDataFactory implements AudioDataFactory {
         return new AudioData.Builder().withPath("/sounds/pauseclose.wav").withVolume(-10.0f).build();
     }
 
+    @Override
+    public AudioData battleMenuTheme() {
+        return new AudioData.Builder().withPath("/sounds/fight.wav").withVolume(-10.0f).withLoop(true).build();
+    }
+
 }
