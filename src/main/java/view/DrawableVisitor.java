@@ -5,6 +5,8 @@ import javafx.scene.paint.Color;
 import model.Room;
 import model.entities.Entity;
 import model.entities.Player;
+import model.entities.Skeleton;
+import model.entities.Wall;
 import model.misc.Vec2;
 import view.sprites.Sprite;
 import view.sprites.SpriteFactory;
@@ -45,6 +47,14 @@ public class DrawableVisitor {
 
     public void draw(Player p) {
         spriteFactory.playerSprite().draw(scaledUp(2), p);
+    }
+
+    public void draw(Skeleton s) {
+        spriteFactory.skeletonSprite().draw(scaledUp(2), s);
+    }
+
+    public void draw(Wall w) {
+        spriteFactory.wallSprite().draw(this);
     }
 
     public DrawableVisitor scaledUp(double factor) {

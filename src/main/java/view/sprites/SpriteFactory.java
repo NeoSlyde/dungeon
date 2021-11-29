@@ -19,10 +19,15 @@ public class SpriteFactory {
         return cachedMonsterSpriteGhost;
     }
 
+    public Sprite wallSprite() {
+        return cachedWallSprite;
+    }
+
     private LivingEntitySprite cachedPlayerSprite = loadSpriteUtil("/player/");
     private LivingEntitySprite cachedMonsterSpriteSkeleton = loadSpriteUtil("/monster/skeleton/");
     private LivingEntitySprite cachedMonsterSpriteGoblin = loadSpriteUtil("/monster/goblin/");
     private LivingEntitySprite cachedMonsterSpriteGhost = loadSpriteUtil("/monster/ghost/");
+    private Sprite cachedWallSprite = new Sprite("/dungeon/wall/stone_gray_0.png");
 
     private LivingEntitySprite loadSpriteUtil(String path) {
         var walkingSpeed = 4;
