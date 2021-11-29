@@ -7,26 +7,41 @@ public class SpriteFactory {
         return cachedPlayerSprite;
     }
 
-    private LivingEntitySprite cachedPlayerSprite = loadPlayerSprite();
+    public LivingEntitySprite skeletonSprite() {
+        return cachedMonsterSpriteSkeleton;
+    }
 
-    private LivingEntitySprite loadPlayerSprite() {
+    public LivingEntitySprite goblinSprite() {
+        return cachedMonsterSpriteGoblin;
+    }
+
+    public LivingEntitySprite ghostSprite() {
+        return cachedMonsterSpriteGhost;
+    }
+
+    private LivingEntitySprite cachedPlayerSprite = loadSpriteUtil("/player/");
+    private LivingEntitySprite cachedMonsterSpriteSkeleton = loadSpriteUtil("/monster/skeleton/");
+    private LivingEntitySprite cachedMonsterSpriteGoblin = loadSpriteUtil("/monster/goblin/");
+    private LivingEntitySprite cachedMonsterSpriteGhost = loadSpriteUtil("/monster/ghost/");
+
+    private LivingEntitySprite loadSpriteUtil(String path) {
         var walkingSpeed = 4;
         var runningSpeed = 8;
         var idle = new DirectedAnimatedSprite(
-                new AnimatedSprite(0, "/player/up0.png"),
-                new AnimatedSprite(0, "/player/right0.png"),
-                new AnimatedSprite(0, "/player/down0.png"),
-                new AnimatedSprite(0, "/player/left0.png"));
+                new AnimatedSprite(0, path + "up0.png"),
+                new AnimatedSprite(0, path + "right0.png"),
+                new AnimatedSprite(0, path + "down0.png"),
+                new AnimatedSprite(0, path + "left0.png"));
         var walking = new DirectedAnimatedSprite(
-                new AnimatedSprite(walkingSpeed, "/player/up1.png", "/player/up2.png"),
-                new AnimatedSprite(walkingSpeed, "/player/right1.png", "/player/right2.png"),
-                new AnimatedSprite(walkingSpeed, "/player/down1.png", "/player/down2.png"),
-                new AnimatedSprite(walkingSpeed, "/player/left1.png", "/player/left2.png"));
+                new AnimatedSprite(walkingSpeed, path + "up1.png", path + "up2.png"),
+                new AnimatedSprite(walkingSpeed, path + "right1.png", path + "right2.png"),
+                new AnimatedSprite(walkingSpeed, path + "down1.png", path + "down2.png"),
+                new AnimatedSprite(walkingSpeed, path + "left1.png", path + "left2.png"));
         var running = new DirectedAnimatedSprite(
-                new AnimatedSprite(runningSpeed, "/player/up1.png", "/player/up2.png"),
-                new AnimatedSprite(runningSpeed, "/player/right1.png", "/player/right2.png"),
-                new AnimatedSprite(runningSpeed, "/player/down1.png", "/player/down2.png"),
-                new AnimatedSprite(runningSpeed, "/player/left1.png", "/player/left2.png"));
+                new AnimatedSprite(runningSpeed, path + "up1.png", path + "up2.png"),
+                new AnimatedSprite(runningSpeed, path + "right1.png", path + "right2.png"),
+                new AnimatedSprite(runningSpeed, path + "down1.png", path + "down2.png"),
+                new AnimatedSprite(runningSpeed, path + "left1.png", path + "left2.png"));
         return new LivingEntitySprite(idle, walking, running);
     }
 }
