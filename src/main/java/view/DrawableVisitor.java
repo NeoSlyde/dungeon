@@ -5,8 +5,10 @@ import javafx.scene.paint.Color;
 import model.Room;
 import model.entities.Entity;
 import model.entities.Player;
-import model.entities.Skeleton;
 import model.entities.Wall;
+import model.entities.monsters.Ghost;
+import model.entities.monsters.Goblin;
+import model.entities.monsters.Skeleton;
 import model.misc.Vec2;
 import view.sprites.Sprite;
 import view.sprites.SpriteFactory;
@@ -51,6 +53,14 @@ public class DrawableVisitor {
 
     public void draw(Skeleton s) {
         spriteFactory.skeletonSprite().draw(scaledUp(2), s);
+    }
+
+    public void draw(Goblin go) {
+        spriteFactory.goblinSprite().draw(scaledUp(2), go);
+    }
+
+    public void draw(Ghost gh) {
+        spriteFactory.ghostSprite().draw(scaledUp(2), gh);
     }
 
     public void draw(Wall w) {
