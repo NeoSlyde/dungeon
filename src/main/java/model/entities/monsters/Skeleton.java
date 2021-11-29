@@ -1,4 +1,4 @@
-package model.entities;
+package model.entities.monsters;
 
 import model.Room;
 import model.misc.Vec2;

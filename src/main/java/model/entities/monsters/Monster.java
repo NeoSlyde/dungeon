@@ -1,6 +1,7 @@
-package model.entities;
+package model.entities.monsters;
 
 import model.Room;
+import model.entities.LivingEntity;
 import model.misc.Vec2;
 import view.DrawableVisitor;
 
