@@ -12,7 +12,8 @@ import view.DrawableVisitor;
 public class Room implements Updatable {
     private final List<Entity> entities = new ArrayList<>();
     private World world = null;
-    public final Vec2 size = new Vec2(32, 18);
+    public static final Vec2 defaultSize = new Vec2(32, 18);
+    public final Vec2 size = defaultSize;
 
     public Room() {
 
@@ -23,7 +24,6 @@ public class Room implements Updatable {
         entities.add(entity);
     }
 
-    // ! Can only be called by Entity's constructor!
     public void removeEntity(Entity entity) {
         entities.remove(entity);
     }

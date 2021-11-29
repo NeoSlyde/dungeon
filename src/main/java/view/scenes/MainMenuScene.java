@@ -2,7 +2,6 @@ package view.scenes;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.List;
 
 import javax.sound.sampled.Clip;
 
@@ -15,19 +14,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.VBox;
-import model.Room;
-import model.entities.Player;
-import model.misc.Vec2;
-import model.world.World;
+import model.world.WorldFactory;
 
 public class MainMenuScene implements Scene {
-
+    private WorldFactory worldFactory;
     private EventHandler evtHandler;
 
     private SceneContext ctx;
     private Clip menuTheme;
 
-    public MainMenuScene(SceneContext ctx) {
+    public MainMenuScene(SceneContext ctx, WorldFactory worldFactory) {
+        this.worldFactory = worldFactory;
         this.evtHandler = new EventHandler() {
         };
         this.ctx = ctx;
@@ -43,10 +40,6 @@ public class MainMenuScene implements Scene {
         menu.setSpacing(10);
 
         menu.getStylesheets().addAll("/style/menu.css");
-
-        var room = new Room();
-        var player = new Player(room, new Vec2(1, 1));
-        room.addEntity(player);
 
         try {
             Image logoImage = new Image(new FileInputStream("src/main/resources/gui/logo2.png"));
@@ -66,7 +59,7 @@ public class MainMenuScene implements Scene {
         menu.getChildren().add(play);
         play.setOnAction(e -> {
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
-            ctx.switchScene(new WorldScene(ctx, new World(List.of(room), player)));
+            ctx.switchScene(new WorldScene(ctx, worldFactory.generate()));
             menuTheme.stop();
         });
 

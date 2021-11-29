@@ -54,6 +54,10 @@ public class Vec2 {
         return Math.sqrt(x * x + y * y);
     }
 
+    public double distance(Vec2 o) {
+        return Math.sqrt(Math.pow(x - o.x, 2) + Math.pow(y - o.y, 2));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

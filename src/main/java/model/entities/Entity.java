@@ -16,7 +16,7 @@ public abstract class Entity implements Updatable {
     private Vec2 position, size;
 
     public Entity(Room room, Vec2 position, Vec2 size) {
-        this.room = room;
+        setRoom(room);
         this.position = position;
         this.size = size;
     }
@@ -30,7 +30,9 @@ public abstract class Entity implements Updatable {
     }
 
     public void setRoom(Room room) {
-        this.room.removeEntity(this);
+        if (this.room != null) {
+            this.room.removeEntity(this);
+        }
         this.room = room;
         room.addEntity(this);
     }
