@@ -13,7 +13,7 @@ import view.DrawableVisitor;
 import view.sprites.SpriteFactory;
 
 public class WorldScene implements Scene {
-    private static final double dt = 0.016;
+    private static final double dt = 1.0 / 144;
 
     private World world;
 
@@ -26,12 +26,12 @@ public class WorldScene implements Scene {
     public WorldScene(SceneContext ctx, World world) {
         this.world = world;
         this.evtHandler = new WorldSceneEventHandler(world);
-
         canvas = new Canvas(ctx.windowSize.x, ctx.windowSize.y);
         tl = new Timeline(new KeyFrame(Duration.seconds(dt), e -> {
             world.update(dt);
             world.draw(new DrawableVisitor(Vec2.ZERO, ctx.windowSize, canvas.getGraphicsContext2D(),
                     SpriteFactory.INSTANCE));
+
         }));
         tl.setCycleCount(Timeline.INDEFINITE);
 

@@ -1,5 +1,8 @@
 package view.sprites;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+
 public class SpriteFactory {
     public static final SpriteFactory INSTANCE = new SpriteFactory();
 
@@ -23,11 +26,17 @@ public class SpriteFactory {
         return cachedWallSprite;
     }
 
+    public ImagePattern floorPattern() {
+        return cachedFloorPattern;
+    }
+
     private LivingEntitySprite cachedPlayerSprite = loadSpriteUtil("/player/");
     private LivingEntitySprite cachedMonsterSpriteSkeleton = loadSpriteUtil("/monster/skeleton/");
     private LivingEntitySprite cachedMonsterSpriteGoblin = loadSpriteUtil("/monster/goblin/");
     private LivingEntitySprite cachedMonsterSpriteGhost = loadSpriteUtil("/monster/ghost/");
     private Sprite cachedWallSprite = new Sprite("/dungeon/wall/stone_gray_0.png");
+    private ImagePattern cachedFloorPattern = new ImagePattern(new Image("/dungeon/floor/grey_dirt_0_old.png"), 0, 0,
+            32, 32, false);
 
     private LivingEntitySprite loadSpriteUtil(String path) {
         var walkingSpeed = 4;

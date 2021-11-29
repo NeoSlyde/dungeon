@@ -30,7 +30,7 @@ public class DrawableVisitor {
     }
 
     public void draw(Room room) {
-        ctx.setFill(new Color(0, 0, 0, 1));
+        ctx.setFill(spriteFactory.floorPattern());
         ctx.fillRect(posPx.x, posPx.y, sizePx.x, sizePx.y);
 
         var gameSizeFactor = sizePx.divide(room.size);
