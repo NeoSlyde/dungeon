@@ -1,7 +1,7 @@
 package eventhandlers;
 
-import model.World;
 import model.misc.Direction;
+import model.world.World;
 import view.scenes.PauseScene;
 import view.scenes.SceneContext;
 

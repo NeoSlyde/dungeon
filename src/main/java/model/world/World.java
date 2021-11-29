@@ -1,7 +1,8 @@
-package model;
+package model.world;
 
 import java.util.List;
 
+import model.Room;
 import model.entities.Player;
 import model.misc.Updatable;
 import view.DrawableVisitor;

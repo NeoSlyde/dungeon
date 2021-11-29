@@ -7,8 +7,8 @@ import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.util.Duration;
-import model.World;
 import model.misc.Vec2;
+import model.world.World;
 import view.DrawableVisitor;
 import view.sprites.SpriteFactory;
 

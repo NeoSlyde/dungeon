@@ -17,7 +17,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import model.World;
+import model.world.World;
 
 public class PauseScene implements Scene {
 

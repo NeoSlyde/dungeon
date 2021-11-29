@@ -16,9 +16,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.VBox;
 import model.Room;
-import model.World;
 import model.entities.Player;
 import model.misc.Vec2;
+import model.world.World;
 
 public class MainMenuScene implements Scene {
 

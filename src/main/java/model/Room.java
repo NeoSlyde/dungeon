@@ -6,6 +6,7 @@ import java.util.List;
 import model.entities.Entity;
 import model.misc.Updatable;
 import model.misc.Vec2;
+import model.world.World;
 import view.DrawableVisitor;
 
 public class Room implements Updatable {

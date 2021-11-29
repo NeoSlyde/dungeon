@@ -1,6 +1,6 @@
 package eventhandlers;
 
-import model.World;
+import model.world.World;
 import view.scenes.SceneContext;
 import view.scenes.WorldScene;
 
