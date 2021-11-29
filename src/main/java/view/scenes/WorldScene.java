@@ -10,6 +10,7 @@ import javafx.util.Duration;
 import model.World;
 import model.misc.Vec2;
 import view.DrawableVisitor;
+import view.sprites.SpriteFactory;
 
 public class WorldScene implements Scene {
     private static final double dt = 0.016;
@@ -29,7 +30,8 @@ public class WorldScene implements Scene {
         canvas = new Canvas(ctx.windowSize.x, ctx.windowSize.y);
         tl = new Timeline(new KeyFrame(Duration.seconds(dt), e -> {
             world.update(dt);
-            world.draw(new DrawableVisitor(Vec2.ZERO, ctx.windowSize, canvas.getGraphicsContext2D()));
+            world.draw(new DrawableVisitor(Vec2.ZERO, ctx.windowSize, canvas.getGraphicsContext2D(),
+                    SpriteFactory.INSTANCE));
         }));
         tl.setCycleCount(Timeline.INDEFINITE);
 

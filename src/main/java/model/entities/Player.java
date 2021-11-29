@@ -2,6 +2,7 @@ package model.entities;
 
 import model.Room;
 import model.misc.Vec2;
+import view.DrawableVisitor;
 
 public class Player extends LivingEntity {
     public Player(Room room, Vec2 position) {
@@ -9,7 +10,6 @@ public class Player extends LivingEntity {
     }
 
     private double health = getMaxHealth();
-    private boolean running = false;
 
     @Override
     public double getMaxHealth() {
@@ -28,10 +28,11 @@ public class Player extends LivingEntity {
 
     @Override
     public double getSpeed() {
-        return running ? 8 : 4;
+        return isRunning() ? 8 : 4;
     }
 
-    public void setRunning(boolean running) {
-        this.running = running;
+    @Override
+    public void draw(DrawableVisitor d) {
+        d.draw(this);
     }
 }

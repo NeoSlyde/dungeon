@@ -12,6 +12,7 @@ public abstract class LivingEntity extends Entity {
     private Direction facingDirection = Direction.RIGHT;
     private Inventory inventory = new Inventory();
     private Optional<LivingEntity> inCombatWith = Optional.empty();
+    private boolean running = false;
 
     public LivingEntity(Room room, Vec2 position, Vec2 size) {
         super(room, position, size);
@@ -64,6 +65,14 @@ public abstract class LivingEntity extends Entity {
 
     public Direction getFacingDirection() {
         return facingDirection;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     @Override
