@@ -1,6 +1,7 @@
 package model.entities;
 
 import model.Room;
+import model.items.HealingPotion;
 import model.misc.Vec2;
 import view.DrawableVisitor;
 

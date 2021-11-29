@@ -2,6 +2,7 @@ package view.scenes;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Map;
 
 import javax.sound.sampled.Clip;
 
@@ -13,10 +14,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import model.items.Item;
 import model.world.World;
 
 public class PauseScene implements Scene {
@@ -35,6 +38,7 @@ public class PauseScene implements Scene {
 
         this.world = world;
         pauseTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().pauseMenuTheme());
+
     }
 
     @Override
@@ -53,28 +57,27 @@ public class PauseScene implements Scene {
         pauseMenu.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
         pauseMenu.setAlignment(Pos.CENTER);
         pauseMenu.setSpacing(10);
+        pauseMenu.setFillWidth(false);
 
         VBox inventoryComponent = new VBox();
         inventoryComponent.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
         inventoryComponent.setAlignment(Pos.CENTER);
-        inventoryComponent.setSpacing(-80);
+        inventoryComponent.setFillWidth(false);
+        inventoryComponent.setSpacing(-30);
 
-        TilePane inventory1 = new TilePane();
-        inventory1.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
-        inventory1.setAlignment(Pos.CENTER);
-        inventory1.setHgap(10);
-        inventory1.setVgap(10);
-
-        TilePane inventory2 = new TilePane();
-        inventory2.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
-        inventory2.setAlignment(Pos.CENTER);
-        inventory2.setHgap(10);
-        inventory2.setVgap(10);
+        TilePane inventory = new TilePane();
+        inventory.setAlignment(Pos.CENTER);
+        inventory.setHgap(10);
+        inventory.setVgap(10);
+        inventory.setPrefColumns(6);
+        inventory.setPrefRows(2);
 
         // make a black rectangle
-
-        generateSlots(inventory1);
-        generateSlots(inventory2);
+        try {
+            generateSlots(inventory);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         try {
 
@@ -105,8 +108,7 @@ public class PauseScene implements Scene {
             e1.printStackTrace();
         }
 
-        inventoryComponent.getChildren().add(inventory1);
-        inventoryComponent.getChildren().add(inventory2);
+        inventoryComponent.getChildren().add(inventory);
 
         pauseMenu.getChildren().add(inventoryComponent);
 
@@ -118,22 +120,71 @@ public class PauseScene implements Scene {
         return evtHandler;
     }
 
-    private void generateSlots(TilePane tilePane) {
+    private void generateSlots(TilePane tilePane) throws FileNotFoundException {
         tilePane.getChildren().clear();
-        for (int i = 0; i < 6; i++) {
-            tilePane.getChildren().add(createSlot());
+        Map<Item, Integer> items = world.getPlayer().getInventory().getItems();
+        int count = 0;
+        int numItems = 12;
+        for (Map.Entry<Item, Integer> entry : items.entrySet()) {
+            tilePane.getChildren().add(createSlot(entry, tilePane));
+            count++;
+        }
+        if (count < numItems) {
+            for (int i = count; i < numItems; i++) {
+                tilePane.getChildren().add(createEmptySlot());
+            }
         }
     }
 
-    private Rectangle createSlot() {
-        Rectangle rectangle = new Rectangle(150, 150);
-        rectangle.setStroke(Color.BLACK);
-        rectangle.setStrokeWidth(5);
-        rectangle.setFill(Color.GREY);
+    private Pane createEmptySlot() {
+        Pane slot = new Pane();
+        slot.setPrefSize(150, 150);
+        slot.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-border-color: white; -fx-border-width: 2;");
+        return slot;
+    }
 
-        rectangle.setOnMouseClicked(e -> ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect()));
+    private Pane createSlot(Map.Entry<Item, Integer> entry, TilePane tilePane) {
+        Pane slot = new Pane();
+        slot.setPrefSize(150, 150);
+        slot.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-border-color: white; -fx-border-width: 2;");
+        try {
+            Image itemImage = new Image(new FileInputStream(entry.getKey().getImagePath()));
+            ImageView itemImageView = new ImageView(itemImage);
+            itemImageView.setFitWidth(itemImage.getWidth() * 4.6875);
+            itemImageView.setFitHeight(itemImage.getHeight() * 4.6875);
+            slot.getChildren().add(itemImageView);
 
-        return rectangle;
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        }
+
+        Text amount = new Text("x" + entry.getValue().toString());
+        // put text in the bottom of the slot
+        amount.setLayoutX(slot.getPrefWidth() / 2 - amount.getLayoutBounds().getWidth() / 2 + 50);
+        amount.setLayoutY(slot.getPrefHeight() - amount.getLayoutBounds().getHeight() - 5 + 10);
+        amount.setFill(Color.WHITE);
+
+        // make amount bigger
+        amount.setScaleX(1.5);
+        amount.setScaleY(1.5);
+
+        slot.getChildren().add(amount);
+
+        slot.setOnMouseClicked(e -> {
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            entry.getKey().use(world.getPlayer());
+            world.getPlayer().getInventory().removeItem(entry.getKey(), 1);
+            if (entry.getValue() == 0) {
+                world.getPlayer().getInventory().removeItem(entry.getKey());
+                tilePane.getChildren().remove(slot);
+                tilePane.getChildren().add(createEmptySlot());
+            }
+            amount.setText("x" + entry.getValue().toString());
+        });
+
+        amount.setStyle("-fx-font-weight: bold;");
+
+        return slot;
     }
 
     public World getWorld() {

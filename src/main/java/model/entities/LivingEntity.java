@@ -13,6 +13,7 @@ public abstract class LivingEntity extends Entity {
     private Inventory inventory = new Inventory();
     private Optional<LivingEntity> inCombatWith = Optional.empty();
     private boolean running = false;
+    private double health;
 
     public LivingEntity(Room room, Vec2 position, Vec2 size) {
         super(room, position, size);
@@ -73,6 +74,17 @@ public abstract class LivingEntity extends Entity {
 
     public void setRunning(boolean running) {
         this.running = running;
+    }
+
+    public void heal(double amount) {
+        double newHealth = health + amount;
+        newHealth = Math.min(getMaxHealth(), newHealth);
+        setHealth(newHealth);
+    }
+
+    private void setHealth(double newHealth) {
+        newHealth = Math.max(0, Math.min(getMaxHealth(), newHealth));
+        this.health = newHealth;
     }
 
     @Override
