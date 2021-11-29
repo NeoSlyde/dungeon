@@ -77,7 +77,9 @@ public abstract class LivingEntity extends Entity {
 
     @Override
     public void update(double dt) {
-        setPosition(computeNextPos(dt));
+        final var nextPos = computeNextPos(dt);
+        if (getRoom().getEntities().stream().filter(e -> e != this).noneMatch(e -> e.collidesWith(nextPos, getSize())))
+            setPosition(nextPos);
     }
 
     private Vec2 getVelocity() {
