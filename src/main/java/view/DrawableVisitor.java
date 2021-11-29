@@ -44,6 +44,12 @@ public class DrawableVisitor {
     }
 
     public void draw(Player p) {
-        spriteFactory.playerSprite().draw(this, p);
+        spriteFactory.playerSprite().draw(scaledUp(2), p);
+    }
+
+    public DrawableVisitor scaledUp(double factor) {
+        Vec2 newSize = sizePx.multiply(factor);
+        Vec2 offset = newSize.subtract(sizePx).multiply(0.5);
+        return new DrawableVisitor(posPx.subtract(offset), newSize, ctx, spriteFactory);
     }
 }

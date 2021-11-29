@@ -6,7 +6,7 @@ import view.DrawableVisitor;
 
 public class Player extends LivingEntity {
     public Player(Room room, Vec2 position) {
-        super(room, position, new Vec2(1, 1));
+        super(room, position, new Vec2(0.5, 0.5));
     }
 
     private double health = getMaxHealth();
