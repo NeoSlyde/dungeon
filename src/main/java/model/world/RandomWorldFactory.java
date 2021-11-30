@@ -38,7 +38,6 @@ public class RandomWorldFactory implements WorldFactory {
                 backDoor.setDestination(prevDoor);
             }
             Door nextDoor = generateNextDoor(backDoor, room);
-            System.out.println(nextDoor.side + ": " + nextDoor.pos);
 
             Entity[][] grid = new Entity[(int) Room.defaultSize.y][(int) Room.defaultSize.x];
 
