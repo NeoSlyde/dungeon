@@ -117,6 +117,10 @@ public abstract class LivingEntity extends Entity {
         this.health = Math.max(0, Math.min(getMaxHealth(), health));
     }
 
+    public void attack(LivingEntity target) {
+        target.setHealth(target.getHealth() - getStrength());
+    }
+
     @Override
     public void update(double dt) {
         final var nextPos = computeNextPos(dt);

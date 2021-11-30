@@ -50,4 +50,9 @@ public class StandardAudioDataFactory implements AudioDataFactory {
         return new AudioData.Builder().withPath("/sounds/door.wav").withVolume(-10.0f).build();
     }
 
+    @Override
+    public AudioData attackSoundEffect() {
+        return new AudioData.Builder().withPath("/sounds/hit.wav").withVolume(6.0f).build();
+    }
+
 }
