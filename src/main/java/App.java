@@ -10,6 +10,7 @@ import model.entities.monsters.RandomMonsterFactory;
 import model.world.RandomWorldFactory;
 import view.scenes.MainMenuScene;
 import view.scenes.SceneContext;
+import view.sprites.SpriteFactory;
 
 public class App extends Application {
     @Override
@@ -18,7 +19,8 @@ public class App extends Application {
         Scene scene = new Scene(root);
 
         var audioDataFactory = new StandardAudioDataFactory();
-        var sceneCtx = new SceneContext(root, audioDataFactory);
+        var spriteFactory = new SpriteFactory();
+        var sceneCtx = new SceneContext(root, audioDataFactory, spriteFactory);
 
         var random = new Random();
         sceneCtx.switchScene(

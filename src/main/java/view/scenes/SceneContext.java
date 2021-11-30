@@ -6,17 +6,20 @@ import eventhandlers.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import model.misc.Vec2;
+import view.sprites.SpriteFactory;
 
 public class SceneContext {
     private Scene current = new DummyScene();
     private AudioDataFactory audioDataFactory;
+    private SpriteFactory spriteFactory;
     private AudioPlayer audioPlayer = new AudioPlayer();
     private final Group root;
     public final Vec2 windowSize = new Vec2(16 * 70, 9 * 70);
 
-    public SceneContext(Group root, AudioDataFactory audioDataFactory) {
+    public SceneContext(Group root, AudioDataFactory audioDataFactory, SpriteFactory spriteFactory) {
         this.root = root;
         this.audioDataFactory = audioDataFactory;
+        this.spriteFactory = spriteFactory;
     }
 
     public void switchScene(Scene scene) {
@@ -44,5 +47,9 @@ public class SceneContext {
 
     public AudioPlayer getAudioPlayer() {
         return audioPlayer;
+    }
+
+    public SpriteFactory getSpriteFactory() {
+        return spriteFactory;
     }
 }

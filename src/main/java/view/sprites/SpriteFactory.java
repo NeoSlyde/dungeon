@@ -4,8 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
 public class SpriteFactory {
-    public static final SpriteFactory INSTANCE = new SpriteFactory();
-
     public LivingEntitySprite playerSprite() {
         return cachedPlayerSprite;
     }
