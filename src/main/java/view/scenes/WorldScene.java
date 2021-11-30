@@ -28,9 +28,11 @@ public class WorldScene implements Scene {
         canvas = new Canvas(ctx.windowSize.x, ctx.windowSize.y);
         tl = new Timeline(new KeyFrame(Duration.seconds(dt), e -> {
             world.update(dt);
-            world.draw(new DrawableVisitor(Vec2.ZERO, ctx.windowSize, canvas.getGraphicsContext2D(),
-                    ctx.getSpriteFactory()));
-
+            if (world.getPlayer().getEnemy().isPresent()) {
+                ctx.switchScene(new BattleScene(ctx, world));
+            }
+            world.draw(new DrawableVisitor(Vec2.ZERO, ctx.windowSize,
+                    canvas.getGraphicsContext2D(), ctx.getSpriteFactory()));
         }));
         tl.setCycleCount(Timeline.INDEFINITE);
 

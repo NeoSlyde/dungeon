@@ -5,19 +5,8 @@ import model.misc.Vec2;
 import view.DrawableVisitor;
 
 public class Ghost extends Monster {
-
     public Ghost(Room room, Vec2 position) {
         super(room, position);
-    }
-
-    @Override
-    public double getMaxHealth() {
-        return 100;
-    }
-
-    @Override
-    public double getHealth() {
-        return health;
     }
 
     @Override
@@ -33,6 +22,11 @@ public class Ghost extends Monster {
     @Override
     public void draw(DrawableVisitor d) {
         d.draw(this);
+    }
+
+    @Override
+    public String getName() {
+        return "Ghost";
     }
 
 }

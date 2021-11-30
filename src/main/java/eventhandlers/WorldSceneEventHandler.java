@@ -1,6 +1,7 @@
 package eventhandlers;
 
 import model.entities.Entity;
+import model.entities.monsters.Monster;
 import model.misc.Direction;
 import model.world.World;
 import view.scenes.PauseScene;
@@ -41,5 +42,10 @@ public class WorldSceneEventHandler implements EventHandler {
         world.getPlayer().getFacingEntity()
                 .filter(Entity::isUsable)
                 .ifPresent(e -> e.use(world.getPlayer()));
+
+        world.getPlayer().getFacingEntity()
+                .filter(e -> e instanceof Monster)
+                .map(e -> (Monster) e)
+                .ifPresent(world.getPlayer()::setEnemy);
     }
 }

@@ -13,7 +13,8 @@ public abstract class LivingEntity extends Entity {
     private Inventory inventory = new Inventory();
     private Optional<LivingEntity> inCombatWith = Optional.empty();
     private boolean running = false;
-    private double health;
+    private double health = 100, maxHealth = 100;
+    private double mana = 100, maxMana = 100;
 
     public LivingEntity(Room room, Vec2 position, Vec2 size) {
         super(room, position, size);
@@ -28,13 +29,35 @@ public abstract class LivingEntity extends Entity {
     public void use(LivingEntity user) {
     }
 
-    public abstract double getMaxHealth();
+    public double getMaxHealth() {
+        return maxHealth;
+    }
 
-    public abstract double getHealth();
+    public double getHealth() {
+        return health;
+    }
 
     public abstract double getStrength();
 
     public abstract double getSpeed();
+
+    public abstract String getName();
+
+    public double getMana() {
+        return mana;
+    }
+
+    public void setMana(double mana) {
+        this.mana = mana;
+    }
+
+    public double getMaxMana() {
+        return maxMana;
+    }
+
+    public void setMaxMana(double maxMana) {
+        this.maxMana = maxMana;
+    }
 
     public Inventory getInventory() {
         return inventory;

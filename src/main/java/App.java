@@ -25,9 +25,8 @@ public class App extends Application {
         var sceneCtx = new SceneContext(root, audioDataFactory, spriteFactory, audioPlayer);
 
         var random = new Random();
-        sceneCtx.switchScene(
-                new MainMenuScene(sceneCtx, new RandomWorldFactory(random, new RandomMonsterFactory(random),
-                        audioPlayer, audioDataFactory)));
+        sceneCtx.switchScene(new MainMenuScene(sceneCtx,
+                new RandomWorldFactory(random, new RandomMonsterFactory(random), audioPlayer, audioDataFactory)));
         var controller = new JavaFXController(sceneCtx);
 
         scene.setOnKeyPressed(controller::handleKeyPressed);

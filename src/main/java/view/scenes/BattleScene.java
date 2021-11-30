@@ -9,25 +9,26 @@ import eventhandlers.BattleSceneEventHandler;
 import eventhandlers.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import model.entities.Player;
+import model.entities.monsters.Monster;
+import model.misc.Direction;
+import model.misc.Vec2;
 import model.world.World;
+import view.DrawableVisitor;
 
 public class BattleScene implements Scene {
-
     private EventHandler evtHandler;
-
     private World world;
-
     private SceneContext ctx;
-
     private Clip battleTheme;
 
     public BattleScene(SceneContext ctx, World world) {
@@ -50,6 +51,9 @@ public class BattleScene implements Scene {
 
     @Override
     public Node getUI() {
+        Player player = world.getPlayer();
+        Monster enemy = player.getEnemy().get();
+
         Pane battleScene = new Pane();
         battleScene.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
         battleScene.getStylesheets().addAll("/style/battle.css");
@@ -78,19 +82,19 @@ public class BattleScene implements Scene {
         playerStatus.setLayoutY(420);
         playerStatus.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
 
-        Text playerName = new Text("Rachid");
+        Text playerName = new Text(player.getName());
         playerName.setLayoutX(50);
         playerName.setLayoutY(50);
         playerName.setFont(Font.font("Arctic", 40));
         playerName.setStyle("-fx-fill: white;");
 
-        Text playerHP = new Text("100/100 HP");
+        Text playerHP = new Text(String.format("%.0f/%.0f HP", player.getHealth(), player.getMaxHealth()));
         playerHP.setLayoutX(50);
         playerHP.setLayoutY(100);
         playerHP.setFont(Font.font("Arctic", 40));
         playerHP.setStyle("-fx-fill: green;");
 
-        Text playerMP = new Text("100/100 MP");
+        Text playerMP = new Text(String.format("%.0f/%.0f MP", player.getMana(), player.getMaxMana()));
         playerMP.setLayoutX(50);
         playerMP.setLayoutY(150);
         playerMP.setFont(Font.font("Arctic", 40));
@@ -106,13 +110,13 @@ public class BattleScene implements Scene {
         enemyStatus.setLayoutY(5);
         enemyStatus.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
 
-        Text enemyName = new Text("Skeleton");
+        Text enemyName = new Text(enemy.getName());
         enemyName.setLayoutX(50);
         enemyName.setLayoutY(50);
         enemyName.setFont(Font.font("Arctic", 40));
         enemyName.setStyle("-fx-fill: white;");
 
-        Text enemyHp = new Text("100/100 HP");
+        Text enemyHp = new Text(String.format("%.0f/%.0f HP", enemy.getHealth(), enemy.getMaxHealth()));
         enemyHp.setLayoutX(50);
         enemyHp.setLayoutY(100);
         enemyHp.setFont(Font.font("Arctic", 40));
@@ -154,21 +158,29 @@ public class BattleScene implements Scene {
         });
 
         try {
-            Image playerImage = new Image(new FileInputStream("src/main/resources/player/right0.png"));
-            ImageView playerImageView = new ImageView(playerImage);
-            playerImageView.setFitHeight(150);
-            playerImageView.setFitWidth(150);
-            playerImageView.setX(200);
-            playerImageView.setY(ctx.windowSize.y / 2 - 50);
+            player.setMoving(false);
+            player.setFacingDirection(Direction.RIGHT);
+            Canvas playerCanvas = new Canvas();
+            playerCanvas.setWidth(150);
+            playerCanvas.setHeight(150);
+            playerCanvas.setTranslateX(200);
+            playerCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
+            player.draw(new DrawableVisitor(Vec2.ZERO,
+                    new Vec2(playerCanvas.getWidth(), playerCanvas.getHeight()),
+                    playerCanvas.getGraphicsContext2D(), ctx.getSpriteFactory()).scaledUp(0.5));
 
-            Image enemyImage = new Image(new FileInputStream("src/main/resources/monster/skeleton/left0.png"));
-            ImageView enemyImageView = new ImageView(enemyImage);
-            enemyImageView.setFitHeight(150);
-            enemyImageView.setFitWidth(150);
-            enemyImageView.setX(ctx.windowSize.x - 350);
-            enemyImageView.setY(ctx.windowSize.y / 2 - 50);
+            enemy.setMoving(false);
+            enemy.setFacingDirection(Direction.LEFT);
+            Canvas enemyCanvas = new Canvas();
+            enemyCanvas.setHeight(150);
+            enemyCanvas.setWidth(150);
+            enemyCanvas.setTranslateX(ctx.windowSize.x - 350);
+            enemyCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
+            enemy.draw(new DrawableVisitor(Vec2.ZERO,
+                    new Vec2(enemyCanvas.getWidth(), enemyCanvas.getHeight()),
+                    enemyCanvas.getGraphicsContext2D(), ctx.getSpriteFactory()).scaledUp(0.5));
 
-            battleScene.getChildren().addAll(playerImageView, enemyImageView);
+            battleScene.getChildren().addAll(playerCanvas, enemyCanvas);
 
             Image backgroundImage = new Image(new FileInputStream("src/main/resources/gui/battle.png"));
             BackgroundImage background = new BackgroundImage(backgroundImage, null, null, null, null);

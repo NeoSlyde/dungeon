@@ -11,16 +11,6 @@ public class Goblin extends Monster {
     }
 
     @Override
-    public double getMaxHealth() {
-        return 75;
-    }
-
-    @Override
-    public double getHealth() {
-        return health;
-    }
-
-    @Override
     public double getStrength() {
         return 10;
     }
@@ -33,6 +23,11 @@ public class Goblin extends Monster {
     @Override
     public void draw(DrawableVisitor d) {
         d.draw(this);
+    }
+
+    @Override
+    public String getName() {
+        return "Goblin";
     }
 
 }
