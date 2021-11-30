@@ -27,7 +27,7 @@ public class Ghost extends Monster {
 
     @Override
     public double getSpeed() {
-        return 3;
+        return 1;
     }
 
     @Override
