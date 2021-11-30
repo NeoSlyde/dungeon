@@ -1,5 +1,7 @@
 package view.scenes;
 
+import javax.sound.sampled.Clip;
+
 import eventhandlers.EventHandler;
 import eventhandlers.WorldSceneEventHandler;
 import javafx.animation.KeyFrame;
@@ -22,10 +24,13 @@ public class WorldScene implements Scene {
 
     private Timeline tl;
 
+    private Clip worldTheme;
+
     public WorldScene(SceneContext ctx, World world) {
         this.world = world;
         this.evtHandler = new WorldSceneEventHandler(world, ctx);
         canvas = new Canvas(ctx.windowSize.x, ctx.windowSize.y);
+        worldTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().gameplayPeacefulMusic());
         tl = new Timeline(new KeyFrame(Duration.seconds(dt), e -> {
             world.update(dt);
             if (world.getPlayer().getEnemy().isPresent()) {
@@ -41,11 +46,13 @@ public class WorldScene implements Scene {
     @Override
     public void onEnter() {
         tl.play();
+        worldTheme.start();
     }
 
     @Override
     public void onLeave() {
         tl.stop();
+        worldTheme.stop();
     }
 
     @Override
