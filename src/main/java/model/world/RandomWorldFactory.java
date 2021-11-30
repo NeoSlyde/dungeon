@@ -17,9 +17,11 @@ import model.misc.Vec2;
 
 public class RandomWorldFactory implements WorldFactory {
     private final Random random;
+    private final EntityFactory monsterFactory;
 
-    public RandomWorldFactory(Random random) {
+    public RandomWorldFactory(Random random, EntityFactory monsterFactory) {
         this.random = random;
+        this.monsterFactory = monsterFactory;
     }
 
     public World generate() {
@@ -53,8 +55,10 @@ public class RandomWorldFactory implements WorldFactory {
             fillBordersWithEntity(grid, (r, p) -> new Wall(room, p));
 
             if (prevDoor != null)
-                remove(grid, (int) backDoor.getPosition().x, (int) backDoor.getPosition().y);
-            remove(grid, (int) nextDoor.getPosition().x, (int) nextDoor.getPosition().y);
+                set(grid, (int) backDoor.getPosition().x, (int) backDoor.getPosition().y, backDoor);
+            set(grid, (int) nextDoor.getPosition().x, (int) nextDoor.getPosition().y, nextDoor);
+
+            generateMonsters(grid, room);
 
             Stream.of(grid).flatMap(Stream::of).filter(Objects::nonNull).forEach(room::addEntity);
             rooms.add(room);
@@ -174,5 +178,22 @@ public class RandomWorldFactory implements WorldFactory {
             pos = random.nextInt((int) room.size.x - 2) + 1;
         }
         return new Door(room, side, pos);
+    }
+
+    private void generateMonsters(Entity[][] grid, Room room) {
+        int monsterCount = random.nextInt(4) + 1;
+        for (int i = 0; i < monsterCount; ++i) {
+            Vec2 pos = null;
+            for (int j = 0; j < 10_000; ++j) {
+                Vec2 randpos = new Vec2(random.nextInt((int) room.size.x), random.nextInt((int) room.size.y));
+                if (grid[(int) randpos.y][(int) randpos.x] == null) {
+                    pos = randpos;
+                    break;
+                }
+            }
+            if (pos == null)
+                continue;
+            set(grid, (int) pos.x, (int) pos.y, monsterFactory.generate(room, pos));
+        }
     }
 }

@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.entities.monsters.RandomMonsterFactory;
 import model.world.RandomWorldFactory;
 import view.scenes.MainMenuScene;
 import view.scenes.SceneContext;
@@ -17,10 +18,11 @@ public class App extends Application {
         Scene scene = new Scene(root);
 
         var audioDataFactory = new StandardAudioDataFactory();
-
         var sceneCtx = new SceneContext(root, audioDataFactory);
 
-        sceneCtx.switchScene(new MainMenuScene(sceneCtx, new RandomWorldFactory(new Random())));
+        var random = new Random();
+        sceneCtx.switchScene(
+                new MainMenuScene(sceneCtx, new RandomWorldFactory(random, new RandomMonsterFactory(random))));
         var controller = new JavaFXController(sceneCtx);
 
         scene.setOnKeyPressed(controller::handleKeyPressed);
