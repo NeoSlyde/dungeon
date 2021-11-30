@@ -45,4 +45,9 @@ public class StandardAudioDataFactory implements AudioDataFactory {
         return new AudioData.Builder().withPath("/sounds/fight.wav").withVolume(-10.0f).withLoop(true).build();
     }
 
+    @Override
+    public AudioData openDoorSoundEffect() {
+        return new AudioData.Builder().withPath("/sounds/door.wav").withVolume(-10.0f).build();
+    }
+
 }

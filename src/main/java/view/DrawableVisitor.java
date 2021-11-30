@@ -3,6 +3,7 @@ package view;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import model.Room;
+import model.entities.Door;
 import model.entities.Entity;
 import model.entities.Player;
 import model.entities.Wall;
@@ -65,6 +66,10 @@ public class DrawableVisitor {
 
     public void draw(Wall w) {
         spriteFactory.wallSprite().draw(this);
+    }
+
+    public void draw(Door d) {
+        spriteFactory.doorSprite().draw(this);
     }
 
     public DrawableVisitor scaledUp(double factor) {

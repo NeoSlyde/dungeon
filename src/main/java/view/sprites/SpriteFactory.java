@@ -24,6 +24,10 @@ public class SpriteFactory {
         return cachedWallSprite;
     }
 
+    public Sprite doorSprite() {
+        return cachedDoorSprite;
+    }
+
     public ImagePattern floorPattern() {
         return cachedFloorPattern;
     }
@@ -33,6 +37,7 @@ public class SpriteFactory {
     private LivingEntitySprite cachedMonsterSpriteGoblin = loadSpriteUtil("/monster/goblin/");
     private LivingEntitySprite cachedMonsterSpriteGhost = loadSpriteUtil("/monster/ghost/");
     private Sprite cachedWallSprite = new Sprite("/dungeon/wall/stone_gray_0.png");
+    private Sprite cachedDoorSprite = new Sprite("/dungeon/doors/runed_door.png");
     private ImagePattern cachedFloorPattern = new ImagePattern(new Image("/dungeon/floor/grey_dirt_0_old.png"), 0, 0,
             32, 32, false);
 

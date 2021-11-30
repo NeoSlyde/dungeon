@@ -2,14 +2,19 @@ package model.entities;
 
 import java.util.Random;
 
+import audio.AudioDataFactory;
+import audio.AudioPlayer;
 import model.Room;
 import model.misc.Direction;
 import model.misc.Vec2;
+import view.DrawableVisitor;
 
 public class Door extends Entity {
     public final Direction side;
     public final double pos;
     private Door destination;
+    private AudioPlayer audioPlayer = new AudioPlayer();
+    private AudioDataFactory audioDataFactory;
 
     public Door(Room room, Direction side, double pos) {
         super(room, getPosition(room, side, pos), new Vec2(1, 1));
@@ -55,11 +60,17 @@ public class Door extends Entity {
 
     @Override
     public void use(LivingEntity user) {
+        audioPlayer.play(audioDataFactory.openDoorSoundEffect());
         user.setPosition(destination.getFacingPosition());
         user.setRoom(destination.getRoom());
     }
 
     public static Door random(Random random, Room room) {
         return new Door(room, Direction.random(random), random.nextDouble());
+    }
+
+    @Override
+    public void draw(DrawableVisitor visitor) {
+        visitor.draw(this);
     }
 }
