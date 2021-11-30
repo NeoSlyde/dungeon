@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Stream;
 
+import audio.AudioDataFactory;
+import audio.AudioPlayer;
 import model.Room;
 import model.entities.Door;
 import model.entities.Entity;
@@ -18,10 +20,15 @@ import model.misc.Vec2;
 public class RandomWorldFactory implements WorldFactory {
     private final Random random;
     private final EntityFactory monsterFactory;
+    private AudioPlayer audioPlayer;
+    private AudioDataFactory audioDataFactory;
 
-    public RandomWorldFactory(Random random, EntityFactory monsterFactory) {
+    public RandomWorldFactory(Random random, EntityFactory monsterFactory, AudioPlayer audioPlayer,
+            AudioDataFactory audioDataFactory) {
         this.random = random;
         this.monsterFactory = monsterFactory;
+        this.audioDataFactory = audioDataFactory;
+        this.audioPlayer = audioPlayer;
     }
 
     public World generate() {
@@ -33,7 +40,7 @@ public class RandomWorldFactory implements WorldFactory {
             Room room = new Room();
             Door backDoor = null;
             if (prevDoor != null) {
-                backDoor = new Door(room, prevDoor.side.getOpposite(), prevDoor.pos);
+                backDoor = new Door(room, prevDoor.side.getOpposite(), prevDoor.pos, audioDataFactory, audioPlayer);
                 prevDoor.setDestination(backDoor);
                 backDoor.setDestination(prevDoor);
             }
@@ -176,7 +183,7 @@ public class RandomWorldFactory implements WorldFactory {
         } else {
             pos = random.nextInt((int) room.size.x - 2) + 1;
         }
-        return new Door(room, side, pos);
+        return new Door(room, side, pos, audioDataFactory, audioPlayer);
     }
 
     private void generateMonsters(Entity[][] grid, Room room) {

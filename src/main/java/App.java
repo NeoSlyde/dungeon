@@ -1,6 +1,7 @@
 
 import java.util.Random;
 
+import audio.AudioPlayer;
 import audio.StandardAudioDataFactory;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -19,12 +20,14 @@ public class App extends Application {
         Scene scene = new Scene(root);
 
         var audioDataFactory = new StandardAudioDataFactory();
+        var audioPlayer = new AudioPlayer();
         var spriteFactory = new SpriteFactory();
-        var sceneCtx = new SceneContext(root, audioDataFactory, spriteFactory);
+        var sceneCtx = new SceneContext(root, audioDataFactory, spriteFactory, audioPlayer);
 
         var random = new Random();
         sceneCtx.switchScene(
-                new MainMenuScene(sceneCtx, new RandomWorldFactory(random, new RandomMonsterFactory(random))));
+                new MainMenuScene(sceneCtx, new RandomWorldFactory(random, new RandomMonsterFactory(random),
+                        audioPlayer, audioDataFactory)));
         var controller = new JavaFXController(sceneCtx);
 
         scene.setOnKeyPressed(controller::handleKeyPressed);

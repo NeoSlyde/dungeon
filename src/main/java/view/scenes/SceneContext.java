@@ -12,14 +12,16 @@ public class SceneContext {
     private Scene current = new DummyScene();
     private AudioDataFactory audioDataFactory;
     private SpriteFactory spriteFactory;
-    private AudioPlayer audioPlayer = new AudioPlayer();
+    private AudioPlayer audioPlayer;
     private final Group root;
     public final Vec2 windowSize = new Vec2(16 * 70, 9 * 70);
 
-    public SceneContext(Group root, AudioDataFactory audioDataFactory, SpriteFactory spriteFactory) {
+    public SceneContext(Group root, AudioDataFactory audioDataFactory, SpriteFactory spriteFactory,
+            AudioPlayer audioPlayer) {
         this.root = root;
         this.audioDataFactory = audioDataFactory;
         this.spriteFactory = spriteFactory;
+        this.audioPlayer = audioPlayer;
     }
 
     public void switchScene(Scene scene) {

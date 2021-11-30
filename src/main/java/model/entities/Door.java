@@ -13,13 +13,15 @@ public class Door extends Entity {
     public final Direction side;
     public final double pos;
     private Door destination;
-    private AudioPlayer audioPlayer = new AudioPlayer();
+    private AudioPlayer audioPlayer;
     private AudioDataFactory audioDataFactory;
 
-    public Door(Room room, Direction side, double pos) {
+    public Door(Room room, Direction side, double pos, AudioDataFactory audioDataFactory, AudioPlayer audioPlayer) {
         super(room, getPosition(room, side, pos), new Vec2(1, 1));
         this.side = side;
         this.pos = pos;
+        this.audioDataFactory = audioDataFactory;
+        this.audioPlayer = audioPlayer;
     }
 
     public Vec2 getPosition() {
@@ -65,8 +67,8 @@ public class Door extends Entity {
         user.setRoom(destination.getRoom());
     }
 
-    public static Door random(Random random, Room room) {
-        return new Door(room, Direction.random(random), random.nextDouble());
+    public static Door random(Random random, Room room, AudioPlayer audioPlayer, AudioDataFactory audioDataFactory) {
+        return new Door(room, Direction.random(random), random.nextDouble(), audioDataFactory, audioPlayer);
     }
 
     @Override
