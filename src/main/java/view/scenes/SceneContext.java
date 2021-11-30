@@ -32,7 +32,7 @@ public class SceneContext {
 
         current.onEnter();
         root.getChildren().add(current.getUI());
-        current.getUI().requestFocus();
+        root.requestFocus();
     }
 
     public Node getUI() {

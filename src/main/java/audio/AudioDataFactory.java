@@ -20,4 +20,6 @@ public interface AudioDataFactory {
     AudioData battleMenuTheme();
 
     AudioData openDoorSoundEffect();
+
+    AudioData attackSoundEffect();
 }

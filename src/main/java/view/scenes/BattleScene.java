@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 
 import javax.sound.sampled.Clip;
 
+import animatefx.animation.BounceOutLeft;
+import animatefx.animation.BounceOutRight;
 import eventhandlers.BattleSceneEventHandler;
 import eventhandlers.EventHandler;
 import javafx.geometry.Pos;
@@ -18,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import model.entities.Player;
 import model.entities.monsters.Monster;
 import model.misc.Direction;
@@ -53,6 +56,8 @@ public class BattleScene implements Scene {
     public Node getUI() {
         Player player = world.getPlayer();
         Monster enemy = player.getEnemy().get();
+        Canvas playerCanvas = new Canvas();
+        Canvas enemyCanvas = new Canvas();
 
         Pane battleScene = new Pane();
         battleScene.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
@@ -123,13 +128,38 @@ public class BattleScene implements Scene {
         enemyHp.setStyle("-fx-fill: green;");
         enemyStatus.getChildren().addAll(enemyName, enemyHp);
 
+        BounceOutRight playerAttackAnimation = new BounceOutRight(playerCanvas);
+        BounceOutLeft enemyAttackAnimation = new BounceOutLeft(enemyCanvas);
+
         Button attack = new Button("ATTACK");
+        Button magic = new Button("MAGIC");
+
         combatOptions.getChildren().add(attack);
         attack.setOnAction(e -> {
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            playerAttackAnimation.play();
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
+            battleScene.getChildren().remove(combatOptions);
         });
 
-        Button magic = new Button("MAGIC");
+        enemyAttackAnimation.setDelay(Duration.seconds(0.5));
+        enemyAttackAnimation.setOnFinished(d -> {
+            enemyCanvas.setTranslateX(ctx.windowSize.x - 350);
+            enemyCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
+            enemy.attack(player);
+            battleScene.getChildren().add(combatOptions);
+        });
+        enemyAttackAnimation.setResetOnFinished(true);
+
+        playerAttackAnimation.setOnFinished(d -> {
+            playerCanvas.setTranslateX(200);
+            playerCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
+            player.attack(enemy);
+            enemyAttackAnimation.play();
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
+        });
+        playerAttackAnimation.setResetOnFinished(true);
+
         combatOptions.getChildren().add(magic);
         magic.setOnAction(e -> {
             battleScene.getChildren().remove(combatOptions);
@@ -160,7 +190,6 @@ public class BattleScene implements Scene {
         try {
             player.setMoving(false);
             player.setFacingDirection(Direction.RIGHT);
-            Canvas playerCanvas = new Canvas();
             playerCanvas.setWidth(150);
             playerCanvas.setHeight(150);
             playerCanvas.setTranslateX(200);
@@ -171,7 +200,6 @@ public class BattleScene implements Scene {
 
             enemy.setMoving(false);
             enemy.setFacingDirection(Direction.LEFT);
-            Canvas enemyCanvas = new Canvas();
             enemyCanvas.setHeight(150);
             enemyCanvas.setWidth(150);
             enemyCanvas.setTranslateX(ctx.windowSize.x - 350);
