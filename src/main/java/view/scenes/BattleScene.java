@@ -215,6 +215,8 @@ public class BattleScene implements Scene {
         });
         playerAttackAnimation.setResetOnFinished(true);
 
+        // Fire
+
         fireMagicAnimation.setOnFinished(d -> {
             fireBall.setX(310);
             fireBall.setY(ctx.windowSize.y / 2 - 50);
@@ -223,6 +225,8 @@ public class BattleScene implements Scene {
             enemyAttackAnimation.play();
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
         });
+
+        // Thunder
 
         thunderMagicAnimation.setOnFinished(d -> {
             thunderAttack.setX(ctx.windowSize.x - 380);
