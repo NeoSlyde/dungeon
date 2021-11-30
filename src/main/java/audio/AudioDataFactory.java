@@ -22,4 +22,6 @@ public interface AudioDataFactory {
     AudioData openDoorSoundEffect();
 
     AudioData attackSoundEffect();
+
+    AudioData fireSoundEffect();
 }

@@ -45,4 +45,20 @@ public class Player extends LivingEntity {
     public String getName() {
         return "You";
     }
+
+    public double getFireMagicStrength() {
+        return 50;
+    }
+
+    public void castFireAttack(Monster enemy) {
+        this.attackWithValue(enemy, getFireMagicStrength());
+    }
+
+    public double getThunderMagicStrength() {
+        return 70;
+    }
+
+    public void castThunderAttack(Monster enemy) {
+        this.attackWithValue(enemy, getFireMagicStrength());
+    }
 }

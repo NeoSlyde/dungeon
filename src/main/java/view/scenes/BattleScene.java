@@ -7,6 +7,8 @@ import javax.sound.sampled.Clip;
 
 import animatefx.animation.BounceOutLeft;
 import animatefx.animation.BounceOutRight;
+import animatefx.animation.FadeIn;
+import animatefx.animation.FadeOutRightBig;
 import eventhandlers.BattleSceneEventHandler;
 import eventhandlers.EventHandler;
 import javafx.geometry.Pos;
@@ -14,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
@@ -58,6 +61,8 @@ public class BattleScene implements Scene {
         Monster enemy = player.getEnemy().get();
         Canvas playerCanvas = new Canvas();
         Canvas enemyCanvas = new Canvas();
+        ImageView fireBall = new ImageView();
+        ImageView thunderAttack = new ImageView();
 
         Pane battleScene = new Pane();
         battleScene.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
@@ -78,6 +83,54 @@ public class BattleScene implements Scene {
         magicOptions.setLayoutX(5);
         magicOptions.setLayoutY(420);
         magicOptions.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+
+        try {
+            player.setMoving(false);
+            player.setFacingDirection(Direction.RIGHT);
+            playerCanvas.setWidth(150);
+            playerCanvas.setHeight(150);
+            playerCanvas.setTranslateX(200);
+            playerCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
+            player.draw(new DrawableVisitor(Vec2.ZERO,
+                    new Vec2(playerCanvas.getWidth(), playerCanvas.getHeight()),
+                    playerCanvas.getGraphicsContext2D(), ctx.getSpriteFactory()).scaledUp(0.5));
+
+            enemy.setMoving(false);
+            enemy.setFacingDirection(Direction.LEFT);
+            enemyCanvas.setHeight(150);
+            enemyCanvas.setWidth(150);
+            enemyCanvas.setTranslateX(ctx.windowSize.x - 350);
+            enemyCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
+            enemy.draw(new DrawableVisitor(Vec2.ZERO,
+                    new Vec2(enemyCanvas.getWidth(), enemyCanvas.getHeight()),
+                    enemyCanvas.getGraphicsContext2D(), ctx.getSpriteFactory()).scaledUp(0.5));
+
+            Image fireBallImage = new Image(new FileInputStream("src/main/resources/magic/fire.gif"));
+
+            fireBall.setImage(fireBallImage);
+
+            fireBall.setX(310);
+            fireBall.setY(ctx.windowSize.y / 2 - 50);
+            fireBall.setVisible(false);
+
+            Image thunderImage = new Image(new FileInputStream("src/main/resources/magic/thunder.gif"));
+
+            thunderAttack.setImage(thunderImage);
+
+            thunderAttack.setFitHeight(thunderImage.getHeight() * 2);
+
+            thunderAttack.setX(ctx.windowSize.x - 380);
+            thunderAttack.setVisible(false);
+
+            battleScene.getChildren().addAll(playerCanvas, enemyCanvas, fireBall, thunderAttack);
+
+            Image backgroundImage = new Image(new FileInputStream("src/main/resources/gui/battle.png"));
+            BackgroundImage background = new BackgroundImage(backgroundImage, null, null, null, null);
+            battleScene.setBackground(new Background(background));
+
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        }
 
         // Player
 
@@ -129,7 +182,9 @@ public class BattleScene implements Scene {
         enemyStatus.getChildren().addAll(enemyName, enemyHp);
 
         BounceOutRight playerAttackAnimation = new BounceOutRight(playerCanvas);
+        FadeOutRightBig fireMagicAnimation = new FadeOutRightBig(fireBall);
         BounceOutLeft enemyAttackAnimation = new BounceOutLeft(enemyCanvas);
+        FadeIn thunderMagicAnimation = new FadeIn(fireBall);
 
         Button attack = new Button("ATTACK");
         Button magic = new Button("MAGIC");
@@ -160,6 +215,23 @@ public class BattleScene implements Scene {
         });
         playerAttackAnimation.setResetOnFinished(true);
 
+        fireMagicAnimation.setOnFinished(d -> {
+            fireBall.setX(310);
+            fireBall.setY(ctx.windowSize.y / 2 - 50);
+            fireBall.setVisible(false);
+            player.castFireAttack(enemy);
+            enemyAttackAnimation.play();
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
+        });
+
+        thunderMagicAnimation.setOnFinished(d -> {
+            thunderAttack.setX(ctx.windowSize.x - 380);
+            thunderAttack.setVisible(false);
+            player.castThunderAttack(enemy);
+            enemyAttackAnimation.play();
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
+        });
+
         combatOptions.getChildren().add(magic);
         magic.setOnAction(e -> {
             battleScene.getChildren().remove(combatOptions);
@@ -171,12 +243,22 @@ public class BattleScene implements Scene {
         magicOptions.getChildren().add(fire);
         fire.setOnAction(e -> {
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            fireBall.setVisible(true);
+            battleScene.getChildren().remove(magicOptions);
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSoundEffect());
+
+            fireMagicAnimation.play();
         });
 
         Button thunder = new Button("THUNDER: 30MP");
         magicOptions.getChildren().add(thunder);
         thunder.setOnAction(e -> {
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            thunderAttack.setVisible(true);
+            battleScene.getChildren().remove(magicOptions);
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSoundEffect());
+
+            thunderMagicAnimation.play();
         });
 
         Button back = new Button("BACK");
@@ -186,37 +268,6 @@ public class BattleScene implements Scene {
             battleScene.getChildren().remove(magicOptions);
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
         });
-
-        try {
-            player.setMoving(false);
-            player.setFacingDirection(Direction.RIGHT);
-            playerCanvas.setWidth(150);
-            playerCanvas.setHeight(150);
-            playerCanvas.setTranslateX(200);
-            playerCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
-            player.draw(new DrawableVisitor(Vec2.ZERO,
-                    new Vec2(playerCanvas.getWidth(), playerCanvas.getHeight()),
-                    playerCanvas.getGraphicsContext2D(), ctx.getSpriteFactory()).scaledUp(0.5));
-
-            enemy.setMoving(false);
-            enemy.setFacingDirection(Direction.LEFT);
-            enemyCanvas.setHeight(150);
-            enemyCanvas.setWidth(150);
-            enemyCanvas.setTranslateX(ctx.windowSize.x - 350);
-            enemyCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
-            enemy.draw(new DrawableVisitor(Vec2.ZERO,
-                    new Vec2(enemyCanvas.getWidth(), enemyCanvas.getHeight()),
-                    enemyCanvas.getGraphicsContext2D(), ctx.getSpriteFactory()).scaledUp(0.5));
-
-            battleScene.getChildren().addAll(playerCanvas, enemyCanvas);
-
-            Image backgroundImage = new Image(new FileInputStream("src/main/resources/gui/battle.png"));
-            BackgroundImage background = new BackgroundImage(backgroundImage, null, null, null, null);
-            battleScene.setBackground(new Background(background));
-
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        }
 
         battleScene.getChildren().addAll(combatOptions, enemyStatus, playerStatus);
 

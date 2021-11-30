@@ -55,4 +55,9 @@ public class StandardAudioDataFactory implements AudioDataFactory {
         return new AudioData.Builder().withPath("/sounds/hit.wav").withVolume(6.0f).build();
     }
 
+    @Override
+    public AudioData fireSoundEffect() {
+        return new AudioData.Builder().withPath("/sounds/fire.wav").withVolume(0.0f).build();
+    }
+
 }
