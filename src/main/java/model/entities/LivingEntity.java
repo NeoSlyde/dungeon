@@ -82,9 +82,16 @@ public abstract class LivingEntity extends Entity {
         setHealth(newHealth);
     }
 
-    private void setHealth(double newHealth) {
-        newHealth = Math.max(0, Math.min(getMaxHealth(), newHealth));
-        this.health = newHealth;
+    public Optional<Entity> getFacingEntity() {
+        return getRoom().getEntities().stream()
+                .filter(e -> e != this)
+                .filter(e -> e.collidesWith(getPosition().add(getFacingDirection()
+                        .getUnitVec2()), getSize()))
+                .findAny();
+    }
+
+    public void setHealth(double health) {
+        this.health = Math.max(0, Math.min(getMaxHealth(), health));
     }
 
     @Override

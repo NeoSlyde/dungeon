@@ -7,10 +7,12 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 import model.Room;
+import model.entities.Door;
 import model.entities.Entity;
 import model.entities.EntityFactory;
 import model.entities.Player;
 import model.entities.Wall;
+import model.misc.Direction;
 import model.misc.Vec2;
 
 public class RandomWorldFactory implements WorldFactory {
@@ -24,22 +26,41 @@ public class RandomWorldFactory implements WorldFactory {
         int roomCount = new Random().nextInt(6) + 10;
         List<Room> rooms = new ArrayList<>();
 
+        Door prevDoor = null;
         while (rooms.size() < roomCount) {
             Room room = new Room();
+            Door backDoor = null;
+            if (prevDoor != null) {
+                backDoor = new Door(room, prevDoor.side.getOpposite(), prevDoor.pos);
+                prevDoor.setDestination(backDoor);
+                backDoor.setDestination(prevDoor);
+            }
+            Door nextDoor = generateNextDoor(backDoor, room);
+            System.out.println(nextDoor.side + ": " + nextDoor.pos);
+
             Entity[][] grid = new Entity[(int) Room.defaultSize.y][(int) Room.defaultSize.x];
 
             fillWithEntity(grid, (r, p) -> new Wall(room, p));
+
             int mainPathWidth = random.nextInt(4) + 1;
-            clearPath(grid, new Vec2(31, 5), new Vec2(0, 0), mainPathWidth);
+            Vec2 startPos = prevDoor == null ? room.size.multiply(0.5) : prevDoor.getDestination().getFacingPosition();
+            clearPath(grid, startPos, nextDoor.getFacingPosition(), mainPathWidth);
+
             int subroomCount = random.nextInt(4) + 1;
-            for (int k = 0; k < subroomCount; k++) {
+            for (int k = 0; k < subroomCount; k++)
                 cutSubroom(grid);
-            }
+
+            fillBordersWithEntity(grid, (r, p) -> new Wall(room, p));
+
+            if (prevDoor != null)
+                remove(grid, (int) backDoor.getPosition().x, (int) backDoor.getPosition().y);
+            remove(grid, (int) nextDoor.getPosition().x, (int) nextDoor.getPosition().y);
 
             Stream.of(grid).flatMap(Stream::of).filter(Objects::nonNull).forEach(room::addEntity);
             rooms.add(room);
+            prevDoor = nextDoor;
         }
-        return new World(rooms, new Player(rooms.get(0), new Vec2(1, 1)));
+        return new World(rooms, new Player(rooms.get(0), Room.defaultSize.multiply(0.5)));
     }
 
     private void fillWithEntity(Entity[][] grid, EntityFactory factory) {
@@ -47,6 +68,17 @@ public class RandomWorldFactory implements WorldFactory {
             for (int i = 0; i < grid[j].length; i++) {
                 set(grid, i, j, factory.generate(null, new Vec2(i, j)));
             }
+        }
+    }
+
+    private void fillBordersWithEntity(Entity[][] grid, EntityFactory factory) {
+        for (int j = 0; j < grid.length; j++) {
+            set(grid, grid[0].length - 1, j, factory.generate(null, new Vec2(grid[0].length - 1, j)));
+            set(grid, 0, j, factory.generate(null, new Vec2(0, j)));
+        }
+        for (int i = 0; i < grid[0].length; i++) {
+            set(grid, i, grid.length - 1, factory.generate(null, new Vec2(i, grid.length - 1)));
+            set(grid, i, 0, factory.generate(null, new Vec2(i, 0)));
         }
     }
 
@@ -128,5 +160,19 @@ public class RandomWorldFactory implements WorldFactory {
             }
             grid[y][x] = entity;
         }
+    }
+
+    private Door generateNextDoor(Door backDoor, Room room) {
+        Direction prevSide = backDoor == null ? null : backDoor.side;
+        Direction side;
+        while ((side = Direction.random(random)).equals(prevSide)) {
+        }
+        double pos;
+        if (side == Direction.LEFT || side == Direction.RIGHT) {
+            pos = random.nextInt((int) room.size.y - 2) + 1;
+        } else {
+            pos = random.nextInt((int) room.size.x - 2) + 1;
+        }
+        return new Door(room, side, pos);
     }
 }

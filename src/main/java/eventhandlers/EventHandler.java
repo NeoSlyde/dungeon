@@ -1,10 +1,9 @@
 package eventhandlers;
 
 import model.misc.Direction;
-import view.scenes.SceneContext;
 
 public interface EventHandler {
-    default void onEscape(KeyEventType type, SceneContext sceneContext) {
+    default void onEscape(KeyEventType type) {
     }
 
     default void onSpacebar(KeyEventType keyEventType) {

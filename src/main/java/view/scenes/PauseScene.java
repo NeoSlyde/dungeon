@@ -34,7 +34,7 @@ public class PauseScene implements Scene {
 
     public PauseScene(SceneContext ctx, World world) {
         this.ctx = ctx;
-        this.evtHandler = new PauseSceneEventHandler(world);
+        this.evtHandler = new PauseSceneEventHandler(world, ctx);
 
         this.world = world;
         pauseTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().pauseMenuTheme());

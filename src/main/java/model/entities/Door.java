@@ -8,29 +8,29 @@ import model.misc.Vec2;
 
 public class Door extends Entity {
     public final Direction side;
-    public final double offset;
+    public final double pos;
     private Door destination;
 
-    public Door(Room room, Direction side, double offset) {
-        super(room, getPosition(room, side, offset), new Vec2(1, 1));
+    public Door(Room room, Direction side, double pos) {
+        super(room, getPosition(room, side, pos), new Vec2(1, 1));
         this.side = side;
-        this.offset = offset;
+        this.pos = pos;
     }
 
     public Vec2 getPosition() {
-        return getPosition(getRoom(), side, offset);
+        return getPosition(getRoom(), side, pos);
     }
 
-    public static Vec2 getPosition(Room room, Direction side, double offset) {
+    public static Vec2 getPosition(Room room, Direction side, double pos) {
         switch (side) {
             case UP:
-                return new Vec2(offset, 0);
+                return new Vec2(pos, 0);
             case DOWN:
-                return new Vec2(offset, room.size.y - 1);
+                return new Vec2(pos, room.size.y - 1);
             case LEFT:
-                return new Vec2(0, offset);
+                return new Vec2(0, pos);
             case RIGHT:
-                return new Vec2(room.size.x - 1, offset);
+                return new Vec2(room.size.x - 1, pos);
             default:
                 return Vec2.ZERO;
         }
@@ -55,7 +55,8 @@ public class Door extends Entity {
 
     @Override
     public void use(LivingEntity user) {
-        user.setPosition(getFacingPosition());
+        user.setPosition(destination.getFacingPosition());
+        user.setRoom(destination.getRoom());
     }
 
     public static Door random(Random random, Room room) {

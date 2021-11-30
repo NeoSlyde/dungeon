@@ -25,7 +25,7 @@ public class WorldScene implements Scene {
 
     public WorldScene(SceneContext ctx, World world) {
         this.world = world;
-        this.evtHandler = new WorldSceneEventHandler(world);
+        this.evtHandler = new WorldSceneEventHandler(world, ctx);
         canvas = new Canvas(ctx.windowSize.x, ctx.windowSize.y);
         tl = new Timeline(new KeyFrame(Duration.seconds(dt), e -> {
             world.update(dt);

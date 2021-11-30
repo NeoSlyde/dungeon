@@ -32,7 +32,7 @@ public class BattleScene implements Scene {
 
     public BattleScene(SceneContext ctx, World world) {
         this.ctx = ctx;
-        this.evtHandler = new BattleSceneEventHandler(world);
+        this.evtHandler = new BattleSceneEventHandler(world, ctx);
 
         this.world = world;
         battleTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().battleMenuTheme());
