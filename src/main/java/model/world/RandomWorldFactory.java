@@ -2,9 +2,7 @@ package model.world;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
-import java.util.stream.Stream;
 
 import audio.AudioDataFactory;
 import audio.AudioPlayer;
@@ -66,7 +64,6 @@ public class RandomWorldFactory implements WorldFactory {
 
             generateMonsters(grid, room);
 
-            Stream.of(grid).flatMap(Stream::of).filter(Objects::nonNull).forEach(room::addEntity);
             rooms.add(room);
             prevDoor = nextDoor;
         }

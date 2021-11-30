@@ -17,7 +17,7 @@ public class Goblin extends Monster {
 
     @Override
     public double getSpeed() {
-        return 2;
+        return 4;
     }
 
     @Override

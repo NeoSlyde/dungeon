@@ -16,7 +16,7 @@ public class Skeleton extends Monster {
 
     @Override
     public double getSpeed() {
-        return 1;
+        return 2;
     }
 
     @Override
