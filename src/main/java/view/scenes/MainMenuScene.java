@@ -3,8 +3,6 @@ package view.scenes;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import javax.sound.sampled.Clip;
-
 import animatefx.animation.FadeOut;
 import eventhandlers.EventHandler;
 import javafx.geometry.Pos;
@@ -15,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import model.world.WorldFactory;
 
 public class MainMenuScene implements Scene {
@@ -22,7 +21,7 @@ public class MainMenuScene implements Scene {
     private EventHandler evtHandler;
 
     private SceneContext ctx;
-    private Clip menuTheme;
+    private MediaPlayer menuTheme;
 
     public MainMenuScene(SceneContext ctx, WorldFactory worldFactory) {
         this.worldFactory = worldFactory;
@@ -110,7 +109,7 @@ public class MainMenuScene implements Scene {
                 menuTheme.stop();
             } else {
                 musicOnOff.setText("MUSIC: ON");
-                menuTheme.start();
+                menuTheme.play();
             }
         });
 
