@@ -1,6 +1,7 @@
 package model.entities;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import model.Inventory;
 import model.Room;
@@ -106,12 +107,11 @@ public abstract class LivingEntity extends Entity {
         setHealth(newHealth);
     }
 
-    public Optional<Entity> getFacingEntity() {
+    public Stream<Entity> getFacingEntities() {
         return getRoom().getEntities().stream()
                 .filter(e -> e != this)
                 .filter(e -> e.collidesWith(getPosition().add(getFacingDirection()
-                        .getUnitVec2()), getSize()))
-                .findAny();
+                        .getUnitVec2()), getSize()));
     }
 
     public void setHealth(double health) {

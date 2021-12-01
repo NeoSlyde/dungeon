@@ -40,13 +40,15 @@ public class WorldSceneEventHandler implements EventHandler {
 
     @Override
     public void onSpacebar(KeyEventType type) {
-        world.getPlayer().getFacingEntity()
+        world.getPlayer().getFacingEntities()
                 .filter(Entity::isUsable)
+                .findAny()
                 .ifPresent(e -> e.use(world.getPlayer()));
 
-        world.getPlayer().getFacingEntity()
+        world.getPlayer().getFacingEntities()
                 .filter(e -> e instanceof Monster)
                 .map(e -> (Monster) e)
+                .findAny()
                 .ifPresent(world.getPlayer()::setEnemy);
     }
 }
