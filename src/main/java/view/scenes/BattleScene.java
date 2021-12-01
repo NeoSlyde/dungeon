@@ -205,6 +205,7 @@ public class BattleScene implements Scene {
         BounceOutLeft enemyAttackAnimation = new BounceOutLeft(enemyCanvas);
         FadeIn thunderMagicAnimation = new FadeIn(fireBall);
         FadeOut enemyFadeOut = new FadeOut(enemyCanvas);
+        FadeOut playerFadeOut = new FadeOut(playerCanvas);
 
         Button attack = new Button("ATTACK");
         Button magic = new Button("MAGIC");
@@ -222,8 +223,10 @@ public class BattleScene implements Scene {
             enemyCanvas.setTranslateX(ctx.windowSize.x - 350);
             enemyCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
             enemy.attack(player, new PhysicalAttack());
-            updateAfterEnemyAttack(playerHP, player);
-            battleScene.getChildren().add(combatOptions);
+            updateAfterEnemyAttack(playerHP, player, playerFadeOut);
+            if (player.getHealth() > 0) {
+                battleScene.getChildren().add(combatOptions);
+            }
         });
         enemyAttackAnimation.setResetOnFinished(true);
 
@@ -355,17 +358,15 @@ public class BattleScene implements Scene {
         }
     }
 
-    private void updateAfterEnemyAttack(Text playerHP, Player player) {
-        Pane tempPane = new Pane();
-        FadeIn fadeIn = new FadeIn(tempPane);
-        fadeIn.setDelay(Duration.seconds(1));
-        fadeIn.setOnFinished(d -> {
+    private void updateAfterEnemyAttack(Text playerHP, Player player, FadeOut playerFadeOut) {
+        setHpText(playerHP, player);
+        playerFadeOut.setSpeed(0.6);
+        playerFadeOut.setOnFinished(value -> {
             ctx.switchScene(new DeathScene(ctx));
         });
-        setHpText(playerHP, player);
-        if (player.getHealth() <= 0) {
 
-            fadeIn.play();
+        if (player.getHealth() <= 0) {
+            playerFadeOut.play();
         }
     }
 }
