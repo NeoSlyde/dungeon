@@ -10,6 +10,7 @@ import view.sprites.GraphicsFactory;
 
 public class SceneContext {
     private Scene current = new DummyScene();
+    private Node currentNode = current.getUI();
     private AudioDataFactory audioDataFactory;
     private GraphicsFactory graphicsFactory;
     private AudioPlayer audioPlayer;
@@ -25,13 +26,13 @@ public class SceneContext {
     }
 
     public void switchScene(Scene scene) {
-        root.getChildren().remove(current.getUI());
+        root.getChildren().remove(currentNode);
         current.onLeave();
 
         current = scene;
 
         current.onEnter();
-        root.getChildren().add(current.getUI());
+        root.getChildren().add((currentNode = current.getUI()));
         root.requestFocus();
     }
 
