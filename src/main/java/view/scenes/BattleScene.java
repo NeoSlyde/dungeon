@@ -79,6 +79,7 @@ public class BattleScene implements Scene {
         battleScene.getStylesheets().addAll("/style/battle.css");
 
         Flash battleSceneOpen = new Flash(battleScene);
+        battleSceneOpen.setSpeed(2);
         battleSceneOpen.play();
 
         FadeOut sceneFadeOut = new FadeOut(battleScene);
