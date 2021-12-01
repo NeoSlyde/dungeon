@@ -1,21 +1,18 @@
 package model.items;
 
 import model.entities.LivingEntity;
+import view.DrawableVisitor;
 
 public abstract class Item {
     public final String name;
-    public final String imagePath;
 
-    public Item(String name, String imagePath) {
+    public Item(String name) {
         this.name = name;
-        this.imagePath = imagePath;
     }
 
     public abstract void use(LivingEntity user);
 
-    public String getImagePath() {
-        return imagePath;
-    }
+    public abstract void draw(DrawableVisitor d);
 
     @Override
     public int hashCode() {

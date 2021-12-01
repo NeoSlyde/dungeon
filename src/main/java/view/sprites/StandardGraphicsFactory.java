@@ -34,6 +34,16 @@ public class StandardGraphicsFactory implements GraphicsFactory {
     }
 
     @Override
+    public Sprite healingPotion() {
+        return cachedHealingPotion;
+    }
+
+    @Override
+    public Sprite manaPotion() {
+        return cachedManaPotion;
+    }
+
+    @Override
     public Sprite chest() {
         return cachedChestSprite;
     }
@@ -58,6 +68,8 @@ public class StandardGraphicsFactory implements GraphicsFactory {
     private ImagePattern cachedFloorPattern = new ImagePattern(new Image("/dungeon/floor/grey_dirt_0_old.png"), 0, 0,
             32, 32, false);
     private Sprite cachedGameOver = new Sprite("/gui/gameover.jpg");
+    private Sprite cachedHealingPotion = new Sprite("/item/potion/ruby_new.png");
+    private Sprite cachedManaPotion = new Sprite("/item/potion/potion_purple_red.png");
 
     private LivingEntitySprite loadSpriteUtil(String path) {
         var walkingSpeed = 4;

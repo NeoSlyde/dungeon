@@ -10,6 +10,7 @@ import eventhandlers.EventHandler;
 import eventhandlers.PauseSceneEventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -20,7 +21,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.items.Item;
+import model.misc.Vec2;
 import model.world.World;
+import view.DrawableVisitor;
 
 public class PauseScene implements Scene {
     private EventHandler evtHandler;
@@ -148,16 +151,14 @@ public class PauseScene implements Scene {
         Pane slot = new Pane();
         slot.setPrefSize(150, 150);
         slot.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-border-color: white; -fx-border-width: 2;");
-        try {
-            Image itemImage = new Image(new FileInputStream(entry.getKey().getImagePath()));
-            ImageView itemImageView = new ImageView(itemImage);
-            itemImageView.setFitWidth(itemImage.getWidth() * 4.6875);
-            itemImageView.setFitHeight(itemImage.getHeight() * 4.6875);
-            slot.getChildren().add(itemImageView);
 
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        }
+        Canvas itemCanvas = new Canvas();
+        Vec2 itemCanvasSize = new Vec2(150, 150);
+        itemCanvas.setWidth(itemCanvasSize.x);
+        itemCanvas.setHeight(itemCanvasSize.y);
+        entry.getKey().draw(new DrawableVisitor(Vec2.ZERO, itemCanvasSize, itemCanvas.getGraphicsContext2D(),
+                ctx.getGraphicsFactory()));
+        slot.getChildren().add(itemCanvas);
 
         Text amount = new Text("x" + entry.getValue().toString());
         // put text in the bottom of the slot

@@ -11,6 +11,8 @@ import model.entities.Wall;
 import model.entities.monsters.Ghost;
 import model.entities.monsters.Goblin;
 import model.entities.monsters.Skeleton;
+import model.items.HealingPotion;
+import model.items.ManaPotion;
 import model.misc.Vec2;
 import view.sprites.Sprite;
 import view.sprites.GraphicsFactory;
@@ -75,6 +77,14 @@ public class DrawableVisitor {
 
     public void draw(Chest c) {
         graphicsFactory.chest().draw(this);
+    }
+
+    public void draw(HealingPotion c) {
+        graphicsFactory.healingPotion().draw(this);
+    }
+
+    public void draw(ManaPotion c) {
+        graphicsFactory.manaPotion().draw(this);
     }
 
     public DrawableVisitor scaledUp(double factor) {

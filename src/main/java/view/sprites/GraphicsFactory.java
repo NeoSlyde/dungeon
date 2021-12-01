@@ -17,6 +17,10 @@ public interface GraphicsFactory {
 
     Sprite chest();
 
+    Sprite healingPotion();
+
+    Sprite manaPotion();
+
     ImagePattern floorPattern();
 
     Sprite gameOver();
