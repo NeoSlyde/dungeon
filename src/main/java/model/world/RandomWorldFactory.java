@@ -197,7 +197,7 @@ public class RandomWorldFactory implements WorldFactory {
     }
 
     private void generateMonsters(Entity[][] grid, Room room) {
-        int monsterCount = random.nextInt(4) + 1000;
+        int monsterCount = random.nextInt(4) + 1;
         for (int i = 0; i < monsterCount; ++i) {
             Vec2 pos = null;
             for (int j = 0; j < 10_000; ++j) {
