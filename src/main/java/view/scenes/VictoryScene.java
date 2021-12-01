@@ -15,7 +15,7 @@ public class VictoryScene implements Scene {
 
     @Override
     public void onEnter() {
-        ctx.getAudioPlayer().play(ctx.getAudioDataFactory().deathSFX());
+        ctx.getAudioPlayer().play(ctx.getAudioDataFactory().winSFX());
         new Thread(() -> {
             try {
                 Thread.sleep(2500);
