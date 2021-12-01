@@ -34,6 +34,11 @@ public class StandardGraphicsFactory implements GraphicsFactory {
     }
 
     @Override
+    public Sprite chest() {
+        return cachedChestSprite;
+    }
+
+    @Override
     public ImagePattern floorPattern() {
         return cachedFloorPattern;
     }
@@ -49,6 +54,7 @@ public class StandardGraphicsFactory implements GraphicsFactory {
     private LivingEntitySprite cachedMonsterSpriteGhost = loadSpriteUtil("/monster/ghost/");
     private Sprite cachedWallSprite = new Sprite("/dungeon/wall/stone_gray_0.png");
     private Sprite cachedDoorSprite = new Sprite("/dungeon/doors/runed_door.png");
+    private Sprite cachedChestSprite = new Sprite("/dungeon/chest.png");
     private ImagePattern cachedFloorPattern = new ImagePattern(new Image("/dungeon/floor/grey_dirt_0_old.png"), 0, 0,
             32, 32, false);
     private Sprite cachedGameOver = new Sprite("/gui/gameover.jpg");

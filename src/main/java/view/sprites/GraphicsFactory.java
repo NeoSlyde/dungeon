@@ -15,6 +15,8 @@ public interface GraphicsFactory {
 
     Sprite door();
 
+    Sprite chest();
+
     ImagePattern floorPattern();
 
     Sprite gameOver();

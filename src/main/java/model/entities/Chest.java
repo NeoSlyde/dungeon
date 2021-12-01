@@ -3,6 +3,7 @@ package model.entities;
 import model.Inventory;
 import model.Room;
 import model.misc.Vec2;
+import view.DrawableVisitor;
 
 public class Chest extends Entity {
     private Inventory inventory = new Inventory();
@@ -24,5 +25,10 @@ public class Chest extends Entity {
     public void use(LivingEntity user) {
         user.getInventory().addAll(inventory);
         getRoom().removeEntity(this);
+    }
+
+    @Override
+    public void draw(DrawableVisitor d) {
+        d.draw(this);
     }
 }
