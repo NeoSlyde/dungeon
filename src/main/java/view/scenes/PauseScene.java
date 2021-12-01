@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
+import javax.sound.sampled.Clip;
+
 import eventhandlers.EventHandler;
 import eventhandlers.PauseSceneEventHandler;
 import javafx.geometry.Pos;
@@ -16,7 +18,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.items.Item;
@@ -28,7 +29,7 @@ public class PauseScene implements Scene {
     private EventHandler evtHandler;
     private World world;
     private SceneContext ctx;
-    private MediaPlayer pauseTheme;
+    private Clip pauseTheme;
 
     public PauseScene(SceneContext ctx, World world, Scene previousScene) {
         this.ctx = ctx;
@@ -41,7 +42,7 @@ public class PauseScene implements Scene {
 
     @Override
     public void onEnter() {
-        pauseTheme.play();
+        pauseTheme.start();
     }
 
     @Override

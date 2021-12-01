@@ -2,17 +2,17 @@ package audio;
 
 public class StandardAudioDataFactory implements AudioDataFactory {
     public AudioData gameplayPeacefulTheme() {
-        return new AudioData.Builder().withPath("/sounds/music.mp3").withVolume(-20.0f).withLoop(true).build();
+        return new AudioData.Builder().withPath("/sounds/music.wav").withVolume(-20.0f).withLoop(true).build();
     }
 
     @Override
     public AudioData mainMenuTheme() {
-        return new AudioData.Builder().withPath("/sounds/menu.mp3").withVolume(-20.0f).withLoop(true).build();
+        return new AudioData.Builder().withPath("/sounds/menu.wav").withVolume(-20.0f).withLoop(true).build();
     }
 
     @Override
     public AudioData pauseMenuTheme() {
-        return new AudioData.Builder().withPath("/sounds/pause.mp3").withVolume(-20.0f).withLoop(true).build();
+        return new AudioData.Builder().withPath("/sounds/pause.wav").withVolume(-20.0f).withLoop(true).build();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class StandardAudioDataFactory implements AudioDataFactory {
 
     @Override
     public AudioData battleMenuTheme() {
-        return new AudioData.Builder().withPath("/sounds/fight.mp3").withVolume(-12.0f).withLoop(true).build();
+        return new AudioData.Builder().withPath("/sounds/fight.wav").withVolume(-12.0f).withLoop(true).build();
     }
 
     @Override

@@ -3,6 +3,8 @@ package view.scenes;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import javax.sound.sampled.Clip;
+
 import animatefx.animation.BounceOutLeft;
 import animatefx.animation.BounceOutRight;
 import animatefx.animation.FadeIn;
@@ -21,7 +23,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -40,7 +41,7 @@ public class BattleScene implements Scene {
     private EventHandler evtHandler;
     private World world;
     private SceneContext ctx;
-    private MediaPlayer battleTheme;
+    private Clip battleTheme;
 
     public BattleScene(SceneContext ctx, World world) {
         this.ctx = ctx;
@@ -53,7 +54,7 @@ public class BattleScene implements Scene {
     public void onEnter() {
         battleTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().battleMenuTheme());
         ctx.getAudioPlayer().play(ctx.getAudioDataFactory().encounterSFX());
-        battleTheme.play();
+        battleTheme.start();
     }
 
     @Override
