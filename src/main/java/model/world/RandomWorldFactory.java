@@ -11,6 +11,7 @@ import model.entities.Door;
 import model.entities.Entity;
 import model.entities.EntityFactory;
 import model.entities.Player;
+import model.entities.RandomChestFactory;
 import model.entities.Wall;
 import model.misc.Direction;
 import model.misc.Vec2;
@@ -36,6 +37,7 @@ public class RandomWorldFactory implements WorldFactory {
         Door prevDoor = null;
         while (rooms.size() < roomCount) {
             Room room = new Room();
+            EntityFactory chestFactory = (_r, pos) -> new RandomChestFactory().generate(room, pos);
             Door backDoor = null;
             if (prevDoor != null) {
                 backDoor = new Door(room, prevDoor.side.getOpposite(), prevDoor.pos, audioDataFactory, audioPlayer);
@@ -54,7 +56,7 @@ public class RandomWorldFactory implements WorldFactory {
 
             int subroomCount = random.nextInt(4) + 1;
             for (int k = 0; k < subroomCount; k++)
-                cutSubroom(grid);
+                cutSubroom(grid, chestFactory);
 
             fillBordersWithEntity(grid, (r, p) -> new Wall(room, p));
 
@@ -106,7 +108,7 @@ public class RandomWorldFactory implements WorldFactory {
         }
     }
 
-    private void cutSubroom(Entity[][] grid) {
+    private void cutSubroom(Entity[][] grid, EntityFactory chestFactory) {
         Vec2 size = new Vec2(4 + random.nextInt(4), 4 + random.nextInt(4));
         // Find the best position to put the subroom
         Vec2 bestPos = null;
@@ -149,6 +151,10 @@ public class RandomWorldFactory implements WorldFactory {
             clearPath(grid, new Vec2(bestPos.x + size.x / 2, bestPos.y + size.y / 2),
                     new Vec2(entrance.x, bestPos.y + size.y / 2), 0);
         }
+
+        // Generate a chest
+        Vec2 chestPos = new Vec2(bestPos.x + size.x / 2, bestPos.y + size.y / 2);
+        set(grid, (int) chestPos.x, (int) chestPos.y, chestFactory.generate(null, chestPos));
     }
 
     private void remove(Entity[][] grid, int x, int y) {
