@@ -16,11 +16,17 @@ public abstract class Monster extends LivingEntity {
         d.draw(this);
     }
 
+    private double lastDirChangeT = 0;
+
     public void update(double dt) {
-        var vec = getRoom().getWorld().getPlayer().getPosition().subtract(getPosition());
-        setFacingDirection(Math.abs(vec.x) > Math.abs(vec.y) ? vec.x > 0 ? Direction.RIGHT : Direction.LEFT
-                : vec.y > 0 ? Direction.DOWN : Direction.UP);
-        setMoving(true);
+        var player = getRoom().getWorld().getPlayer();
+        if ((getRoom().getWorld().getT() - lastDirChangeT) > 0.5) {
+            lastDirChangeT = getRoom().getWorld().getT();
+            var vec = player.getPosition().subtract(getPosition());
+            setFacingDirection(Math.abs(vec.x) > Math.abs(vec.y) ? vec.x > 0 ? Direction.RIGHT : Direction.LEFT
+                    : vec.y > 0 ? Direction.DOWN : Direction.UP);
+        }
+        setMoving(player.getPosition().distance(getPosition()) >= 1);
         super.update(dt);
     }
 }
