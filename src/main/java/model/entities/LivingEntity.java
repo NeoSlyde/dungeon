@@ -115,7 +115,9 @@ public abstract class LivingEntity extends Entity {
 
     public void update(double dt) {
         final var nextPos = computeNextPos(dt);
-        if (getRoom().getEntities().stream().filter(e -> e != this).noneMatch(e -> e.collidesWith(nextPos, getSize())))
+        if (getRoom().getEntities().stream().filter(e -> e != this)
+                .noneMatch(e -> !e.collidesWith(getPosition(), getSize())
+                        && e.collidesWith(nextPos, getSize())))
             setPosition(nextPos);
     }
 
