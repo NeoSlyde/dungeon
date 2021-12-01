@@ -14,7 +14,7 @@ import model.world.World;
 import view.DrawableVisitor;
 
 public class WorldScene implements Scene {
-    private static final double dt = 1.0 / 144;
+    private static final double dt = 1.0 / 60;
 
     private World world;
 
