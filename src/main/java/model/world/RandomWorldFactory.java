@@ -37,7 +37,7 @@ public class RandomWorldFactory implements WorldFactory {
         Door prevDoor = null;
         while (rooms.size() < roomCount) {
             Room room = new Room();
-            EntityFactory chestFactory = (_r, pos) -> new RandomChestFactory().generate(room, pos);
+            EntityFactory chestFactory = (_r, pos) -> new RandomChestFactory(random).generate(room, pos);
             Door backDoor = null;
             if (prevDoor != null) {
                 backDoor = new Door(room, prevDoor.side.getOpposite(), prevDoor.pos, audioDataFactory, audioPlayer);

@@ -11,6 +11,8 @@ public class Inventory {
     private int capacity = 12;
 
     public void addItem(Item item, int amount) {
+        if (amount == 0)
+            return;
         if (items.size() < capacity || items.keySet().contains(item)) {
             items.compute(item, (_item, i) -> i == null ? amount : i + amount);
         }
