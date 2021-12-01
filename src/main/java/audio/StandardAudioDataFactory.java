@@ -69,4 +69,10 @@ public class StandardAudioDataFactory implements AudioDataFactory {
     public AudioData winSFX() {
         return new AudioData.Builder().withPath("/sounds/win.wav").withVolume(0.0f).build();
     }
+
+    @Override
+    public AudioData encounterSFX() {
+        return new AudioData.Builder().withPath("/sounds/encounter.wav").withVolume(0.0f).build();
+    }
+
 }

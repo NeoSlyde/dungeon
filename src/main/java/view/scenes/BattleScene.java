@@ -65,6 +65,7 @@ public class BattleScene implements Scene {
 
     @Override
     public Node getUI() {
+        ctx.getAudioPlayer().play(ctx.getAudioDataFactory().encounterSFX());
         Player player = world.getPlayer();
         Monster enemy = player.getEnemy().get();
         Canvas playerCanvas = new Canvas();

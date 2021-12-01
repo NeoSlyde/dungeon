@@ -28,4 +28,6 @@ public interface AudioDataFactory {
     AudioData errorSFX();
 
     AudioData winSFX();
+
+    AudioData encounterSFX();
 }
