@@ -69,6 +69,7 @@ public class BattleScene implements Scene {
         Canvas enemyCanvas = new Canvas();
         ImageView fireBall = new ImageView();
         ImageView thunderAttack = new ImageView();
+        Font font = Font.loadFont("file:src/main/resources/font/Arctic.ttf", 40);
 
         Pane battleScene = new Pane();
         battleScene.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
@@ -149,21 +150,21 @@ public class BattleScene implements Scene {
         Text playerName = new Text(player.getName());
         playerName.setLayoutX(50);
         playerName.setLayoutY(50);
-        playerName.setFont(Font.font("Arctic", 40));
+        playerName.setFont(font);
         playerName.setStyle("-fx-fill: white;");
 
         Text playerHP = new Text();
         setHpText(playerHP, player);
         playerHP.setLayoutX(50);
         playerHP.setLayoutY(100);
-        playerHP.setFont(Font.font("Arctic", 40));
+        playerHP.setFont(font);
         playerHP.setStyle("-fx-fill: green;");
 
         Text playerMP = new Text();
         setMpText(playerMP, player);
         playerMP.setLayoutX(50);
         playerMP.setLayoutY(150);
-        playerMP.setFont(Font.font("Arctic", 40));
+        playerMP.setFont(font);
         playerMP.setStyle("-fx-fill: blue;");
 
         playerStatus.getChildren().addAll(playerName, playerHP, playerMP);
@@ -179,14 +180,14 @@ public class BattleScene implements Scene {
         Text enemyName = new Text(enemy.getName());
         enemyName.setLayoutX(50);
         enemyName.setLayoutY(50);
-        enemyName.setFont(Font.font("Arctic", 40));
+        enemyName.setFont(font);
         enemyName.setStyle("-fx-fill: white;");
 
         Text enemyHp = new Text();
         setHpText(enemyHp, enemy);
-        enemyHp.setLayoutX(50);
+        enemyHp.setLayoutX(20);
         enemyHp.setLayoutY(100);
-        enemyHp.setFont(Font.font("Arctic", 40));
+        enemyHp.setFont(font);
         enemyHp.setStyle("-fx-fill: green;");
         enemyStatus.getChildren().addAll(enemyName, enemyHp);
 
@@ -232,8 +233,7 @@ public class BattleScene implements Scene {
             fireBall.setX(310);
             fireBall.setY(ctx.windowSize.y / 2 - 50);
             fireBall.setVisible(false);
-            player.attack(enemy, new FireAttack());
-            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
+
             enemyAttackAnimation.play();
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
         });
@@ -243,8 +243,7 @@ public class BattleScene implements Scene {
         thunderMagicAnimation.setOnFinished(d -> {
             thunderAttack.setX(ctx.windowSize.x - 380);
             thunderAttack.setVisible(false);
-            player.attack(enemy, new ThunderAttack());
-            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
+
             enemyAttackAnimation.play();
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
         });
@@ -263,6 +262,8 @@ public class BattleScene implements Scene {
             fireBall.setVisible(true);
             battleScene.getChildren().remove(magicOptions);
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSFX());
+            player.attack(enemy, new FireAttack());
+            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
 
             fireMagicAnimation.play();
         });
@@ -274,6 +275,8 @@ public class BattleScene implements Scene {
             thunderAttack.setVisible(true);
             battleScene.getChildren().remove(magicOptions);
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSFX());
+            player.attack(enemy, new ThunderAttack());
+            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
 
             thunderMagicAnimation.play();
         });
