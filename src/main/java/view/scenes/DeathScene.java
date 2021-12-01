@@ -31,9 +31,9 @@ public class DeathScene implements Scene {
         var canvas = new Canvas();
         canvas.setWidth(ctx.windowSize.x);
         canvas.setHeight(ctx.windowSize.y);
-        ctx.getSpriteFactory().gameOverImg()
+        ctx.getGraphicsFactory().gameOver()
                 .draw(new DrawableVisitor(Vec2.ZERO, ctx.windowSize,
-                        canvas.getGraphicsContext2D(), ctx.getSpriteFactory()));
+                        canvas.getGraphicsContext2D(), ctx.getGraphicsFactory()));
         return canvas;
     }
 

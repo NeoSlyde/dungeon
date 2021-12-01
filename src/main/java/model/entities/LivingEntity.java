@@ -127,7 +127,6 @@ public abstract class LivingEntity extends Entity {
         setMana(getMana() - attack.getMana());
     }
 
-    @Override
     public void update(double dt) {
         final var nextPos = computeNextPos(dt);
         if (getRoom().getEntities().stream().filter(e -> e != this).noneMatch(e -> e.collidesWith(nextPos, getSize())))

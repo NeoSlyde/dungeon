@@ -1,7 +1,7 @@
 package audio;
 
 public class StandardAudioDataFactory implements AudioDataFactory {
-    public AudioData gameplayPeacefulMusic() {
+    public AudioData gameplayPeacefulTheme() {
         return new AudioData.Builder().withPath("/sounds/music.wav").withVolume(-20.0f).withLoop(true).build();
     }
 
@@ -16,27 +16,22 @@ public class StandardAudioDataFactory implements AudioDataFactory {
     }
 
     @Override
-    public AudioData selectSoundEffect() {
+    public AudioData selectSFX() {
         return new AudioData.Builder().withPath("/sounds/select.wav").withVolume(-10.0f).build();
     }
 
     @Override
-    public AudioData closeSoundEffect() {
+    public AudioData closeSFX() {
         return new AudioData.Builder().withPath("/sounds/close.wav").withVolume(-10.0f).build();
     }
 
     @Override
-    public AudioData bruhSoundEffect() {
-        return new AudioData.Builder().withPath("/sounds/bruh.wav").build();
-    }
-
-    @Override
-    public AudioData pauseOpenSoundEffect() {
+    public AudioData pauseOpenSFX() {
         return new AudioData.Builder().withPath("/sounds/pauseopen.wav").withVolume(-10.0f).build();
     }
 
     @Override
-    public AudioData pauseCloseSoundEffect() {
+    public AudioData pauseCloseSFX() {
         return new AudioData.Builder().withPath("/sounds/pauseclose.wav").withVolume(-10.0f).build();
     }
 
@@ -46,17 +41,17 @@ public class StandardAudioDataFactory implements AudioDataFactory {
     }
 
     @Override
-    public AudioData openDoorSoundEffect() {
+    public AudioData openDoorSFX() {
         return new AudioData.Builder().withPath("/sounds/door.wav").withVolume(-10.0f).build();
     }
 
     @Override
-    public AudioData attackSoundEffect() {
+    public AudioData attackSFX() {
         return new AudioData.Builder().withPath("/sounds/hit.wav").withVolume(6.0f).build();
     }
 
     @Override
-    public AudioData fireSoundEffect() {
+    public AudioData fireSFX() {
         return new AudioData.Builder().withPath("/sounds/fire.wav").withVolume(0.0f).build();
     }
 

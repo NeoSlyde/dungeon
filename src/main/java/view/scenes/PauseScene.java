@@ -172,7 +172,7 @@ public class PauseScene implements Scene {
         slot.getChildren().add(amount);
 
         slot.setOnMouseClicked(e -> {
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
             entry.getKey().use(world.getPlayer());
             world.getPlayer().getInventory().removeItem(entry.getKey(), 1);
             if (entry.getValue() == 0) {

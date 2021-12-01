@@ -15,7 +15,7 @@ public class PauseSceneEventHandler implements EventHandler {
     @Override
     public void onEscape(KeyEventType type) {
         if (type == KeyEventType.PRESSED) {
-            sceneContext.getAudioPlayer().play(sceneContext.getAudioDataFactory().pauseCloseSoundEffect());
+            sceneContext.getAudioPlayer().play(sceneContext.getAudioDataFactory().pauseCloseSFX());
             sceneContext.switchScene(previousScene);
         }
     }

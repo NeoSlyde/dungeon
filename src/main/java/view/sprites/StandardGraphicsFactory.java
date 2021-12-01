@@ -3,36 +3,43 @@ package view.sprites;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
-public class SpriteFactory {
-    public LivingEntitySprite playerSprite() {
+public class StandardGraphicsFactory implements GraphicsFactory {
+    public LivingEntitySprite player() {
         return cachedPlayerSprite;
     }
 
-    public LivingEntitySprite skeletonSprite() {
+    @Override
+    public LivingEntitySprite skeleton() {
         return cachedMonsterSpriteSkeleton;
     }
 
-    public LivingEntitySprite goblinSprite() {
+    @Override
+    public LivingEntitySprite goblin() {
         return cachedMonsterSpriteGoblin;
     }
 
-    public LivingEntitySprite ghostSprite() {
+    @Override
+    public LivingEntitySprite ghost() {
         return cachedMonsterSpriteGhost;
     }
 
-    public Sprite wallSprite() {
+    @Override
+    public Sprite wall() {
         return cachedWallSprite;
     }
 
-    public Sprite doorSprite() {
+    @Override
+    public Sprite door() {
         return cachedDoorSprite;
     }
 
+    @Override
     public ImagePattern floorPattern() {
         return cachedFloorPattern;
     }
 
-    public Sprite gameOverImg() {
+    @Override
+    public Sprite gameOver() {
         return cachedGameOver;
     }
 

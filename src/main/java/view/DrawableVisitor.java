@@ -12,18 +12,18 @@ import model.entities.monsters.Goblin;
 import model.entities.monsters.Skeleton;
 import model.misc.Vec2;
 import view.sprites.Sprite;
-import view.sprites.SpriteFactory;
+import view.sprites.GraphicsFactory;
 
 public class DrawableVisitor {
     public final Vec2 posPx, sizePx;
     public final GraphicsContext ctx;
-    public final SpriteFactory spriteFactory;
+    public final GraphicsFactory graphicsFactory;
 
-    public DrawableVisitor(Vec2 posPx, Vec2 sizePx, GraphicsContext ctx, SpriteFactory spriteFactory) {
+    public DrawableVisitor(Vec2 posPx, Vec2 sizePx, GraphicsContext ctx, GraphicsFactory graphicsFactory) {
         this.posPx = posPx;
         this.sizePx = sizePx;
         this.ctx = ctx;
-        this.spriteFactory = spriteFactory;
+        this.graphicsFactory = graphicsFactory;
     }
 
     public void draw(Sprite sprite) {
@@ -31,14 +31,14 @@ public class DrawableVisitor {
     }
 
     public void draw(Room room) {
-        ctx.setFill(spriteFactory.floorPattern());
+        ctx.setFill(graphicsFactory.floorPattern());
         ctx.fillRect(posPx.x, posPx.y, sizePx.x, sizePx.y);
 
         var gameSizeFactor = sizePx.divide(room.size);
 
         for (var e : room.getEntities()) {
             var d = new DrawableVisitor(posPx.add(e.getPosition().multiply(gameSizeFactor)),
-                    e.getSize().multiply(gameSizeFactor), ctx, spriteFactory);
+                    e.getSize().multiply(gameSizeFactor), ctx, graphicsFactory);
             e.draw(d);
         }
     }
@@ -49,32 +49,32 @@ public class DrawableVisitor {
     }
 
     public void draw(Player p) {
-        spriteFactory.playerSprite().draw(scaledUp(2), p);
+        graphicsFactory.player().draw(scaledUp(2), p);
     }
 
     public void draw(Skeleton s) {
-        spriteFactory.skeletonSprite().draw(scaledUp(2), s);
+        graphicsFactory.skeleton().draw(scaledUp(2), s);
     }
 
     public void draw(Goblin go) {
-        spriteFactory.goblinSprite().draw(scaledUp(2), go);
+        graphicsFactory.goblin().draw(scaledUp(2), go);
     }
 
     public void draw(Ghost gh) {
-        spriteFactory.ghostSprite().draw(scaledUp(2), gh);
+        graphicsFactory.ghost().draw(scaledUp(2), gh);
     }
 
     public void draw(Wall w) {
-        spriteFactory.wallSprite().draw(this);
+        graphicsFactory.wall().draw(this);
     }
 
     public void draw(Door d) {
-        spriteFactory.doorSprite().draw(this);
+        graphicsFactory.door().draw(this);
     }
 
     public DrawableVisitor scaledUp(double factor) {
         Vec2 newSize = sizePx.multiply(factor);
         Vec2 offset = newSize.subtract(sizePx).multiply(0.5);
-        return new DrawableVisitor(posPx.subtract(offset), newSize, ctx, spriteFactory);
+        return new DrawableVisitor(posPx.subtract(offset), newSize, ctx, graphicsFactory);
     }
 }

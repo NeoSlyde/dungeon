@@ -4,10 +4,9 @@ import java.util.List;
 
 import model.Room;
 import model.entities.Player;
-import model.misc.Updatable;
 import view.DrawableVisitor;
 
-public class World implements Updatable {
+public class World {
     private final List<Room> rooms;
     private final Player player;
     private double t = 0;
@@ -27,7 +26,6 @@ public class World implements Updatable {
         return player;
     }
 
-    @Override
     public void update(double dt) {
         t += dt;
         rooms.forEach(r -> r.update(dt));

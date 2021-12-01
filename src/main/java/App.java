@@ -11,7 +11,7 @@ import model.entities.monsters.RandomMonsterFactory;
 import model.world.RandomWorldFactory;
 import view.scenes.MainMenuScene;
 import view.scenes.SceneContext;
-import view.sprites.SpriteFactory;
+import view.sprites.StandardGraphicsFactory;
 
 public class App extends Application {
     @Override
@@ -21,8 +21,8 @@ public class App extends Application {
 
         var audioDataFactory = new StandardAudioDataFactory();
         var audioPlayer = new AudioPlayer();
-        var spriteFactory = new SpriteFactory();
-        var sceneCtx = new SceneContext(root, audioDataFactory, spriteFactory, audioPlayer);
+        var graphicsFactory = new StandardGraphicsFactory();
+        var sceneCtx = new SceneContext(root, audioDataFactory, graphicsFactory, audioPlayer);
 
         var random = new Random();
         sceneCtx.switchScene(new MainMenuScene(sceneCtx,

@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.entities.Entity;
-import model.misc.Updatable;
 import model.misc.Vec2;
 import model.world.World;
 import view.DrawableVisitor;
 
-public class Room implements Updatable {
+public class Room {
     private final List<Entity> entities = new ArrayList<>();
     private World world = null;
     public static final Vec2 defaultSize = new Vec2(32, 18);
@@ -46,7 +45,6 @@ public class Room implements Updatable {
         return this == obj;
     }
 
-    @Override
     public void update(double dt) {
         entities.forEach(e -> e.update(dt));
     }

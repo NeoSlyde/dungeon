@@ -30,14 +30,14 @@ public class WorldScene implements Scene {
         this.world = world;
         this.evtHandler = new WorldSceneEventHandler(world, ctx);
         canvas = new Canvas(ctx.windowSize.x, ctx.windowSize.y);
-        worldTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().gameplayPeacefulMusic());
+        worldTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().gameplayPeacefulTheme());
         tl = new Timeline(new KeyFrame(Duration.seconds(dt), e -> {
             world.update(dt);
             if (world.getPlayer().getEnemy().isPresent()) {
                 ctx.switchScene(new BattleScene(ctx, world));
             }
             world.draw(new DrawableVisitor(Vec2.ZERO, ctx.windowSize,
-                    canvas.getGraphicsContext2D(), ctx.getSpriteFactory()));
+                    canvas.getGraphicsContext2D(), ctx.getGraphicsFactory()));
         }));
         tl.setCycleCount(Timeline.INDEFINITE);
 

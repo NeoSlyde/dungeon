@@ -62,7 +62,7 @@ public class Door extends Entity {
 
     @Override
     public void use(LivingEntity user) {
-        audioPlayer.play(audioDataFactory.openDoorSoundEffect());
+        audioPlayer.play(audioDataFactory.openDoorSFX());
         user.setPosition(destination.getFacingPosition());
         user.setRoom(destination.getRoom());
     }

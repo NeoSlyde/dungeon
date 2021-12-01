@@ -17,7 +17,7 @@ public class BattleSceneEventHandler implements EventHandler {
     @Override
     public void onEscape(KeyEventType type) {
         if (type == KeyEventType.PRESSED) {
-            sceneContext.getAudioPlayer().play(sceneContext.getAudioDataFactory().pauseOpenSoundEffect());
+            sceneContext.getAudioPlayer().play(sceneContext.getAudioDataFactory().pauseOpenSFX());
             sceneContext.switchScene(new PauseScene(sceneContext, world, new BattleScene(sceneContext, world)));
         }
     }

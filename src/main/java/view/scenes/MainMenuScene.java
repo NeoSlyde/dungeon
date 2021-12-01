@@ -58,7 +58,7 @@ public class MainMenuScene implements Scene {
         Button play = new Button("START A NEW GAME");
         menu.getChildren().add(play);
         play.setOnAction(e -> {
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
             ctx.switchScene(new WorldScene(ctx, worldFactory.generate()));
             menuTheme.stop();
         });
@@ -75,7 +75,7 @@ public class MainMenuScene implements Scene {
         menu.getChildren().add(option);
 
         option.setOnAction(e -> {
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
             menu.getChildren().remove(option);
             menu.getChildren().remove(play);
             menu.getChildren().remove(quit);
@@ -86,7 +86,7 @@ public class MainMenuScene implements Scene {
         });
 
         goBack.setOnAction(e -> {
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().closeSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().closeSFX());
             menu.getChildren().add(play);
             menu.getChildren().add(option);
             menu.getChildren().add(quit);
@@ -97,7 +97,7 @@ public class MainMenuScene implements Scene {
         });
 
         musicOnOff.setOnAction(e -> {
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
             if (musicOnOff.getText().equals("MUSIC: ON")) {
                 musicOnOff.setText("MUSIC: OFF");
                 menuTheme.stop();
@@ -110,7 +110,7 @@ public class MainMenuScene implements Scene {
         menu.getChildren().add(quit);
 
         quit.setOnAction(e -> {
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().closeSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().closeSFX());
             System.exit(0);
         });
 

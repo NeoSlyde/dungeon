@@ -1,29 +1,27 @@
 package audio;
 
 public interface AudioDataFactory {
-    AudioData gameplayPeacefulMusic();
+    AudioData gameplayPeacefulTheme();
 
     AudioData mainMenuTheme();
 
     AudioData pauseMenuTheme();
 
-    AudioData selectSoundEffect();
+    AudioData selectSFX();
 
-    AudioData closeSoundEffect();
+    AudioData closeSFX();
 
-    AudioData bruhSoundEffect();
+    AudioData pauseOpenSFX();
 
-    AudioData pauseOpenSoundEffect();
-
-    AudioData pauseCloseSoundEffect();
+    AudioData pauseCloseSFX();
 
     AudioData battleMenuTheme();
 
-    AudioData openDoorSoundEffect();
+    AudioData openDoorSFX();
 
-    AudioData attackSoundEffect();
+    AudioData attackSFX();
 
-    AudioData fireSoundEffect();
+    AudioData fireSFX();
 
     AudioData deathSFX();
 }

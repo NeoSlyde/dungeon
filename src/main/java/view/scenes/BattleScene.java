@@ -99,7 +99,7 @@ public class BattleScene implements Scene {
             playerCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
             player.draw(new DrawableVisitor(Vec2.ZERO,
                     new Vec2(playerCanvas.getWidth(), playerCanvas.getHeight()),
-                    playerCanvas.getGraphicsContext2D(), ctx.getSpriteFactory()).scaledUp(0.5));
+                    playerCanvas.getGraphicsContext2D(), ctx.getGraphicsFactory()).scaledUp(0.5));
 
             enemy.setMoving(false);
             enemy.setFacingDirection(Direction.LEFT);
@@ -109,7 +109,7 @@ public class BattleScene implements Scene {
             enemyCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
             enemy.draw(new DrawableVisitor(Vec2.ZERO,
                     new Vec2(enemyCanvas.getWidth(), enemyCanvas.getHeight()),
-                    enemyCanvas.getGraphicsContext2D(), ctx.getSpriteFactory()).scaledUp(0.5));
+                    enemyCanvas.getGraphicsContext2D(), ctx.getGraphicsFactory()).scaledUp(0.5));
 
             Image fireBallImage = new Image(new FileInputStream("src/main/resources/magic/fire.gif"));
 
@@ -200,9 +200,9 @@ public class BattleScene implements Scene {
 
         combatOptions.getChildren().add(attack);
         attack.setOnAction(e -> {
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
             playerAttackAnimation.play();
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
             battleScene.getChildren().remove(combatOptions);
         });
 
@@ -222,7 +222,7 @@ public class BattleScene implements Scene {
             player.attack(enemy, new PhysicalAttack());
             updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
             enemyAttackAnimation.play();
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
         });
         playerAttackAnimation.setResetOnFinished(true);
 
@@ -235,7 +235,7 @@ public class BattleScene implements Scene {
             player.attack(enemy, new FireAttack());
             updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
             enemyAttackAnimation.play();
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
         });
 
         // Thunder
@@ -246,23 +246,23 @@ public class BattleScene implements Scene {
             player.attack(enemy, new ThunderAttack());
             updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
             enemyAttackAnimation.play();
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
         });
 
         combatOptions.getChildren().add(magic);
         magic.setOnAction(e -> {
             battleScene.getChildren().remove(combatOptions);
             battleScene.getChildren().add(magicOptions);
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
         });
 
         Button fire = new Button("FIRE: 20MP");
         magicOptions.getChildren().add(fire);
         fire.setOnAction(e -> {
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
             fireBall.setVisible(true);
             battleScene.getChildren().remove(magicOptions);
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSFX());
 
             fireMagicAnimation.play();
         });
@@ -270,10 +270,10 @@ public class BattleScene implements Scene {
         Button thunder = new Button("THUNDER: 30MP");
         magicOptions.getChildren().add(thunder);
         thunder.setOnAction(e -> {
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
             thunderAttack.setVisible(true);
             battleScene.getChildren().remove(magicOptions);
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSFX());
 
             thunderMagicAnimation.play();
         });
@@ -283,7 +283,7 @@ public class BattleScene implements Scene {
         back.setOnAction(e -> {
             battleScene.getChildren().add(combatOptions);
             battleScene.getChildren().remove(magicOptions);
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSoundEffect());
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
         });
 
         battleScene.getChildren().addAll(combatOptions, enemyStatus, playerStatus);
