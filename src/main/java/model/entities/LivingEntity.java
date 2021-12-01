@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import model.Inventory;
 import model.Room;
+import model.attacks.Attack;
 import model.misc.Direction;
 import model.misc.Vec2;
 
@@ -48,7 +49,7 @@ public abstract class LivingEntity extends Entity {
     }
 
     public void setMana(double mana) {
-        this.mana = mana;
+        this.mana = Math.max(0, Math.min(getMaxMana(), mana));
     }
 
     public double getMaxMana() {
@@ -117,12 +118,13 @@ public abstract class LivingEntity extends Entity {
         this.health = Math.max(0, Math.min(getMaxHealth(), health));
     }
 
-    public void attack(LivingEntity target) {
-        target.setHealth(target.getHealth() - getStrength());
+    public boolean canDoAttack(Attack attack) {
+        return getMana() >= attack.getMana();
     }
 
-    public void attackWithValue(LivingEntity target, double value) {
-        target.setHealth(target.getHealth() - value);
+    public void attack(LivingEntity target, Attack attack) {
+        target.setHealth(target.getHealth() - getStrength() * attack.getStrength());
+        setMana(getMana() - attack.getMana());
     }
 
     @Override

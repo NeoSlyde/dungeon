@@ -24,6 +24,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import model.attacks.FireAttack;
+import model.attacks.PhysicalAttack;
+import model.attacks.ThunderAttack;
+import model.entities.LivingEntity;
 import model.entities.Player;
 import model.entities.monsters.Monster;
 import model.misc.Direction;
@@ -53,6 +57,8 @@ public class BattleScene implements Scene {
     @Override
     public void onLeave() {
         battleTheme.stop();
+        if (world.getPlayer().getEnemy().map(e -> e.getHealth()).orElse(0.0) <= 0)
+            world.getPlayer().clearEnemy();
     }
 
     @Override
@@ -146,13 +152,15 @@ public class BattleScene implements Scene {
         playerName.setFont(Font.font("Arctic", 40));
         playerName.setStyle("-fx-fill: white;");
 
-        Text playerHP = new Text(String.format("%.0f/%.0f HP", player.getHealth(), player.getMaxHealth()));
+        Text playerHP = new Text();
+        setHpText(playerHP, player);
         playerHP.setLayoutX(50);
         playerHP.setLayoutY(100);
         playerHP.setFont(Font.font("Arctic", 40));
         playerHP.setStyle("-fx-fill: green;");
 
-        Text playerMP = new Text(String.format("%.0f/%.0f MP", player.getMana(), player.getMaxMana()));
+        Text playerMP = new Text();
+        setMpText(playerMP, player);
         playerMP.setLayoutX(50);
         playerMP.setLayoutY(150);
         playerMP.setFont(Font.font("Arctic", 40));
@@ -174,7 +182,8 @@ public class BattleScene implements Scene {
         enemyName.setFont(Font.font("Arctic", 40));
         enemyName.setStyle("-fx-fill: white;");
 
-        Text enemyHp = new Text(String.format("%.0f/%.0f HP", enemy.getHealth(), enemy.getMaxHealth()));
+        Text enemyHp = new Text();
+        setHpText(enemyHp, enemy);
         enemyHp.setLayoutX(50);
         enemyHp.setLayoutY(100);
         enemyHp.setFont(Font.font("Arctic", 40));
@@ -201,7 +210,8 @@ public class BattleScene implements Scene {
         enemyAttackAnimation.setOnFinished(d -> {
             enemyCanvas.setTranslateX(ctx.windowSize.x - 350);
             enemyCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
-            enemy.attack(player);
+            enemy.attack(player, new PhysicalAttack());
+            updateAfterEnemyAttack(playerHP, player);
             battleScene.getChildren().add(combatOptions);
         });
         enemyAttackAnimation.setResetOnFinished(true);
@@ -209,7 +219,8 @@ public class BattleScene implements Scene {
         playerAttackAnimation.setOnFinished(d -> {
             playerCanvas.setTranslateX(200);
             playerCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
-            player.attack(enemy);
+            player.attack(enemy, new PhysicalAttack());
+            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
             enemyAttackAnimation.play();
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
         });
@@ -221,7 +232,8 @@ public class BattleScene implements Scene {
             fireBall.setX(310);
             fireBall.setY(ctx.windowSize.y / 2 - 50);
             fireBall.setVisible(false);
-            player.castFireAttack(enemy);
+            player.attack(enemy, new FireAttack());
+            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
             enemyAttackAnimation.play();
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
         });
@@ -231,7 +243,8 @@ public class BattleScene implements Scene {
         thunderMagicAnimation.setOnFinished(d -> {
             thunderAttack.setX(ctx.windowSize.x - 380);
             thunderAttack.setVisible(false);
-            player.castThunderAttack(enemy);
+            player.attack(enemy, new ThunderAttack());
+            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
             enemyAttackAnimation.play();
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSoundEffect());
         });
@@ -287,4 +300,27 @@ public class BattleScene implements Scene {
         return world;
     }
 
+    private void setHpText(Text t, LivingEntity e) {
+        t.setText(String.format("%.0f/%.0f HP", e.getHealth(), e.getMaxHealth()));
+    }
+
+    private void setMpText(Text t, LivingEntity e) {
+        t.setText(String.format("%.0f/%.0f MP", e.getMana(), e.getMaxMana()));
+    }
+
+    private void updateAfterPlayerAttack(Text playerMP, Text enemyHp, Player player, Monster enemy) {
+        setHpText(enemyHp, enemy);
+        setMpText(playerMP, player);
+        if (enemy.getHealth() <= 0) {
+            enemy.getRoom().removeEntity(enemy);
+            ctx.switchScene(new WorldScene(ctx, world));
+        }
+    }
+
+    private void updateAfterEnemyAttack(Text playerHP, Player player) {
+        setHpText(playerHP, player);
+        if (player.getHealth() <= 0) {
+            // TODO: DEATH
+        }
+    }
 }

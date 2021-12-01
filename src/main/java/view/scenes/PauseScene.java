@@ -23,18 +23,14 @@ import model.items.Item;
 import model.world.World;
 
 public class PauseScene implements Scene {
-
     private EventHandler evtHandler;
-
     private World world;
-
     private SceneContext ctx;
-
     private Clip pauseTheme;
 
-    public PauseScene(SceneContext ctx, World world) {
+    public PauseScene(SceneContext ctx, World world, Scene previousScene) {
         this.ctx = ctx;
-        this.evtHandler = new PauseSceneEventHandler(world, ctx);
+        this.evtHandler = new PauseSceneEventHandler(ctx, previousScene);
 
         this.world = world;
         pauseTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().pauseMenuTheme());

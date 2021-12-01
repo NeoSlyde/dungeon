@@ -1,6 +1,7 @@
 package eventhandlers;
 
 import model.world.World;
+import view.scenes.BattleScene;
 import view.scenes.PauseScene;
 import view.scenes.SceneContext;
 
@@ -17,7 +18,7 @@ public class BattleSceneEventHandler implements EventHandler {
     public void onEscape(KeyEventType type) {
         if (type == KeyEventType.PRESSED) {
             sceneContext.getAudioPlayer().play(sceneContext.getAudioDataFactory().pauseOpenSoundEffect());
-            sceneContext.switchScene(new PauseScene(sceneContext, world));
+            sceneContext.switchScene(new PauseScene(sceneContext, world, new BattleScene(sceneContext, world)));
         }
     }
 

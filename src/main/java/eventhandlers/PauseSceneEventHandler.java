@@ -1,23 +1,22 @@
 package eventhandlers;
 
-import model.world.World;
+import view.scenes.Scene;
 import view.scenes.SceneContext;
-import view.scenes.WorldScene;
 
 public class PauseSceneEventHandler implements EventHandler {
-    private World world;
     private SceneContext sceneContext;
+    private Scene previousScene;
 
-    public PauseSceneEventHandler(World world, SceneContext sceneContext) {
-        this.world = world;
+    public PauseSceneEventHandler(SceneContext sceneContext, Scene previousScene) {
         this.sceneContext = sceneContext;
+        this.previousScene = previousScene;
     }
 
     @Override
     public void onEscape(KeyEventType type) {
         if (type == KeyEventType.PRESSED) {
             sceneContext.getAudioPlayer().play(sceneContext.getAudioDataFactory().pauseCloseSoundEffect());
-            sceneContext.switchScene(new WorldScene(sceneContext, world));
+            sceneContext.switchScene(previousScene);
         }
     }
 

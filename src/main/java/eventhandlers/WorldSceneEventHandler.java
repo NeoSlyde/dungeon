@@ -6,6 +6,7 @@ import model.misc.Direction;
 import model.world.World;
 import view.scenes.PauseScene;
 import view.scenes.SceneContext;
+import view.scenes.WorldScene;
 
 public class WorldSceneEventHandler implements EventHandler {
     private MovementInputConverter movementInputConverter = new MovementInputConverter();
@@ -33,7 +34,7 @@ public class WorldSceneEventHandler implements EventHandler {
     public void onEscape(KeyEventType type) {
         if (type == KeyEventType.PRESSED) {
             sceneContext.getAudioPlayer().play(sceneContext.getAudioDataFactory().pauseOpenSoundEffect());
-            sceneContext.switchScene(new PauseScene(sceneContext, world));
+            sceneContext.switchScene(new PauseScene(sceneContext, world, new WorldScene(sceneContext, world)));
         }
     }
 
