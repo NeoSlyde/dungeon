@@ -333,7 +333,7 @@ public class BattleScene implements Scene {
         setHpText(enemyHp, enemy);
         setMpText(playerMP, player);
         FadeIn fadeIn = new FadeIn(tempPane);
-        fadeIn.setDelay(Duration.seconds(1));
+        fadeIn.setDelay(Duration.seconds(3.2));
         fadeIn.setOnFinished(d -> {
             enemy.getRoom().removeEntity(enemy);
             ctx.switchScene(new WorldScene(ctx, world));

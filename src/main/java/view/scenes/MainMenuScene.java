@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 
 import javax.sound.sampled.Clip;
 
+import animatefx.animation.FadeOut;
 import eventhandlers.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -55,11 +56,17 @@ public class MainMenuScene implements Scene {
             e1.printStackTrace();
         }
 
+        FadeOut fadeOut = new FadeOut(menu);
+
+        fadeOut.setOnFinished(value -> {
+            ctx.switchScene(new WorldScene(ctx, worldFactory.generate()));
+        });
+
         Button play = new Button("START A NEW GAME");
         menu.getChildren().add(play);
         play.setOnAction(e -> {
+            fadeOut.play();
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
-            ctx.switchScene(new WorldScene(ctx, worldFactory.generate()));
             menuTheme.stop();
         });
 
