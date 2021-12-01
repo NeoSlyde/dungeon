@@ -294,7 +294,7 @@ public class BattleScene implements Scene {
         Button thunder = new Button("THUNDER: 30MP");
         magicOptions.getChildren().add(thunder);
         thunder.setOnAction(e -> {
-            if (!player.canDoAttack(new FireAttack())) {
+            if (!player.canDoAttack(new ThunderAttack())) {
                 ctx.getAudioPlayer().play(ctx.getAudioDataFactory().errorSFX());
             } else {
                 ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
