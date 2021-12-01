@@ -20,6 +20,10 @@ public abstract class Monster extends LivingEntity {
 
     public void update(double dt) {
         var player = getRoom().getWorld().getPlayer();
+        if (player.getPosition().distance(getPosition()) > 6) {
+            setMoving(false);
+            return;
+        }
         if ((getRoom().getWorld().getT() - lastDirChangeT) > 0.5) {
             lastDirChangeT = getRoom().getWorld().getT();
             var vec = player.getPosition().subtract(getPosition());
