@@ -59,4 +59,14 @@ public class StandardAudioDataFactory implements AudioDataFactory {
     public AudioData deathSFX() {
         return new AudioData.Builder().withPath("/sounds/death.wav").withVolume(0.0f).build();
     }
+
+    @Override
+    public AudioData errorSFX() {
+        return new AudioData.Builder().withPath("/sounds/error.wav").withVolume(0.0f).build();
+    }
+
+    @Override
+    public AudioData winSFX() {
+        return new AudioData.Builder().withPath("/sounds/win.wav").withVolume(0.0f).build();
+    }
 }

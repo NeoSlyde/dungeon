@@ -8,6 +8,7 @@ import javax.sound.sampled.Clip;
 import animatefx.animation.BounceOutLeft;
 import animatefx.animation.BounceOutRight;
 import animatefx.animation.FadeIn;
+import animatefx.animation.FadeOut;
 import animatefx.animation.FadeOutRightBig;
 import eventhandlers.BattleSceneEventHandler;
 import eventhandlers.EventHandler;
@@ -195,6 +196,7 @@ public class BattleScene implements Scene {
         FadeOutRightBig fireMagicAnimation = new FadeOutRightBig(fireBall);
         BounceOutLeft enemyAttackAnimation = new BounceOutLeft(enemyCanvas);
         FadeIn thunderMagicAnimation = new FadeIn(fireBall);
+        FadeOut enemyFadeOut = new FadeOut(enemyCanvas);
 
         Button attack = new Button("ATTACK");
         Button magic = new Button("MAGIC");
@@ -221,9 +223,11 @@ public class BattleScene implements Scene {
             playerCanvas.setTranslateX(200);
             playerCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
             player.attack(enemy, new PhysicalAttack());
-            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
-            enemyAttackAnimation.play();
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
+            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy, enemyFadeOut);
+            if (enemy.getHealth() > 0) {
+                enemyAttackAnimation.play();
+                ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
+            }
         });
         playerAttackAnimation.setResetOnFinished(true);
 
@@ -234,8 +238,10 @@ public class BattleScene implements Scene {
             fireBall.setY(ctx.windowSize.y / 2 - 50);
             fireBall.setVisible(false);
 
-            enemyAttackAnimation.play();
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
+            if (enemy.getHealth() > 0) {
+                enemyAttackAnimation.play();
+                ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
+            }
         });
 
         // Thunder
@@ -244,8 +250,10 @@ public class BattleScene implements Scene {
             thunderAttack.setX(ctx.windowSize.x - 380);
             thunderAttack.setVisible(false);
 
-            enemyAttackAnimation.play();
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
+            if (enemy.getHealth() > 0) {
+                enemyAttackAnimation.play();
+                ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
+            }
         });
 
         combatOptions.getChildren().add(magic);
@@ -258,27 +266,35 @@ public class BattleScene implements Scene {
         Button fire = new Button("FIRE: 20MP");
         magicOptions.getChildren().add(fire);
         fire.setOnAction(e -> {
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
-            fireBall.setVisible(true);
-            battleScene.getChildren().remove(magicOptions);
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSFX());
-            player.attack(enemy, new FireAttack());
-            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
+            if (!player.canDoAttack(new FireAttack())) {
+                ctx.getAudioPlayer().play(ctx.getAudioDataFactory().errorSFX());
+            } else {
+                ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
+                fireBall.setVisible(true);
+                battleScene.getChildren().remove(magicOptions);
+                ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSFX());
+                player.attack(enemy, new FireAttack());
+                updateAfterPlayerAttack(playerMP, enemyHp, player, enemy, enemyFadeOut);
 
-            fireMagicAnimation.play();
+                fireMagicAnimation.play();
+            }
         });
 
         Button thunder = new Button("THUNDER: 30MP");
         magicOptions.getChildren().add(thunder);
         thunder.setOnAction(e -> {
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
-            thunderAttack.setVisible(true);
-            battleScene.getChildren().remove(magicOptions);
-            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSFX());
-            player.attack(enemy, new ThunderAttack());
-            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy);
+            if (!player.canDoAttack(new FireAttack())) {
+                ctx.getAudioPlayer().play(ctx.getAudioDataFactory().errorSFX());
+            } else {
+                ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
+                thunderAttack.setVisible(true);
+                battleScene.getChildren().remove(magicOptions);
+                ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSFX());
+                player.attack(enemy, new ThunderAttack());
+                updateAfterPlayerAttack(playerMP, enemyHp, player, enemy, enemyFadeOut);
 
-            thunderMagicAnimation.play();
+                thunderMagicAnimation.play();
+            }
         });
 
         Button back = new Button("BACK");
@@ -311,19 +327,36 @@ public class BattleScene implements Scene {
         t.setText(String.format("%.0f/%.0f MP", e.getMana(), e.getMaxMana()));
     }
 
-    private void updateAfterPlayerAttack(Text playerMP, Text enemyHp, Player player, Monster enemy) {
+    private void updateAfterPlayerAttack(Text playerMP, Text enemyHp, Player player, Monster enemy,
+            FadeOut enemyFadeOut) {
+        Pane tempPane = new Pane();
         setHpText(enemyHp, enemy);
         setMpText(playerMP, player);
-        if (enemy.getHealth() <= 0) {
+        FadeIn fadeIn = new FadeIn(tempPane);
+        fadeIn.setDelay(Duration.seconds(1));
+        fadeIn.setOnFinished(d -> {
             enemy.getRoom().removeEntity(enemy);
             ctx.switchScene(new WorldScene(ctx, world));
+        });
+        if (enemy.getHealth() <= 0) {
+            battleTheme.stop();
+            ctx.getAudioPlayer().play(ctx.getAudioDataFactory().winSFX());
+            enemyFadeOut.play();
+            fadeIn.play();
         }
     }
 
     private void updateAfterEnemyAttack(Text playerHP, Player player) {
+        Pane tempPane = new Pane();
+        FadeIn fadeIn = new FadeIn(tempPane);
+        fadeIn.setDelay(Duration.seconds(1));
+        fadeIn.setOnFinished(d -> {
+            ctx.switchScene(new DeathScene(ctx));
+        });
         setHpText(playerHP, player);
         if (player.getHealth() <= 0) {
-            ctx.switchScene(new DeathScene(ctx));
+
+            fadeIn.play();
         }
     }
 }

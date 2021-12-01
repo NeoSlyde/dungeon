@@ -24,4 +24,8 @@ public interface AudioDataFactory {
     AudioData fireSFX();
 
     AudioData deathSFX();
+
+    AudioData errorSFX();
+
+    AudioData winSFX();
 }

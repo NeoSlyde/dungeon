@@ -18,7 +18,7 @@ public class DeathScene implements Scene {
         ctx.getAudioPlayer().play(ctx.getAudioDataFactory().deathSFX());
         new Thread(() -> {
             try {
-                Thread.sleep(600);
+                Thread.sleep(2500);
                 System.exit(0);
             } catch (InterruptedException e) {
                 e.printStackTrace();
