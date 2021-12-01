@@ -320,7 +320,7 @@ public class BattleScene implements Scene {
     private void updateAfterEnemyAttack(Text playerHP, Player player) {
         setHpText(playerHP, player);
         if (player.getHealth() <= 0) {
-            // TODO: DEATH
+            ctx.switchScene(new DeathScene(ctx));
         }
     }
 }

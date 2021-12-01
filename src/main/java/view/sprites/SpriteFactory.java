@@ -32,6 +32,10 @@ public class SpriteFactory {
         return cachedFloorPattern;
     }
 
+    public Sprite gameOverImg() {
+        return cachedGameOver;
+    }
+
     private LivingEntitySprite cachedPlayerSprite = loadSpriteUtil("/player/");
     private LivingEntitySprite cachedMonsterSpriteSkeleton = loadSpriteUtil("/monster/skeleton/");
     private LivingEntitySprite cachedMonsterSpriteGoblin = loadSpriteUtil("/monster/goblin/");
@@ -40,6 +44,7 @@ public class SpriteFactory {
     private Sprite cachedDoorSprite = new Sprite("/dungeon/doors/runed_door.png");
     private ImagePattern cachedFloorPattern = new ImagePattern(new Image("/dungeon/floor/grey_dirt_0_old.png"), 0, 0,
             32, 32, false);
+    private Sprite cachedGameOver = new Sprite("/gui/gameover.jpg");
 
     private LivingEntitySprite loadSpriteUtil(String path) {
         var walkingSpeed = 4;

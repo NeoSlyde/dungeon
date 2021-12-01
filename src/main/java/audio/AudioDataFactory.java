@@ -24,4 +24,6 @@ public interface AudioDataFactory {
     AudioData attackSoundEffect();
 
     AudioData fireSoundEffect();
+
+    AudioData deathSFX();
 }

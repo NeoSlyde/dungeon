@@ -42,7 +42,7 @@ public class StandardAudioDataFactory implements AudioDataFactory {
 
     @Override
     public AudioData battleMenuTheme() {
-        return new AudioData.Builder().withPath("/sounds/fight.wav").withVolume(-10.0f).withLoop(true).build();
+        return new AudioData.Builder().withPath("/sounds/fight.wav").withVolume(-12.0f).withLoop(true).build();
     }
 
     @Override
@@ -60,4 +60,8 @@ public class StandardAudioDataFactory implements AudioDataFactory {
         return new AudioData.Builder().withPath("/sounds/fire.wav").withVolume(0.0f).build();
     }
 
+    @Override
+    public AudioData deathSFX() {
+        return new AudioData.Builder().withPath("/sounds/death.wav").withVolume(0.0f).build();
+    }
 }
