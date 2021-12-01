@@ -3,6 +3,7 @@ package view.scenes;
 import javax.sound.sampled.Clip;
 
 import animatefx.animation.FadeIn;
+import animatefx.animation.FadeOut;
 import eventhandlers.EventHandler;
 import eventhandlers.WorldSceneEventHandler;
 import javafx.animation.KeyFrame;
@@ -48,9 +49,7 @@ public class WorldScene implements Scene {
     public void onEnter() {
         tl.play();
         FadeIn canvasOpen = new FadeIn(canvas);
-        canvasOpen.setOnFinished(value -> {
-            worldTheme.start();
-        });
+        worldTheme.start();
         canvasOpen.play();
     }
 

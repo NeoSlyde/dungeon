@@ -10,6 +10,7 @@ import animatefx.animation.BounceOutRight;
 import animatefx.animation.FadeIn;
 import animatefx.animation.FadeOut;
 import animatefx.animation.FadeOutRightBig;
+import animatefx.animation.Flash;
 import eventhandlers.BattleSceneEventHandler;
 import eventhandlers.EventHandler;
 import javafx.geometry.Pos;
@@ -75,6 +76,12 @@ public class BattleScene implements Scene {
         Pane battleScene = new Pane();
         battleScene.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
         battleScene.getStylesheets().addAll("/style/battle.css");
+
+        Flash battleSceneOpen = new Flash(battleScene);
+        battleSceneOpen.play();
+
+        FadeOut sceneFadeOut = new FadeOut(battleScene);
+        sceneFadeOut.setDelay(Duration.seconds(2.5));
 
         VBox combatOptions = new VBox();
         combatOptions.setAlignment(Pos.CENTER);
@@ -223,7 +230,7 @@ public class BattleScene implements Scene {
             playerCanvas.setTranslateX(200);
             playerCanvas.setTranslateY(ctx.windowSize.y / 2 - 50);
             player.attack(enemy, new PhysicalAttack());
-            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy, enemyFadeOut);
+            updateAfterPlayerAttack(playerMP, enemyHp, player, enemy, enemyFadeOut, sceneFadeOut);
             if (enemy.getHealth() > 0) {
                 enemyAttackAnimation.play();
                 ctx.getAudioPlayer().play(ctx.getAudioDataFactory().attackSFX());
@@ -274,7 +281,7 @@ public class BattleScene implements Scene {
                 battleScene.getChildren().remove(magicOptions);
                 ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSFX());
                 player.attack(enemy, new FireAttack());
-                updateAfterPlayerAttack(playerMP, enemyHp, player, enemy, enemyFadeOut);
+                updateAfterPlayerAttack(playerMP, enemyHp, player, enemy, enemyFadeOut, sceneFadeOut);
 
                 fireMagicAnimation.play();
             }
@@ -291,7 +298,7 @@ public class BattleScene implements Scene {
                 battleScene.getChildren().remove(magicOptions);
                 ctx.getAudioPlayer().play(ctx.getAudioDataFactory().fireSFX());
                 player.attack(enemy, new ThunderAttack());
-                updateAfterPlayerAttack(playerMP, enemyHp, player, enemy, enemyFadeOut);
+                updateAfterPlayerAttack(playerMP, enemyHp, player, enemy, enemyFadeOut, sceneFadeOut);
 
                 thunderMagicAnimation.play();
             }
@@ -328,7 +335,7 @@ public class BattleScene implements Scene {
     }
 
     private void updateAfterPlayerAttack(Text playerMP, Text enemyHp, Player player, Monster enemy,
-            FadeOut enemyFadeOut) {
+            FadeOut enemyFadeOut, FadeOut sceneFadeOut) {
         Pane tempPane = new Pane();
         setHpText(enemyHp, enemy);
         setMpText(playerMP, player);
@@ -343,6 +350,7 @@ public class BattleScene implements Scene {
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().winSFX());
             enemyFadeOut.play();
             fadeIn.play();
+            sceneFadeOut.play();
         }
     }
 
