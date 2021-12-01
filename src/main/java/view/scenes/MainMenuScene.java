@@ -106,10 +106,10 @@ public class MainMenuScene implements Scene {
             ctx.getAudioPlayer().play(ctx.getAudioDataFactory().selectSFX());
             if (musicOnOff.getText().equals("MUSIC: ON")) {
                 musicOnOff.setText("MUSIC: OFF");
-                menuTheme.stop();
+                ctx.getAudioPlayer().setOn(false);
             } else {
                 musicOnOff.setText("MUSIC: ON");
-                menuTheme.play();
+                ctx.getAudioPlayer().setOn(true);
             }
         });
 
