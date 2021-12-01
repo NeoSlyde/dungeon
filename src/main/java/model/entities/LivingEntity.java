@@ -1,6 +1,5 @@
 package model.entities;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import model.Inventory;
@@ -13,7 +12,6 @@ public abstract class LivingEntity extends Entity {
     private boolean moving = false;
     private Direction facingDirection = Direction.RIGHT;
     private Inventory inventory = new Inventory();
-    private Optional<LivingEntity> inCombatWith = Optional.empty();
     private boolean running = false;
     private double health = 100, maxHealth = 100;
     private double mana = 100, maxMana = 100;
@@ -63,18 +61,6 @@ public abstract class LivingEntity extends Entity {
 
     public Inventory getInventory() {
         return inventory;
-    }
-
-    public Optional<LivingEntity> getInCombatWith() {
-        return inCombatWith;
-    }
-
-    public void setInCombatWith(LivingEntity inCombatWith) {
-        this.inCombatWith = Optional.ofNullable(inCombatWith);
-    }
-
-    public void withdrawFromCombat() {
-        inCombatWith = Optional.empty();
     }
 
     public void setMoving(boolean m) {
