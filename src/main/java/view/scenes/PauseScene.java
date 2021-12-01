@@ -58,9 +58,6 @@ public class PauseScene implements Scene {
         pauseMenu.setSpacing(10);
         pauseMenu.setFillWidth(false);
 
-        // Button quit = new Button("LEAVE THE GAME");
-        // quit.getStylesheets().addAll("/style/menu.css");
-
         VBox inventoryComponent = new VBox();
         inventoryComponent.setPrefSize(ctx.windowSize.x, ctx.windowSize.y);
         inventoryComponent.setAlignment(Pos.CENTER);
