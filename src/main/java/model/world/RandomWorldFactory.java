@@ -12,6 +12,7 @@ import model.entities.Entity;
 import model.entities.EntityFactory;
 import model.entities.Player;
 import model.entities.RandomChestFactory;
+import model.entities.VictoryDoor;
 import model.entities.Wall;
 import model.misc.Direction;
 import model.misc.Vec2;
@@ -31,10 +32,11 @@ public class RandomWorldFactory implements WorldFactory {
     }
 
     public World generate() {
-        int roomCount = new Random().nextInt(6) + 10;
+        int roomCount = random.nextInt(6) + 10;
         List<Room> rooms = new ArrayList<>();
 
         Door prevDoor = null;
+        Entity[][] lastGrid = null;
         while (rooms.size() < roomCount) {
             Room room = new Room();
             EntityFactory chestFactory = (_r, pos) -> new RandomChestFactory(random).generate(room, pos);
@@ -68,7 +70,11 @@ public class RandomWorldFactory implements WorldFactory {
 
             rooms.add(room);
             prevDoor = nextDoor;
+            lastGrid = grid;
         }
+        set(lastGrid, (int) prevDoor.getPosition().x, (int) prevDoor.getPosition().y,
+                new VictoryDoor(rooms.get(rooms.size() - 1),
+                        prevDoor.side, prevDoor.pos, audioDataFactory, audioPlayer));
         return new World(rooms, new Player(rooms.get(0), Room.defaultSize.multiply(0.5)));
     }
 

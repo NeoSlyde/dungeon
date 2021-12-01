@@ -13,6 +13,7 @@ public class Player extends LivingEntity {
     }
 
     private Optional<Monster> enemy = Optional.empty();
+    private boolean hasWon = false;
 
     @Override
     public double getStrength() {
@@ -44,5 +45,13 @@ public class Player extends LivingEntity {
     @Override
     public String getName() {
         return "You";
+    }
+
+    public boolean getHasWon() {
+        return hasWon;
+    }
+
+    public void setHasWon(boolean hasWon) {
+        this.hasWon = hasWon;
     }
 }

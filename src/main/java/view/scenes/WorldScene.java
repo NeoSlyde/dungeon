@@ -35,8 +35,10 @@ public class WorldScene implements Scene {
         tl = new Timeline(new KeyFrame(Duration.seconds(dt), e -> {
             world.update(dt);
             if (world.getPlayer().getEnemy().isPresent()) {
-                ctx.getAudioPlayer().play(ctx.getAudioDataFactory().encounterSFX());
                 ctx.switchScene(new BattleScene(ctx, world));
+            }
+            if (world.getPlayer().getHasWon()) {
+                ctx.switchScene(new VictoryScene(ctx));
             }
             world.draw(new DrawableVisitor(Vec2.ZERO, ctx.windowSize,
                     canvas.getGraphicsContext2D(), ctx.getGraphicsFactory()));

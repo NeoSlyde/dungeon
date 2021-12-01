@@ -48,11 +48,12 @@ public class BattleScene implements Scene {
         this.evtHandler = new BattleSceneEventHandler(world, ctx);
 
         this.world = world;
-        battleTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().battleMenuTheme());
     }
 
     @Override
     public void onEnter() {
+        battleTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().battleMenuTheme());
+        ctx.getAudioPlayer().play(ctx.getAudioDataFactory().encounterSFX());
         battleTheme.start();
     }
 

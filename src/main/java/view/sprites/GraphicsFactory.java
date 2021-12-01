@@ -24,4 +24,6 @@ public interface GraphicsFactory {
     ImagePattern floorPattern();
 
     Sprite gameOver();
+
+    Sprite victory();
 }
