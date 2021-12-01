@@ -36,10 +36,6 @@ public class SceneContext {
         root.requestFocus();
     }
 
-    public Node getUI() {
-        return current.getUI();
-    }
-
     public EventHandler getEventHandler() {
         return current.getEventHandler();
     }
