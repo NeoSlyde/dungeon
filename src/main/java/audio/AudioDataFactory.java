@@ -30,4 +30,6 @@ public interface AudioDataFactory {
     AudioData winSFX();
 
     AudioData encounterSFX();
+
+    AudioData chestSFX();
 }

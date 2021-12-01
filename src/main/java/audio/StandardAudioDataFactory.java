@@ -75,4 +75,8 @@ public class StandardAudioDataFactory implements AudioDataFactory {
         return new AudioData.Builder().withPath("/sounds/encounter.wav").withVolume(0.0f).build();
     }
 
+    @Override
+    public AudioData chestSFX() {
+        return new AudioData.Builder().withPath("/sounds/open.wav").withVolume(0.0f).build();
+    }
 }
