@@ -3,7 +3,6 @@ package view.scenes;
 import javax.sound.sampled.Clip;
 
 import animatefx.animation.FadeIn;
-import animatefx.animation.FadeOut;
 import eventhandlers.EventHandler;
 import eventhandlers.WorldSceneEventHandler;
 import javafx.animation.KeyFrame;
