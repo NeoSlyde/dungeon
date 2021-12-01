@@ -1,21 +1,36 @@
 package audio;
 
-import javax.sound.sampled.Clip;
+import java.io.IOException;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 // This class *plays* audio
 public class AudioPlayer {
-    public MediaPlayer play(AudioData audioData) {
+    public Clip play(AudioData audioData) {
         var soundURL = this.getClass().getResource(audioData.path);
-        Media media = new Media(soundURL.toExternalForm());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        if (audioData.loop) {
-            mediaPlayer.setCycleCount(Clip.LOOP_CONTINUOUSLY);
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundURL);
+            var clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(audioData.volume);
+            clip.start();
+            if (audioData.loop) {
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }
+            return clip;
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
         }
-        mediaPlayer.play();
-        mediaPlayer.setVolume(Math.pow(10, audioData.volume / 20));
-        return mediaPlayer;
+        return null;
     }
 }

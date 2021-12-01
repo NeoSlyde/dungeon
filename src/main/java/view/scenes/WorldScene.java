@@ -1,5 +1,7 @@
 package view.scenes;
 
+import javax.sound.sampled.Clip;
+
 import animatefx.animation.FadeIn;
 import eventhandlers.EventHandler;
 import eventhandlers.WorldSceneEventHandler;
@@ -7,7 +9,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import model.misc.Vec2;
 import model.world.World;
@@ -24,14 +25,14 @@ public class WorldScene implements Scene {
 
     private Timeline tl;
 
-    private MediaPlayer worldTheme;
+    private Clip worldTheme;
 
     public WorldScene(SceneContext ctx, World world) {
         this.world = world;
         this.evtHandler = new WorldSceneEventHandler(world, ctx);
         canvas = new Canvas(ctx.windowSize.x, ctx.windowSize.y);
         worldTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().gameplayPeacefulTheme());
-        worldTheme.play();
+        worldTheme.stop();
         tl = new Timeline(new KeyFrame(Duration.seconds(dt), e -> {
             world.update(dt);
             if (world.getPlayer().getEnemy().isPresent()) {
@@ -51,7 +52,7 @@ public class WorldScene implements Scene {
     public void onEnter() {
         tl.play();
         FadeIn canvasOpen = new FadeIn(canvas);
-        worldTheme.play();
+        worldTheme.start();
         canvasOpen.play();
     }
 
