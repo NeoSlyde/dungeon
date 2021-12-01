@@ -32,6 +32,7 @@ public class WorldScene implements Scene {
         this.evtHandler = new WorldSceneEventHandler(world, ctx);
         canvas = new Canvas(ctx.windowSize.x, ctx.windowSize.y);
         worldTheme = ctx.getAudioPlayer().play(ctx.getAudioDataFactory().gameplayPeacefulTheme());
+        worldTheme.stop();
         tl = new Timeline(new KeyFrame(Duration.seconds(dt), e -> {
             world.update(dt);
             if (world.getPlayer().getEnemy().isPresent()) {
