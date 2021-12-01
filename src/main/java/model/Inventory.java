@@ -11,15 +11,8 @@ public class Inventory {
     private int capacity = 12;
 
     public void addItem(Item item, int amount) {
-        // ensure inventory has capacity
-        if (items.size() < capacity) {
-            // if item is already in inventory, add to amount
-            if (items.containsKey(item)) {
-                items.put(item, items.get(item) + amount);
-            } else {
-                // if item is not in inventory, add item and amount
-                items.put(item, amount);
-            }
+        if (items.size() < capacity || items.keySet().contains(item)) {
+            items.compute(item, (_item, i) -> i == null ? amount : i + amount);
         }
     }
 
@@ -39,4 +32,7 @@ public class Inventory {
         return capacity;
     }
 
+    public void addAll(Inventory inv2) {
+        inv2.items.forEach(this::addItem);
+    }
 }
